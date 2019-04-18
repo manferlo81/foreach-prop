@@ -1,6 +1,10 @@
+import toArray from "args-to-arr";
+
 let hasOwn;
 
-function eachProp(object, callback, ...rest) {
+function eachProp(object, callback) {
+
+  const rest = toArray(arguments, 2);
 
   if (!hasOwn) {
     hasOwn = Object.prototype.hasOwnProperty;

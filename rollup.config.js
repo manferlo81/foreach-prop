@@ -1,6 +1,6 @@
 import buble from "rollup-plugin-buble";
 
-import { main, module as esModule } from "./package.json";
+import { main, module as esModule, dependencies } from "./package.json";
 
 const input = "src/index.js";
 const sourcemap = true;
@@ -9,6 +9,7 @@ const sourcemap = true;
 const cjsOutput = {
   file: main,
   format: "cjs",
+  interop: false,
   sourcemap,
 };
 
@@ -19,11 +20,15 @@ const esOutput = {
   sourcemap,
 };
 
+const external = Object.keys(dependencies);
+
 /** @type { import("rollup").RollupOptions } */
 const config = {
 
   input,
   output: [cjsOutput, esOutput],
+
+  external,
 
   plugins: [
     buble({
