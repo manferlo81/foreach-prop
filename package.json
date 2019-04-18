@@ -11,6 +11,11 @@
     "object",
     "properties"
   ],
+  "files": [
+    "dist",
+    "types",
+    "src"
+  ],
   "scripts": {
     "dev": "rollup -cw",
     "build": "rollup -c",
