@@ -2,21 +2,21 @@ import buble from "rollup-plugin-buble";
 
 import { main, module as esModule } from "./package.json";
 
-/** @type { string } */
 const input = "src/index.js";
+const sourcemap = true;
 
 /** @type { import("rollup").OutputOptions } */
 const cjsOutput = {
   file: main,
   format: "cjs",
-  sourcemap: true,
+  sourcemap,
 };
 
 /** @type { import("rollup").OutputOptions } */
 const esOutput = {
   file: esModule,
   format: "es",
-  sourcemap: true,
+  sourcemap,
 };
 
 /** @type { import("rollup").RollupOptions } */
