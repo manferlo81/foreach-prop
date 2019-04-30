@@ -11,8 +11,7 @@ function map(object, callback) {
     if (
       hasOwn.call(object, key)
     ) {
-      const item = callback.call(this, object[key], key, ...rest);
-      result[key] = item;
+      result[key] = callback.call(this, object[key], key, ...rest);
     }
   }
 
