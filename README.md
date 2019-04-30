@@ -1,2 +1,3 @@
 # foreach-prop
-shallow object property enumeration
+
+Array-like methods for objects

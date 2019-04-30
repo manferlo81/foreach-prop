@@ -1,7 +1,7 @@
 {
   "name": "foreach-prop",
   "version": "0.0.1",
-  "description": "shallow object property enumeration",
+  "description": "Array-like methods for objects",
   "main": "dist/each-prop.cjs.js",
   "module": "dist/each-prop.es.js",
   "types": "types/index.d.ts",
