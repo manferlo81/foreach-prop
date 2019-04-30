@@ -17,10 +17,11 @@
     "src"
   ],
   "scripts": {
+    "clean": "rm -rf dist coverage",
     "dev": "rollup -cw",
     "build": "rollup -c",
     "test": "jest",
-    "preversion": "npm run build && npm test"
+    "preversion": "npm run clean && npm run build && npm test"
   },
   "dependencies": {
     "args-to-arr": "^1.2.4"
