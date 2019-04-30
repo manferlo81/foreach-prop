@@ -1,6 +1,6 @@
 const { reduce } = require("..");
 
-describe("reduce", () => {
+describe("reduce method", () => {
 
   const object = {
     a: 1,

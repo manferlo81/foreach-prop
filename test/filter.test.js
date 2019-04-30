@@ -1,6 +1,6 @@
 const { filter } = require("..");
 
-describe("filter", () => {
+describe("filter method", () => {
 
   const object = {
     a: 1,

@@ -1,6 +1,6 @@
 const { map } = require("..");
 
-describe("map", () => {
+describe("map method", () => {
 
   const object = {
     a: 1,

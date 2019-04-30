@@ -1,6 +1,6 @@
 const { keyOf } = require("..");
 
-describe("keyOf", () => {
+describe("keyOf method", () => {
 
   const object = {
     a: 1,

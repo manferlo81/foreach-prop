@@ -1,6 +1,6 @@
 const { findKey } = require("..");
 
-describe("findKey", () => {
+describe("findKey method", () => {
 
   const object = {
     a: 1,

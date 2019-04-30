@@ -1,6 +1,6 @@
 const { forEach } = require("..");
 
-describe("forEach", () => {
+describe("forEach method", () => {
 
   const object = {
     a: 1,
