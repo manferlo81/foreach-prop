@@ -19,7 +19,8 @@
   "scripts": {
     "dev": "rollup -cw",
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "preversion": "npm run build && npm test"
   },
   "dependencies": {
     "args-to-arr": "^1.2.4"
