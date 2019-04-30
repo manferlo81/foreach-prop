@@ -20,7 +20,7 @@
     "clean": "rm -rf dist coverage",
     "dev": "rollup -cw",
     "build": "rollup -c",
-    "test": "jest",
+    "test": "jest --colors",
     "preversion": "npm run clean && npm run build && npm test"
   },
   "dependencies": {
