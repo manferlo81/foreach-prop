@@ -11,6 +11,7 @@ const cjsOutput = {
   format: "cjs",
   interop: false,
   sourcemap,
+  esModule: false,
 };
 
 /** @type { import("rollup").OutputOptions } */
