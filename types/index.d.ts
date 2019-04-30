@@ -7,4 +7,4 @@ declare function map<K extends keyof any, V, E extends any[], N = any>(object: R
 declare function findKey<K extends keyof any, V, E extends any[]>(object: Record<K, V>, callback: EachPropCallback<K, V, E>, ...extra: E): K | null;
 declare function reduce<K extends keyof any, V, E extends any[], T = any>(object: Record<K, V>, callback: ReduceCallback<K, V, E, T>, initial: T, ...extra: E): T;
 
-export { forEach, map, findKey };
+export { forEach, map, findKey, reduce };
