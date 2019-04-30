@@ -1,4 +1,4 @@
-const eachProp = require("..");
+const { forEach } = require("..");
 
 const object = {
   a: 1,
@@ -11,7 +11,7 @@ test("enumerate properly", () => {
   const callback = jest.fn();
   const keys = Object.keys(object);
 
-  eachProp(object, callback);
+  forEach(object, callback);
 
   expect(callback).toHaveBeenCalledTimes(keys.length);
 
@@ -21,14 +21,14 @@ test("enumerate properly", () => {
 
 });
 
-test("return key if callback returns truthy", () => {
+test("forEach should return void", () => {
 
-  const result = eachProp(object, (val, key) => {
+  const result = forEach(object, (val, key) => {
     if (val === 2 && key === "b") {
       return true;
     }
   });
 
-  expect(result).toBe("b");
+  expect(result).toBeUndefined();
 
 });
