@@ -6,9 +6,10 @@ describe("keyOf method", () => {
     a: 1,
     b: 2,
     c: 3,
+    d: 2,
   };
 
-  test("keyOf should return the found key", () => {
+  test("keyOf should return the first found key", () => {
 
     const keyOf1 = keyOf(object, 1);
     const keyOf2 = keyOf(object, 2);
