@@ -1,6 +1,6 @@
 # foreach-prop
 
-[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop) [![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/master/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop) [![Greenkeeper badge](https://badges.greenkeeper.io/manferlo81/foreach-prop.svg)](https://greenkeeper.io/)
+[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop)  [![Greenkeeper badge](https://badges.greenkeeper.io/manferlo81/foreach-prop.svg)](https://greenkeeper.io/) [![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/master/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop) [![Known Vulnerabilities](https://snyk.io/test/github/manferlo81/foreach-prop/badge.svg?targetFile=package.json)](https://snyk.io/test/github/manferlo81/foreach-prop?targetFile=package.json)
 
 Array-like methods for objects
 
