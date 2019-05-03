@@ -3,15 +3,12 @@ import hasOwn from "./has-own";
 
 function reduce(object, callback, initial) {
 
-  const rest = toArray(arguments, 3);
+  const extra = toArray(arguments, 3);
+  let result = initial;
 
-  let result = initial || {};
-
-  for (let key in object) {
-    if (
-      hasOwn.call(object, key)
-    ) {
-      result = callback.call(this, result, object[key], key, ...rest);
+  for (const key in object) {
+    if (hasOwn.call(object, key)) {
+      result = callback.call(this, result, object[key], key, ...extra);
     }
   }
 

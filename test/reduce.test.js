@@ -53,16 +53,15 @@ describe("reduce method", () => {
 
   });
 
-  test("reduce should create initial object if not provided", () => {
+  test("reduce should return initial object if empty object", () => {
 
-    const result = reduce(object, (result, val, key) => {
-      result[key] = val;
+    const initial = {};
+    const result = reduce({}, (result, val, key) => {
+      result[key] = val * 2;
       return result;
-    });
+    }, initial);
 
-    expect(typeof result).toBe("object");
-    expect(result).toMatchObject(object);
-    expect(result).not.toBe(object);
+    expect(result).toBe(initial);
 
   });
 

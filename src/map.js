@@ -7,10 +7,8 @@ function map(object, callback) {
 
   const result = {};
 
-  for (let key in object) {
-    if (
-      hasOwn.call(object, key)
-    ) {
+  for (const key in object) {
+    if (hasOwn.call(object, key)) {
       result[key] = callback.call(this, object[key], key, ...rest);
     }
   }

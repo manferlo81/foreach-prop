@@ -3,12 +3,12 @@ import hasOwn from "./has-own";
 
 function findKey(object, callback) {
 
-  const rest = toArray(arguments, 2);
+  const extra = toArray(arguments, 2);
 
-  for (let key in object) {
+  for (const key in object) {
     if (
       hasOwn.call(object, key) &&
-      callback.call(this, object[key], key, ...rest)
+      callback.call(this, object[key], key, ...extra)
     ) {
       return key;
     }
