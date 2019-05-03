@@ -9,7 +9,12 @@
     "for-in",
     "for-each",
     "object",
-    "properties"
+    "properties",
+    "property",
+    "key",
+    "filter",
+    "reduce",
+    "map"
   ],
   "files": [
     "dist",
