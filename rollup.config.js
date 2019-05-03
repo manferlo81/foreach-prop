@@ -2,36 +2,31 @@ import buble from "rollup-plugin-buble";
 
 import { main, module as esModule, dependencies } from "./package.json";
 
-const input = "src/index.js";
 const sourcemap = true;
 
-/** @type { import("rollup").OutputOptions } */
-const cjsOutput = {
-  file: main,
-  format: "cjs",
-  interop: false,
+const input = "src/index.js";
+
+const output = [
+  { file: main, format: "cjs" },
+  { file: esModule, format: "es" },
+].map((partial) => ({
+  ...partial,
   sourcemap,
   esModule: false,
-};
-
-/** @type { import("rollup").OutputOptions } */
-const esOutput = {
-  file: esModule,
-  format: "es",
-  sourcemap,
-};
+  interop: false,
+}));
 
 const external = Object.keys(dependencies);
 
-/** @type { import("rollup").RollupOptions } */
 const config = {
 
   input,
-  output: [cjsOutput, esOutput],
+  output,
 
   external,
 
   plugins: [
+
     buble({
       target: {
         node: 0.12,
@@ -42,6 +37,7 @@ const config = {
         edge: 12,
       },
     }),
+
   ],
 
 };
