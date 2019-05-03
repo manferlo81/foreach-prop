@@ -39,6 +39,24 @@ describe("forEach method", () => {
 
   });
 
+  test("forEach passes this arg", () => {
+
+    const thisArg = [];
+    const callback = jest.fn(function () {
+      expect(this).toBe(thisArg);
+    });
+
+    forEach.call(thisArg, object, callback);
+
+    expect(keys.length).toBeGreaterThan(0);
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+    });
+
+  });
+
   test("forEach should return void", () => {
 
     const result = forEach(object, (val, key) => {

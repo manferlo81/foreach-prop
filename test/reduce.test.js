@@ -41,6 +41,26 @@ describe("reduce method", () => {
 
   });
 
+  test("reduce passes this arg", () => {
+
+    const thisArg = [];
+    const initial = {};
+    const callback = jest.fn(function (result) {
+      expect(this).toBe(thisArg);
+      return result;
+    });
+
+    reduce.call(thisArg, object, callback, initial);
+
+    expect(keys.length).toBeGreaterThan(0);
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, initial, object[key], key);
+    });
+
+  });
+
   test("reduce should return initial object", () => {
 
     const initial = {};

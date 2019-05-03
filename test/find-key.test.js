@@ -39,6 +39,25 @@ describe("findKey method", () => {
 
   });
 
+  test("findKey passes this arg", () => {
+
+    const thisArg = [];
+    const callback = jest.fn(function () {
+      expect(this).toBe(thisArg);
+    });
+
+
+    findKey.call(thisArg, object, callback);
+
+    expect(keys.length).toBeGreaterThan(0);
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+    });
+
+  });
+
   test("findKey should return the found key", () => {
 
     const result = findKey(object, (val, key) => {
