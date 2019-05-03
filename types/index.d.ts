@@ -9,7 +9,8 @@ declare function map<K extends keyof any, V, E extends any[], N = any>(object: R
 declare function keyOf<K extends keyof any, V>(object: Record<K, V>, value: V): K | null;
 declare function lastKeyOf<K extends keyof any, V>(object: Record<K, V>, value: V): K | null;
 declare function findKey<K extends keyof any, V, E extends any[]>(object: Record<K, V>, callback: FilterCallback<K, V, E>, ...extra: E): K | null;
+declare function find<K extends keyof any, V, E extends any[]>(object: Record<K, V>, callback: FilterCallback<K, V, E>, ...extra: E): V | undefined;
 declare function filter<K extends keyof any, V, E extends any[]>(object: Record<K, V>, callback: FilterCallback<K, V, E>, ...extra: E): Record<K, V>;
 declare function reduce<K extends keyof any, V, E extends any[], T = any>(object: Record<K, V>, callback: ReduceCallback<K, V, E, T>, initial: T, ...extra: E): T;
 
-export { forEach, map, keyOf, lastKeyOf, findKey, filter, reduce };
+export { forEach, map, keyOf, lastKeyOf, findKey, find, filter, reduce };
