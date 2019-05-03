@@ -12,6 +12,7 @@
     "properties",
     "property",
     "key",
+    "keys",
     "filter",
     "reduce",
     "map"
