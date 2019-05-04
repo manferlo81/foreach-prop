@@ -1,3 +1,9 @@
+# 0.2.x
+
+* added some method
+* added every method
+* added includes method
+
 # 0.1.x
 
 * added find method
