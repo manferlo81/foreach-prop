@@ -1,3 +1,7 @@
+# 1.0.x
+
+* first official release
+
 # 0.2.x
 
 * added some method
