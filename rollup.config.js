@@ -1,45 +1,54 @@
 import buble from "rollup-plugin-buble";
+import resolve from "rollup-plugin-node-resolve";
+import commonjs from "rollup-plugin-commonjs";
 
-import { main, module as esModule, dependencies } from "./package.json";
-
-const sourcemap = true;
+import { main, module as esModule, browser, dependencies } from "./package.json";
 
 const input = "src/index.js";
+const sourcemap = true;
+const deps = Object.keys(dependencies);
 
-const output = [
+const configs = [
   { file: main, format: "cjs" },
   { file: esModule, format: "es" },
-].map((partial) => ({
-  ...partial,
-  sourcemap,
-  esModule: false,
-  interop: false,
-}));
+  { file: browser, format: "umd", name: "eachProp", isBrowser: true },
+].map(({ isBrowser, ...partial }) => {
 
-const external = Object.keys(dependencies);
+  const output = {
+    ...partial,
+    sourcemap,
+    esModule: false,
+    interop: false,
+  };
 
-const config = {
+  const external = isBrowser ? [] : deps;
 
-  input,
-  output,
+  return {
 
-  external,
+    input,
+    output,
+    external,
 
-  plugins: [
+    plugins: [
 
-    buble({
-      target: {
-        node: 0.12,
-        ie: 8,
-        chrome: 48,
-        firefox: 43,
-        safari: 8,
-        edge: 12,
-      },
-    }),
+      resolve(),
+      commonjs(),
 
-  ],
+      buble({
+        target: {
+          node: 0.12,
+          ie: 8,
+          chrome: 48,
+          firefox: 43,
+          safari: 8,
+          edge: 12,
+        },
+      }),
 
-};
+    ],
 
-export default config;
+  };
+
+});
+
+export default configs;

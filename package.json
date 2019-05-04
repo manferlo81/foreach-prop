@@ -4,6 +4,7 @@
   "description": "Array-like methods for objects",
   "main": "dist/each-prop.cjs.js",
   "module": "dist/each-prop.es.js",
+  "browser": "dist/each-prop.umd.js",
   "types": "types/index.d.ts",
   "keywords": [
     "for-in",
@@ -37,7 +38,9 @@
     "eslint": "^5.16.0",
     "jest": "^24.7.1",
     "rollup": "^1.10.1",
-    "rollup-plugin-buble": "^0.19.6"
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3"
   },
   "author": "Manuel Fernandez <manferlo81@gmail.com>",
   "repository": {
