@@ -10,6 +10,14 @@ Array-like methods for objects
 npm install foreach-prop
 ```
 
+*... or use it from [jsDelivr](https://www.jsdelivr.com/) cdn...*
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
+```
+
+*... see [this link](https://www.jsdelivr.com/package/npm/foreach-prop) for more cdn options (specific/minified version, etc...)*
+
 ## Methods
 
 #### forEach
