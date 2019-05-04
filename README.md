@@ -60,18 +60,18 @@ map.call(thisArg, object, callback, ...extra);
 
 #### keyOf
 
-*similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one.*
+*similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one, or* `null` *if not found.*
 
 ```typescript
-keyOf(object, value): string;
+keyOf(object, value): string | null;
 ```
 
 #### lastKeyOf
 
-*similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one.*
+*similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one, or* `null` *if not found.*
 
 ```typescript
-lastKeyOf(object, value): string;
+lastKeyOf(object, value): string | null;
 ```
 
 #### findKey
@@ -79,7 +79,7 @@ lastKeyOf(object, value): string;
 *similar to* `Array.prototype.findIndex`*. It executes the provided callback function for every key-value-pair in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
 
 ```typescript
-findKey(object, function callback(value, key, ...extra) => any, ...extra): string;
+findKey(object, function callback(value, key, ...extra) => any, ...extra): string | null;
 ```
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
