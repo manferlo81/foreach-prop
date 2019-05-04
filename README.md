@@ -1,22 +1,32 @@
 # foreach-prop
 
-[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop)  [![Greenkeeper badge](https://badges.greenkeeper.io/manferlo81/foreach-prop.svg)](https://greenkeeper.io/) [![npm](https://img.shields.io/npm/v/foreach-prop.svg)](https://www.npmjs.com/package/foreach-prop) [![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/master/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop) [![Known Vulnerabilities](https://snyk.io/test/github/manferlo81/foreach-prop/badge.svg?targetFile=package.json)](https://snyk.io/test/github/manferlo81/foreach-prop?targetFile=package.json) [![GitHub](https://img.shields.io/github/license/manferlo81/foreach-prop.svg)](LICENSE)
+[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop) [![Greenkeeper badge](https://badges.greenkeeper.io/manferlo81/foreach-prop.svg)](https://greenkeeper.io/) [![npm](https://img.shields.io/npm/v/foreach-prop.svg)](https://www.npmjs.com/package/foreach-prop) [![dependencies Status](https://david-dm.org/manferlo81/foreach-prop/status.svg)](https://david-dm.org/manferlo81/foreach-prop) [![devDependencies Status](https://david-dm.org/manferlo81/foreach-prop/dev-status.svg)](https://david-dm.org/manferlo81/foreach-prop?type=dev) [![install size](https://packagephobia.now.sh/badge?p=foreach-prop)](https://packagephobia.now.sh/result?p=foreach-prop) [![npm bundle size](https://img.shields.io/bundlephobia/min/foreach-prop.svg)](https://bundlephobia.com/result?p=foreach-prop) [![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/master/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop) [![Known Vulnerabilities](https://snyk.io/test/github/manferlo81/foreach-prop/badge.svg?targetFile=package.json)](https://snyk.io/test/github/manferlo81/foreach-prop?targetFile=package.json) [![GitHub](https://img.shields.io/github/license/manferlo81/foreach-prop.svg)](LICENSE)
 
 Array-like methods for objects
 
 ## Install
 
+#### npm
+
 ```sh
 npm install foreach-prop
 ```
 
-*... or use it from [jsDelivr](https://www.jsdelivr.com/) cdn...*
+#### jsDelivr
+*[www.jsdelivr.com](https://www.jsdelivr.com/)*
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
 ```
 
-*... see [this link](https://www.jsdelivr.com/package/npm/foreach-prop) for more cdn options (specific/minified version, etc...)*
+*[more options on jsDelivr website...](https://www.jsdelivr.com/package/npm/foreach-prop)*
+
+#### UNPKG
+*[unpkg.com](https://unpkg.com)*
+
+```html
+<script src="https://unpkg.com/foreach-prop"></script>
+```
 
 ## Methods
 
