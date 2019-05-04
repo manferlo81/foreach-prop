@@ -2,7 +2,7 @@ import toArray from "args-to-arr";
 import hasOwn from "./has-own";
 import callItBack from "./call-it-back";
 
-function some(object, callback) {
+function every(object, callback) {
 
   const extra = toArray(arguments, 2);
 
@@ -19,4 +19,4 @@ function some(object, callback) {
 
 }
 
-export default some;
+export default every;
