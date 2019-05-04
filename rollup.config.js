@@ -14,6 +14,7 @@ const configs = [
   { file: browser, format: "umd", name: "eachProp", isBrowser: true },
 ].map(({ isBrowser, ...partial }) => {
 
+  /** @type { import("rollup").OutputOptions } */
   const output = {
     ...partial,
     sourcemap,
@@ -23,7 +24,8 @@ const configs = [
 
   const external = isBrowser ? [] : deps;
 
-  return {
+  /** @type { import("rollup").RollupOptions } */
+  const config = {
 
     input,
     output,
@@ -48,6 +50,8 @@ const configs = [
     ],
 
   };
+
+  return config;
 
 });
 
