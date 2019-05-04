@@ -1,5 +1,6 @@
 import toArray from "args-to-arr";
 import hasOwn from "./has-own";
+import callItBack from "./call-it-back";
 
 function forEach(object, callback) {
 
@@ -7,7 +8,7 @@ function forEach(object, callback) {
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      callback.call(this, object[key], key, ...extra);
+      callItBack(callback, this, object, key, extra);
     }
   }
 

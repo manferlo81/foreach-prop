@@ -1,5 +1,6 @@
 import toArray from "args-to-arr";
 import hasOwn from "./has-own";
+import callItBack from "./call-it-back";
 
 function filter(object, callback) {
 
@@ -8,9 +9,8 @@ function filter(object, callback) {
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      const value = object[key];
-      if (callback.call(this, value, key, ...extra)) {
-        result[key] = value;
+      if (callItBack(callback, this, object, key, extra)) {
+        result[key] = object[key];
       }
     }
   }
