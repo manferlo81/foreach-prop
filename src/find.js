@@ -8,9 +8,8 @@ function find(object, callback) {
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      const value = object[key];
       if (callItBack(callback, this, object, key, extra)) {
-        return value;
+        return object[key];
       }
     }
   }

@@ -5,7 +5,6 @@ import callItBack from "./call-it-back";
 function map(object, callback) {
 
   const extra = toArray(arguments, 2);
-
   const result = {};
 
   for (const key in object) {

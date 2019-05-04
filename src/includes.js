@@ -1,18 +1,7 @@
-import hasOwn from "./has-own";
+import keyOf from "./key-of";
 
 function includes(object, value) {
-
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key) &&
-      object[key] === value
-    ) {
-      return true;
-    }
-  }
-
-  return false;
-
+  return keyOf(object, value) !== null;
 }
 
 export default includes;
