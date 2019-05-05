@@ -16,7 +16,7 @@ npm install foreach-prop
 *[www.jsdelivr.com](https://www.jsdelivr.com/)*
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop@1/dist/each-prop.umd.js"></script>
 ```
 
 *[more options on jsDelivr website...](https://www.jsdelivr.com/package/npm/foreach-prop)*
@@ -25,7 +25,7 @@ npm install foreach-prop
 *[unpkg.com](https://unpkg.com)*
 
 ```html
-<script src="https://unpkg.com/foreach-prop"></script>
+<script src="https://unpkg.com/foreach-prop@1/dist/each-prop.umd.js"></script>
 ```
 
 ## Methods
