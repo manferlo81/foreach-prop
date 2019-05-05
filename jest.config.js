@@ -1,4 +1,4 @@
-const CI = process.env.CI;
+const CI = !!process.env.CI;
 
 module.exports = {
 
@@ -15,6 +15,6 @@ module.exports = {
     "text-summary",
   ],
 
-  verbose: true,
+  verbose: CI,
 
 };
