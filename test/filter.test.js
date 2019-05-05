@@ -64,7 +64,7 @@ describe("filter method", () => {
     const result = filter(object, () => true);
 
     expect(typeof result).toBe("object");
-    expect(result).toMatchObject(object);
+    expect(result).toEqual(object);
     expect(result).not.toBe(object);
 
   });
@@ -75,7 +75,7 @@ describe("filter method", () => {
       return val >= 2 && val <= 3;
     });
 
-    expect(result).toMatchObject({
+    expect(result).toEqual({
       b: 2,
       c: 3,
     });

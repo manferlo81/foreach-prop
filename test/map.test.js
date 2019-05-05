@@ -64,7 +64,7 @@ describe("map method", () => {
     });
 
     expect(typeof result).toBe("object");
-    expect(result).toMatchObject(object);
+    expect(result).toEqual(object);
     expect(result).not.toBe(object);
 
   });
@@ -75,7 +75,7 @@ describe("map method", () => {
       return val * 2;
     });
 
-    expect(Object.keys(result)).toMatchObject(keys);
+    expect(Object.keys(result)).toEqual(keys);
 
     keys.forEach((key) => {
       expect(result[key]).toBe(object[key] * 2);
