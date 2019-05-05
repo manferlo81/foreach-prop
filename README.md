@@ -74,6 +74,14 @@ keyOf(object, value): string | null;
 lastKeyOf(object, value): string | null;
 ```
 
+#### includes
+
+*similar to* `Array.prototype.includes`*. It returns whether or not a value is present in an object.*
+
+```typescript
+includes(object, value): boolean;
+```
+
 #### findKey
 
 *similar to* `Array.prototype.findIndex`*. It executes the provided callback function for every key-value-pair in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
@@ -136,6 +144,34 @@ reduce(object, function callback(current, value, key, ...extra) => any, initial,
 
 ```javascript
 reduce.call(thisArg, object, callback, initial, ...extra);
+```
+
+#### some
+
+*similar to* `Array.prototype.some`*. It returns whether at least one of the key-value-pairs satisfy the provided callback function.*
+
+```javascript
+some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
+```
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+
+```javascript
+some.call(thisrArg, object, callback, ...extra): boolean;
+```
+
+#### every
+
+*similar to* `Array.prototype.every`*. It returns whether all key-value-pairs satisfy the provided callback function.*
+
+```javascript
+every(object, function callback(value, key, ...extra) => any, ...extra): boolean;
+```
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+
+```javascript
+every.call(thisrArg, object, callback, ...extra): boolean;
 ```
 
 ## License
