@@ -11,11 +11,11 @@ describe("lastKeyOf method", () => {
 
   test("lastKeyOf should return the last found key", () => {
 
-    const keyOf1 = lastKeyOf(object, 1);
-    const keyOf2 = lastKeyOf(object, 2);
+    const keyOf1 = lastKeyOf(object, 2);
+    const keyOf2 = lastKeyOf(object, 3);
 
-    expect(keyOf1).toBe("a");
-    expect(keyOf2).toBe("d");
+    expect(keyOf1).toBe("d");
+    expect(keyOf2).toBe("c");
 
   });
 

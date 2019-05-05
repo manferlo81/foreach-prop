@@ -11,11 +11,11 @@ describe("keyOf method", () => {
 
   test("keyOf should return the first found key", () => {
 
-    const keyOf1 = keyOf(object, 1);
-    const keyOf2 = keyOf(object, 2);
+    const keyOf1 = keyOf(object, 2);
+    const keyOf2 = keyOf(object, 3);
 
-    expect(keyOf1).toBe("a");
-    expect(keyOf2).toBe("b");
+    expect(keyOf1).toBe("b");
+    expect(keyOf2).toBe("c");
 
   });
 

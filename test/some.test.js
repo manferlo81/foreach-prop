@@ -24,23 +24,7 @@ describe("some method", () => {
 
   });
 
-  test("some passes extra args", () => {
-
-    const callback = jest.fn();
-    const extra1 = {};
-    const extra2 = [];
-
-    some(object, callback, extra1, extra2);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
-    });
-
-  });
-
-  test("some passes this arg", () => {
+  test("some passes this argument to callback", () => {
 
     const thisArg = [];
 
@@ -55,6 +39,22 @@ describe("some method", () => {
 
     keys.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+    });
+
+  });
+
+  test("some passes extra arguments to callback", () => {
+
+    const callback = jest.fn();
+    const extra1 = {};
+    const extra2 = [];
+
+    some(object, callback, extra1, extra2);
+
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
     });
 
   });

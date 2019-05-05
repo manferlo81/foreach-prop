@@ -23,23 +23,7 @@ describe("find method", () => {
 
   });
 
-  test("find passes extra args", () => {
-
-    const callback = jest.fn();
-    const extra1 = {};
-    const extra2 = [];
-
-    find(object, callback, extra1, extra2);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
-    });
-
-  });
-
-  test("find passes this arg", () => {
+  test("find passes this argument to callback", () => {
 
     const thisArg = [];
     const callback = jest.fn(function () {
@@ -57,6 +41,22 @@ describe("find method", () => {
 
   });
 
+  test("find passes extra arguments to callback", () => {
+
+    const callback = jest.fn();
+    const extra1 = {};
+    const extra2 = [];
+
+    find(object, callback, extra1, extra2);
+
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
+    });
+
+  });
+
   test("find should return the found key", () => {
 
     const result = find(object, (val, key) => {
@@ -67,7 +67,7 @@ describe("find method", () => {
 
   });
 
-  test("find should return null if not found", () => {
+  test("find should return undefined if not found", () => {
 
     const result = find(object, (val, key) => {
       return key === "does-not-exist";

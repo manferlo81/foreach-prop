@@ -24,23 +24,7 @@ describe("filter method", () => {
 
   });
 
-  test("filter passes extra args", () => {
-
-    const callback = jest.fn();
-    const extra1 = {};
-    const extra2 = [];
-
-    filter(object, callback, extra1, extra2);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
-    });
-
-  });
-
-  test("filter passes this arg", () => {
+  test("filter passes this argument to callback", () => {
 
     const thisArg = [];
 
@@ -59,13 +43,37 @@ describe("filter method", () => {
 
   });
 
+  test("filter passes extra arguments to callback", () => {
+
+    const callback = jest.fn();
+    const extra1 = {};
+    const extra2 = [];
+
+    filter(object, callback, extra1, extra2);
+
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
+    });
+
+  });
+
   test("filter should return a new object", () => {
+
+    const result = filter(object, () => true);
+
+    expect(typeof result).toBe("object");
+    expect(result).toMatchObject(object);
+    expect(result).not.toBe(object);
+
+  });
+
+  test("filter should return a filtered object", () => {
 
     const result = filter(object, (val) => {
       return val >= 2 && val <= 3;
     });
-
-    expect(typeof result).toBe("object");
 
     expect(result).toMatchObject({
       b: 2,

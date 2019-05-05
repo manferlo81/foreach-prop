@@ -23,23 +23,7 @@ describe("findKey method", () => {
 
   });
 
-  test("findKey passes extra args", () => {
-
-    const callback = jest.fn();
-    const extra1 = {};
-    const extra2 = [];
-
-    findKey(object, callback, extra1, extra2);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
-    });
-
-  });
-
-  test("findKey passes this arg", () => {
+  test("findKey passes this argument to callback", () => {
 
     const thisArg = [];
     const callback = jest.fn(function () {
@@ -54,6 +38,22 @@ describe("findKey method", () => {
 
     keys.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+    });
+
+  });
+
+  test("findKey passes extra arguments to callback", () => {
+
+    const callback = jest.fn();
+    const extra1 = {};
+    const extra2 = [];
+
+    findKey(object, callback, extra1, extra2);
+
+    expect(callback).toHaveBeenCalledTimes(keys.length);
+
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
     });
 
   });

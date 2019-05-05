@@ -11,7 +11,7 @@ describe("includes method", () => {
 
   test("includes should return true if found", () => {
 
-    const result = includes(object, 1);
+    const result = includes(object, 3);
 
     expect(result).toBe(true);
 
