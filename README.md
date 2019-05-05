@@ -38,7 +38,7 @@ npm install foreach-prop
 forEach(object, function callback(value, key, ...extra) => void, ...extra): void;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 forEach.call(thisArg, object, callback, ...extra);
@@ -52,7 +52,7 @@ forEach.call(thisArg, object, callback, ...extra);
 map(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 map.call(thisArg, object, callback, ...extra);
@@ -90,7 +90,7 @@ includes(object, value): boolean;
 findKey(object, function callback(value, key, ...extra) => any, ...extra): string | null;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 findKey.call(thisArg, object, callback, ...extra);
@@ -112,7 +112,7 @@ const value = find({ something }, (val, key) => (key === "something"));
 console.log(value); // it logs undefined because something is undefined
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 find.call(thisArg, object, callback, ...extra);
@@ -126,7 +126,7 @@ find.call(thisArg, object, callback, ...extra);
 filter(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 filter.call(thisArg, object, callback, ...extra);
@@ -140,7 +140,7 @@ filter.call(thisArg, object, callback, ...extra);
 reduce(object, function callback(current, value, key, ...extra) => any, initial, ...extra): any;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 reduce.call(thisArg, object, callback, initial, ...extra);
@@ -154,7 +154,7 @@ reduce.call(thisArg, object, callback, initial, ...extra);
 some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 some.call(thisrArg, object, callback, ...extra): boolean;
@@ -168,7 +168,7 @@ some.call(thisrArg, object, callback, ...extra): boolean;
 every(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
 
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*...*
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
 every.call(thisrArg, object, callback, ...extra): boolean;
