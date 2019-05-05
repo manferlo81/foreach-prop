@@ -1,6 +1,6 @@
 {
   "name": "foreach-prop",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Array-like methods for objects",
   "main": "dist/each-prop.cjs.js",
   "module": "dist/each-prop.es.js",
