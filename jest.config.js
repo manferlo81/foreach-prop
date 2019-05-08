@@ -1,12 +1,14 @@
+const { main } = require("./package.json");
 const CI = !!process.env.CI;
 
 module.exports = {
 
   testEnvironment: "node",
+  browser: false,
 
   collectCoverage: true,
   collectCoverageFrom: [
-    "dist/**",
+    main,
   ],
   coverageDirectory: "coverage",
   coverageReporters: [

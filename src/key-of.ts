@@ -1,6 +1,6 @@
 import hasOwn from "./has-own";
 
-function keyOf(object, value) {
+function keyOf<K extends keyof any, V>(object: Record<K, V>, value: V): K | null {
 
   for (const key in object) {
     if (

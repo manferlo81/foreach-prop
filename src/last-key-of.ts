@@ -1,6 +1,6 @@
 import hasOwn from "./has-own";
 
-function lastKeyOf(object, value) {
+function lastKeyOf<K extends keyof any, V>(object: Record<K, V>, value: V): K | null {
 
   let result = null;
 

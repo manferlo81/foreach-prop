@@ -1,8 +1,17 @@
 import toArray from "args-to-arr";
 import hasOwn from "./has-own";
 import callItBack from "./call-it-back";
+import { FilterCallback } from "./types";
 
-function every(object, callback) {
+function every<K extends keyof any, V, E extends any[]>(
+  object: Record<K, V>,
+  callback: FilterCallback<K, V, E>,
+  ...extra: E
+): boolean;
+function every<K extends keyof any, V, E extends any[]>(
+  object: Record<K, V>,
+  callback: FilterCallback<K, V, E>
+): boolean {
 
   const extra = toArray(arguments, 2);
 

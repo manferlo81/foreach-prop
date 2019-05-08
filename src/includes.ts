@@ -1,6 +1,6 @@
 import keyOf from "./key-of";
 
-function includes(object, value) {
+function includes<K extends keyof any, V>(object: Record<K, V>, value: V): boolean {
   return keyOf(object, value) !== null;
 }
 
