@@ -2,6 +2,7 @@ import buble from "rollup-plugin-buble";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { ts, dts } from "rollup-plugin-dts";
+import removeEmptyLines from "./plugins/remove-empty-lines";
 
 import { main, module as esModule, browser, types, dependencies } from "./package.json";
 
@@ -33,6 +34,8 @@ const configs = [
       commonjs(),
 
       dts({ banner: false }),
+
+      removeEmptyLines(),
 
     ]
     : [
