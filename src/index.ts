@@ -9,3 +9,4 @@ export { default as filter } from "./filter";
 export { default as reduce } from "./reduce";
 export { default as some } from "./some";
 export { default as every } from "./every";
+export * from "./types";

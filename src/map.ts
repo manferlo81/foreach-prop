@@ -1,22 +1,22 @@
 import toArray from "args-to-arr";
 import callItBack from "./call-it-back";
 import hasOwn from "./has-own";
-import { MapCallback } from "./types";
+import { Key, MapCallback } from "./types";
 
-function map<K extends keyof any, V, E extends any[], N = any>(
-  this: any,
+function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
+  this: TH,
   object: Record<K, V>,
-  callback: MapCallback<K, V, E, N>,
+  callback: MapCallback<K, V, E, TH, RV>,
   ...extra: E
-): Record<K, N>;
-function map<K extends keyof any, V, E extends any[], N = any>(
-  this: any,
+): Record<K, RV>;
+function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
+  this: TH,
   object: Record<K, V>,
-  callback: MapCallback<K, V, E, N>,
-): Record<K, N> {
+  callback: MapCallback<K, V, E, TH, RV>,
+): Record<K, RV> {
 
   const extra = toArray(arguments, 2);
-  const result: Record<keyof any, N> = {};
+  const result: Record<Key, RV> = {};
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {

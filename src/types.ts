@@ -1,46 +1,39 @@
-export type EachPropCallback<
-  K extends keyof any,
-  V,
-  E extends any[],
-  TH = any> = (
-    this: TH,
-    value: V,
-    key: K,
-    ...extra: E
-  ) => void;
+export type Key = keyof any;
+export type Extra = any[];
 
 export type MapCallback<
-  K extends keyof any,
+  K extends Key,
   V,
-  E extends any[],
-  N = any,
-  TH = any> = (
+  E extends Extra,
+  TH = any,
+  R = any> = (
     this: TH,
     value: V,
     key: K,
     ...extra: E
-  ) => N;
-
-export type FilterCallback<
-  K extends keyof any,
-  V,
-  E extends any[],
-  TH = any> = (
-    this: TH,
-    value: V,
-    key: K,
-    ...extra: E
-  ) => any;
+  ) => R;
 
 export type ReduceCallback<
-  K extends keyof any,
+  K extends Key,
   V,
-  E extends any[],
-  T = any,
+  E extends Extra,
+  R = any,
   TH = any> = (
     this: TH,
-    prev: T,
+    prev: R,
     value: V,
     key: K,
     ...extra: E
-  ) => T;
+  ) => R;
+
+export type ForEachCallback<
+  K extends Key,
+  V,
+  E extends Extra,
+  TH = any> = MapCallback<K, V, E, TH, void>;
+
+export type FilterCallback<
+  K extends Key,
+  V,
+  E extends Extra,
+  TH = any> = MapCallback<K, V, E, TH, any>;

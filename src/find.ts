@@ -3,16 +3,16 @@ import callItBack from "./call-it-back";
 import hasOwn from "./has-own";
 import { FilterCallback } from "./types";
 
-function find<K extends keyof any, V, E extends any[]>(
-  this: any,
+function find<K extends keyof any, V, E extends any[], TH = any>(
+  this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E>,
+  callback: FilterCallback<K, V, E, TH>,
   ...extra: E
 ): V | void;
-function find<K extends keyof any, V, E extends any[]>(
-  this: any,
+function find<K extends keyof any, V, E extends any[], TH = any>(
+  this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E>,
+  callback: FilterCallback<K, V, E, TH>,
 ): V | void {
 
   const extra = toArray(arguments, 2);
