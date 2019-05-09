@@ -137,13 +137,13 @@ filter.call(thisArg, object, callback, ...extra);
 *similar to* `Array.prototype.reduce` *but with a major difference: if no initial value provided it defaults to* `undefined`*.*
 
 ```typescript
-reduce(object, function callback(current, value, key, ...extra) => any, initial, ...extra): any;
+reduce(object, function callback(current, value, key, ...extra) => any, initial?, ...extra): any;
 ```
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
-reduce.call(thisArg, object, callback, initial, ...extra);
+reduce.call(thisArg, object, callback, initial?, ...extra);
 ```
 
 #### some
