@@ -1,1 +1,1 @@
-export default Object.prototype.hasOwnProperty as (key: string) => boolean;
+export default Object.prototype.hasOwnProperty;
