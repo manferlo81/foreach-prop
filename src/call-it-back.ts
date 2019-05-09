@@ -5,13 +5,13 @@ function callItBack<K extends keyof any, V, E extends any[]>(
   thisArg: any,
   object: Record<K, V>,
   key: K,
-  extra: E
+  extra: E,
 ): any {
-  return callback.call(
+  return callback.call<any, any, any>(
     thisArg,
     object[key],
     key,
-    ...extra
+    ...extra,
   );
 }
 

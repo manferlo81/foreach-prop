@@ -1,16 +1,18 @@
 import toArray from "args-to-arr";
-import hasOwn from "./has-own";
 import callItBack from "./call-it-back";
+import hasOwn from "./has-own";
 import { FilterCallback } from "./types";
 
 function findKey<K extends keyof any, V, E extends any[]>(
+  this: any,
   object: Record<K, V>,
   callback: FilterCallback<K, V, E>,
   ...extra: E
 ): K | null;
 function findKey<K extends keyof any, V, E extends any[]>(
+  this: any,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E>
+  callback: FilterCallback<K, V, E>,
 ): K | null {
 
   const extra = toArray(arguments, 2);
@@ -18,7 +20,7 @@ function findKey<K extends keyof any, V, E extends any[]>(
   for (const key in object) {
     if (
       hasOwn.call(object, key) &&
-      callItBack(callback, this, object, key, extra)
+      callItBack(callback, this, object, key, extra as E)
     ) {
       return key;
     }

@@ -3,15 +3,17 @@ import hasOwn from "./has-own";
 import { ReduceCallback } from "./types";
 
 function reduce<K extends keyof any, V, E extends any[], T = any>(
+  this: any,
   object: Record<K, V>,
   callback: ReduceCallback<K, V, E, T>,
   initial: T,
   ...extra: E
 ): T;
 function reduce<K extends keyof any, V, E extends any[], T = any>(
+  this: any,
   object: Record<K, V>,
   callback: ReduceCallback<K, V, E, T>,
-  initial: T
+  initial: T,
 ): T {
 
   const extra = toArray(arguments, 3);
@@ -19,7 +21,7 @@ function reduce<K extends keyof any, V, E extends any[], T = any>(
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result = callback.call(this, result, object[key], key, ...extra);
+      result = callback.call<any, any, T>(this, result, object[key], key, ...extra);
     }
   }
 
