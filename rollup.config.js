@@ -3,6 +3,7 @@ import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
 import { ts, dts } from "rollup-plugin-dts";
 import removeEmptyLines from "./plugins/remove-empty-lines";
+import unexport from "./plugins/unexport";
 
 import { main, module as esModule, browser, types, dependencies } from "./package.json";
 
@@ -36,6 +37,7 @@ const configs = [
       dts({ banner: false }),
 
       removeEmptyLines(),
+      unexport("Key", "Extra"),
 
     ]
     : [
