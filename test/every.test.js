@@ -1,16 +1,9 @@
 const { every } = require("..");
+const { object, keys, Obj, own, proto } = require("./constants");
 
 describe("every method", () => {
 
-  const object = {
-    a: 1,
-    b: 2,
-    c: 3,
-    d: 4,
-  };
-  const keys = Object.keys(object);
-
-  test("every enumerates properly", () => {
+  test("should iterate properly", () => {
 
     const callback = jest.fn(() => true);
 
@@ -24,27 +17,33 @@ describe("every method", () => {
 
   });
 
-  test("every passes this argument to callback", () => {
+  test("should skip prototype properties", () => {
 
-    const thisArg = [];
+    const instance = new Obj();
+    const callback = jest.fn(() => true);
 
-    const callback = jest.fn(function () {
-      expect(this).toBe(thisArg);
-      return true;
-    });
+    every(instance, callback);
 
-    every.call(thisArg, object, callback);
-
-    expect(keys.length).toBeGreaterThan(0);
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+    expect(callback).toHaveBeenCalledTimes(own.length);
+    expect(callback).not.toHaveBeenCalledWith(expect.any(Function), proto);
+    own.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, instance[key], key);
     });
 
   });
 
-  test("every passes extra arguments to callback", () => {
+  test("should pass this argument to callback", () => {
+
+    const thisArg = [];
+
+    every.call(thisArg, object, function () {
+      expect(this).toBe(thisArg);
+      return true;
+    });
+
+  });
+
+  test("should pass extra arguments to callback", () => {
 
     const callback = jest.fn(() => true);
     const extra1 = {};
@@ -53,14 +52,16 @@ describe("every method", () => {
     every(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key, extra1, extra2);
-    });
+    expect(callback).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(String),
+      extra1,
+      extra2,
+    );
 
   });
 
-  test("every should return true if all match", () => {
+  test("should return true if all match", () => {
 
     const result = every(object, (val) => {
       return val > 0;
@@ -70,7 +71,7 @@ describe("every method", () => {
 
   });
 
-  test("every should return false if some match", () => {
+  test("should return false if some match", () => {
 
     const result = every(object, (val) => {
       return val > 1;
@@ -80,7 +81,7 @@ describe("every method", () => {
 
   });
 
-  test("every should return false if no match", () => {
+  test("should return false if no match", () => {
 
     const result = every(object, (val) => {
       return val > 10;

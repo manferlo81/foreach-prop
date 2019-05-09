@@ -1,15 +1,9 @@
 const { keyOf } = require("..");
+const { object } = require("./constants");
 
 describe("keyOf method", () => {
 
-  const object = {
-    a: 1,
-    b: 2,
-    c: 3,
-    d: 2,
-  };
-
-  test("keyOf should return the first found key", () => {
+  test("should return the first found key", () => {
 
     const keyOf1 = keyOf(object, 2);
     const keyOf2 = keyOf(object, 3);
@@ -19,7 +13,7 @@ describe("keyOf method", () => {
 
   });
 
-  test("keyOf should return null if not found", () => {
+  test("should return null if not found", () => {
 
     const result = keyOf(object, "does-not-exist");
 

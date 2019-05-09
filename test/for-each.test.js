@@ -51,7 +51,12 @@ describe("forEach method", () => {
     forEach(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
-    expect(callback).toHaveBeenCalledWith(expect.anything(), expect.any(String), extra1, extra2);
+    expect(callback).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(String),
+      extra1,
+      extra2,
+    );
 
   });
 
