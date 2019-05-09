@@ -1,3 +1,8 @@
+# 1.1.x
+
+* build using typescript
+* bug fixes
+
 # 1.0.x
 
 * first official release
