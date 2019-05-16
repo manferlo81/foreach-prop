@@ -1,64 +1,63 @@
+import { dirname } from "path";
+import typescript from "typescript";
+
 import buble from "rollup-plugin-buble";
 import resolve from "rollup-plugin-node-resolve";
 import commonjs from "rollup-plugin-commonjs";
-import { ts, dts } from "rollup-plugin-dts";
-import removeEmptyLines from "./plugins/remove-empty-lines";
-import unexport from "./plugins/unexport";
+import ts from "rollup-plugin-typescript2";
 
 import { main, module as esModule, browser, types, dependencies } from "./package.json";
 
 const input = "src/index.ts";
 const sourcemap = true;
 const deps = Object.keys(dependencies);
+const typesDir = dirname(types);
 
 const configs = [
   { file: main, format: "cjs" },
-  { file: esModule, format: "es" },
+  { file: esModule, format: "es", typesDir },
   { file: browser, format: "umd", name: "eachProp", isBrowser: true },
-  { file: types, format: "es", types: true },
-].map(({ isBrowser, types, ...partial }) => {
+].map(({ isBrowser, typesDir, ...partial }) => {
 
   /** @type { import("rollup").OutputOptions } */
   const output = {
     ...partial,
-    sourcemap: !types && sourcemap,
+    sourcemap,
     esModule: false,
     interop: false,
   };
 
   const external = isBrowser ? [] : deps;
 
-  const plugins = types
-    ? [
+  const plugins = [
 
-      resolve(),
-      commonjs(),
+    resolve(),
+    commonjs(),
 
-      dts({ banner: false }),
-
-      removeEmptyLines(),
-      unexport("Key", "Extra"),
-
-    ]
-    : [
-
-      resolve(),
-      commonjs(),
-
-      ts({ banner: false }),
-
-      buble({
-        target: {
-          node: 0.12,
-          ie: 8,
-          chrome: 48,
-          firefox: 43,
-          safari: 8,
-          edge: 12,
+    ts({
+      cacheRoot: ".cache/rpt2",
+      typescript,
+      useTsconfigDeclarationDir: true,
+      tsconfigOverride: {
+        compilerOptions: {
+          declaration: !!typesDir,
+          declarationDir: typesDir,
         },
-      }),
+      },
+    }),
 
-    ];
+    buble({
+      target: {
+        node: 0.12,
+        ie: 8,
+        chrome: 48,
+        firefox: 43,
+        safari: 8,
+        edge: 12,
+      },
+    }),
+
+  ];
 
   /** @type { import("rollup").RollupOptions } */
   const config = {
