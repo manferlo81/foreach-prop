@@ -1,9 +1,11 @@
 const { lastKeyOf } = require("..");
-const { object } = require("./constants");
+const { Obj, protoPropName } = require("./vintage-class");
 
 describe("lastKeyOf method", () => {
 
   test("should return the last found key", () => {
+
+    const object = { a: 1, b: 2, c: 3, d: 2 };
 
     const keyOf1 = lastKeyOf(object, 2);
     const keyOf2 = lastKeyOf(object, 3);
@@ -15,10 +17,25 @@ describe("lastKeyOf method", () => {
 
   test("should return null if not found", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+
     const result = lastKeyOf(object, "does-not-exist");
 
     expect(result).toBeNull();
 
   });
+
+  test("should return null if not own property", () => {
+
+    const object = new Obj();
+
+    const result = lastKeyOf(object, object[protoPropName]);
+
+    expect(object).toHaveProperty(protoPropName);
+    expect(object[protoPropName]).toBeDefined();
+    expect(result).toBeNull();
+
+  });
+
 
 });

@@ -1,10 +1,12 @@
 const { find } = require("..");
-const { object, keys, Obj, own, proto } = require("./constants");
+const { Obj, ownProps, protoProps } = require("./vintage-class");
 
 describe("find method", () => {
 
   test("should iterate properly", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const keys = Object.keys(object);
     const callback = jest.fn();
 
     find(object, callback);
@@ -12,7 +14,11 @@ describe("find method", () => {
     expect(callback).toHaveBeenCalledTimes(keys.length);
 
     keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key],
+        key,
+      );
     });
 
   });
@@ -24,10 +30,19 @@ describe("find method", () => {
 
     find(instance, callback);
 
-    expect(callback).toHaveBeenCalledTimes(own.length);
-    expect(callback).not.toHaveBeenCalledWith(expect.any(Function), proto);
-    own.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, instance[key], key);
+    expect(callback).toHaveBeenCalledTimes(ownProps.length);
+    protoProps.forEach((key) => {
+      expect(callback).not.toHaveBeenCalledWith(
+        expect.anything(),
+        key
+      );
+    });
+    ownProps.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        instance[key],
+        key
+      );
     });
 
   });
@@ -35,15 +50,22 @@ describe("find method", () => {
   test("should pass this argument to callback", () => {
 
     const thisArg = [];
-
-    find.call(thisArg, object, function () {
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const count = Object.keys(object).length;
+    const callback = jest.fn(function () {
       expect(this).toBe(thisArg);
     });
+
+    find.call(thisArg, object, callback);
+
+    expect(callback).toHaveBeenCalledTimes(count);
 
   });
 
   test("should pass extra arguments to callback", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const keys = Object.keys(object);
     const callback = jest.fn();
     const extra1 = {};
     const extra2 = [];
@@ -51,28 +73,34 @@ describe("find method", () => {
     find(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
-    expect(callback).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.any(String),
-      extra1,
-      extra2,
-    );
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key],
+        key,
+        extra1,
+        extra2,
+      );
+    });
 
   });
 
   test("should return the found value", () => {
 
-    const expectedValue = 2;
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const expectedResult = object.b;
 
     const result = find(object, (val) => {
-      return val === expectedValue;
+      return val === expectedResult;
     });
 
-    expect(result).toBe(expectedValue);
+    expect(result).toBe(expectedResult);
 
   });
 
   test("should return undefined if not found", () => {
+
+    const object = { a: 1, b: 2, c: 3, d: 2 };
 
     const result = find(object, (val) => {
       return val === "does-not-exist";

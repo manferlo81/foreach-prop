@@ -1,10 +1,12 @@
 const { some } = require("..");
-const { object, keys, Obj, own, proto } = require("./constants");
+const { Obj, ownProps, protoProps } = require("./vintage-class");
 
 describe("some method", () => {
 
   test("should iterate properly", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const keys = Object.keys(object);
     const callback = jest.fn();
 
     some(object, callback);
@@ -24,10 +26,19 @@ describe("some method", () => {
 
     some(instance, callback);
 
-    expect(callback).toHaveBeenCalledTimes(own.length);
-    expect(callback).not.toHaveBeenCalledWith(expect.any(Function), proto);
-    own.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, instance[key], key);
+    expect(callback).toHaveBeenCalledTimes(ownProps.length);
+    protoProps.forEach((key) => {
+      expect(callback).not.toHaveBeenCalledWith(
+        expect.anything(),
+        key,
+      );
+    });
+    ownProps.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        instance[key],
+        key,
+      );
     });
 
   });
@@ -35,15 +46,22 @@ describe("some method", () => {
   test("should pass this argument to callback", () => {
 
     const thisArg = [];
-
-    some.call(thisArg, object, function () {
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const count = Object.keys(object).length;
+    const callback = jest.fn(function () {
       expect(this).toBe(thisArg);
     });
+
+    some.call(thisArg, object, callback);
+
+    expect(callback).toHaveBeenCalledTimes(count);
 
   });
 
   test("should pass extra arguments to callback", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const keys = Object.keys(object);
     const callback = jest.fn();
     const extra1 = {};
     const extra2 = [];
@@ -51,19 +69,24 @@ describe("some method", () => {
     some(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
-    expect(callback).toHaveBeenCalledWith(
-      expect.anything(),
-      expect.any(String),
-      extra1,
-      extra2,
-    );
+    keys.forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key],
+        key,
+        extra1,
+        extra2,
+      );
+    });
 
   });
 
   test("should return true if any match", () => {
 
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+
     const result = some(object, (val) => {
-      return val == 2;
+      return val === 2;
     });
 
     expect(result).toBe(true);
@@ -71,6 +94,8 @@ describe("some method", () => {
   });
 
   test("should return false if no match", () => {
+
+    const object = { a: 1, b: 2, c: 3, d: 2 };
 
     const result = some(object, (val) => {
       return val > 10;
