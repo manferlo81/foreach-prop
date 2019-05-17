@@ -6,6 +6,10 @@
   "module": "dist/each-prop.es.js",
   "browser": "dist/each-prop.umd.js",
   "types": "types/index.d.ts",
+  "bundlib": {
+    "umd": "dist/each-prop.umd.js",
+    "name": "eachProp"
+  },
   "keywords": [
     "for-in",
     "for-each",
@@ -26,8 +30,8 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "clean": "rm -rf dist types coverage",
-    "dev": "rollup -cw",
-    "build": "npm run lint && rollup -c",
+    "dev": "bundlib -dw",
+    "build": "npm run lint && bundlib -d",
     "test": "jest --colors",
     "preversion": "npm run clean && npm run build && npm test"
   },
