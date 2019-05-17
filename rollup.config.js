@@ -40,6 +40,7 @@ const configs = [
       useTsconfigDeclarationDir: true,
       tsconfigOverride: {
         compilerOptions: {
+          sourceMap: sourcemap,
           declaration: !!typesDir,
           declarationDir: typesDir,
         },
