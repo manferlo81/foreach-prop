@@ -7,7 +7,6 @@
   "browser": "dist/each-prop.umd.js",
   "types": "types/index.d.ts",
   "bundlib": {
-    "umd": "dist/each-prop.umd.js",
     "name": "eachProp"
   },
   "keywords": [
