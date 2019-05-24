@@ -176,4 +176,4 @@ every.call(thisrArg, object, callback, ...extra): boolean;
 
 ## License
 
-[MIT License](LICENSE)
+[MIT](LICENSE) &copy; Manuel Fernández
