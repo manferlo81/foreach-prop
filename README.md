@@ -4,19 +4,23 @@
 
 Array-like methods for objects
 
+> :warning: *some javascript implementations don't respect the object key order.*
+
 ## Install
 
 #### npm
 
 ```sh
-npm install foreach-prop
+npm i foreach-prop
 ```
+
+## CDN
 
 #### jsDelivr
 *[www.jsdelivr.com](https://www.jsdelivr.com/)*
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop@1/dist/each-prop.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
 ```
 
 *[more options on jsDelivr website...](https://www.jsdelivr.com/package/npm/foreach-prop)*
@@ -38,6 +42,8 @@ npm install foreach-prop
 forEach(object, function callback(value, key, ...extra) => void, ...extra): void;
 ```
 
+*Any* `extra` *arguments will be passed to the callback function.*
+
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
@@ -51,6 +57,8 @@ forEach.call(thisArg, object, callback, ...extra);
 ```typescript
 map(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
+
+*Any* `extra` *arguments will be passed to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -90,6 +98,8 @@ includes(object, value): boolean;
 findKey(object, function callback(value, key, ...extra) => any, ...extra): string | null;
 ```
 
+*Any* `extra` *arguments will be passed to the callback function.*
+
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
@@ -112,6 +122,8 @@ const value = find({ something }, (val, key) => (key === "something"));
 console.log(value); // it logs undefined because something is undefined
 ```
 
+*Any* `extra` *arguments will be passed to the callback function.*
+
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
@@ -125,6 +137,8 @@ find.call(thisArg, object, callback, ...extra);
 ```typescript
 filter(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
+
+*Any* `extra` *arguments will be passed to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -140,6 +154,8 @@ filter.call(thisArg, object, callback, ...extra);
 reduce(object, function callback(current, value, key, ...extra) => any, initial?, ...extra): any;
 ```
 
+*Any* `extra` *arguments will be passed to the callback function.*
+
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
@@ -154,6 +170,8 @@ reduce.call(thisArg, object, callback, initial?, ...extra);
 some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
 
+*Any* `extra` *arguments will be passed to the callback function.*
+
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
@@ -167,6 +185,8 @@ some.call(thisrArg, object, callback, ...extra): boolean;
 ```javascript
 every(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
+
+*Any* `extra` *arguments will be passed to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
