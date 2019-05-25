@@ -1,5 +1,6 @@
 # 1.1.6
 
+* dependencies updated
 * improved documentation
 * added jsDelivr badge
 * added types badge
