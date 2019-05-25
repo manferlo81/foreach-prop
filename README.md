@@ -8,28 +8,58 @@ Array-like methods for objects
 
 ## Install
 
-#### npm
-
-```sh
+```bash
 npm i foreach-prop
 ```
 
 ## CDN
 
 #### jsDelivr
+
 *[www.jsdelivr.com](https://www.jsdelivr.com/)*
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
 ```
 
+##### for production
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.min.js"></script>
+```
+
 *[more options on jsDelivr website...](https://www.jsdelivr.com/package/npm/foreach-prop)*
 
-#### UNPKG
+#### unpkg
+
 *[unpkg.com](https://unpkg.com)*
 
 ```html
-<script src="https://unpkg.com/foreach-prop@1/dist/each-prop.umd.js"></script>
+<script src="https://unpkg.com/foreach-prop/dist/each-prop.umd.js"></script>
+```
+
+## Usage
+
+```javascript
+import { map } from "foreach-prop";
+
+const object = {
+  key1: "str",
+  key2: 1,
+};
+
+const result = map(object, (value, key, extra1) => {
+  return key + extra1;
+}, " $$");
+
+console.log(result);
+```
+
+```console
+{
+  key1: "key1 $$",
+  key2: "key2 $$",
+}
 ```
 
 ## Methods
