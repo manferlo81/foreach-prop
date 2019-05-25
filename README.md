@@ -64,7 +64,7 @@ console.log(result);
 
 ## Methods
 
-#### forEach
+### forEach
 
 *similar to* `Array.prototype.forEach`*. It executes the provided callback function for every key-value-pair in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
 
@@ -80,7 +80,7 @@ forEach(object, function callback(value, key, ...extra) => void, ...extra): void
 forEach.call(thisArg, object, callback, ...extra);
 ```
 
-#### map
+### map
 
 *similar to* `Array.prototype.map`*. It executes the provided callback function for every key-value-pair in the object and returns a new object.*
 
@@ -96,7 +96,7 @@ map(object, function callback(value, key, ...extra) => any, ...extra): object;
 map.call(thisArg, object, callback, ...extra);
 ```
 
-#### keyOf
+### keyOf
 
 *similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one, or* `null` *if not found.*
 
@@ -104,7 +104,7 @@ map.call(thisArg, object, callback, ...extra);
 keyOf(object, value): string | null;
 ```
 
-#### lastKeyOf
+### lastKeyOf
 
 *similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one, or* `null` *if not found.*
 
@@ -112,7 +112,7 @@ keyOf(object, value): string | null;
 lastKeyOf(object, value): string | null;
 ```
 
-#### includes
+### includes
 
 *similar to* `Array.prototype.includes`*. It returns whether or not a value is present in an object.*
 
@@ -120,7 +120,7 @@ lastKeyOf(object, value): string | null;
 includes(object, value): boolean;
 ```
 
-#### findKey
+### findKey
 
 *similar to* `Array.prototype.findIndex`*. It executes the provided callback function for every key-value-pair in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
 
@@ -136,7 +136,7 @@ findKey(object, function callback(value, key, ...extra) => any, ...extra): strin
 findKey.call(thisArg, object, callback, ...extra);
 ```
 
-#### find
+### find
 
 *similar to* `Array.prototype.find`*. It executes the provided callback function for every key-value-pair in the object and returns the value once the provided callback function return a truthy value. It returns* `undefined` *if nothing found.*
 
@@ -162,7 +162,7 @@ console.log(value); // it logs undefined because something is undefined
 find.call(thisArg, object, callback, ...extra);
 ```
 
-#### filter
+### filter
 
 *similar to* `Array.prototype.filter`*. It executes the provided callback function for every key-value-pair in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
 
@@ -178,7 +178,7 @@ filter(object, function callback(value, key, ...extra) => any, ...extra): object
 filter.call(thisArg, object, callback, ...extra);
 ```
 
-#### reduce
+### reduce
 
 *similar to* `Array.prototype.reduce` *but with a major difference: if no initial value provided it defaults to* `undefined`*.*
 
@@ -194,7 +194,7 @@ reduce(object, function callback(current, value, key, ...extra) => any, initial?
 reduce.call(thisArg, object, callback, initial?, ...extra);
 ```
 
-#### some
+### some
 
 *similar to* `Array.prototype.some`*. It returns whether at least one of the key-value-pairs satisfy the provided callback function.*
 
@@ -210,7 +210,7 @@ some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 some.call(thisrArg, object, callback, ...extra): boolean;
 ```
 
-#### every
+### every
 
 *similar to* `Array.prototype.every`*. It returns whether all key-value-pairs satisfy the provided callback function.*
 
