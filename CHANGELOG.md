@@ -1,3 +1,7 @@
+# 1.1.8
+
+* improved documentation
+
 # 1.1.7
 
 * improved jest config

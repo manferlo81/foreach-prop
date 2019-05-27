@@ -14,7 +14,7 @@ npm i foreach-prop
 
 ## CDN
 
-#### jsDelivr
+### jsDelivr
 
 *[www.jsdelivr.com](https://www.jsdelivr.com/)*
 
@@ -30,7 +30,7 @@ npm i foreach-prop
 
 *[more options...](https://www.jsdelivr.com/package/npm/foreach-prop)*
 
-#### unpkg
+### unpkg
 
 *[unpkg.com](https://unpkg.com)*
 
