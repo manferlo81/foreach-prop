@@ -6,6 +6,8 @@ module.exports = {
   testEnvironment: "node",
   browser: false,
 
+  cacheDirectory: ".cache/jest",
+
   collectCoverage: true,
   collectCoverageFrom: [
     main,
