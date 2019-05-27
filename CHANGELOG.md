@@ -1,5 +1,6 @@
 # 1.1.7
 
+* improved jest config
 * dependencies updated
 * improved documentation
 
