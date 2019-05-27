@@ -4,7 +4,7 @@
 
 Array-like methods for objects
 
-> :warning: *some javascript implementations don't respect the object key order.*
+> :warning: *some javascript implementations don't respect the object key order. keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
 
 ## Install
 
@@ -28,7 +28,7 @@ npm i foreach-prop
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.min.js"></script>
 ```
 
-*[more options on jsDelivr website...](https://www.jsdelivr.com/package/npm/foreach-prop)*
+*[more options...](https://www.jsdelivr.com/package/npm/foreach-prop)*
 
 #### unpkg
 
@@ -37,6 +37,8 @@ npm i foreach-prop
 ```html
 <script src="https://unpkg.com/foreach-prop/dist/each-prop.umd.js"></script>
 ```
+
+*[more options...](https://unpkg.com/foreach-prop/)*
 
 ## Usage
 
