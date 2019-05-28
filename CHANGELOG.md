@@ -1,3 +1,7 @@
+# 1.1.9
+
+* installed `typescript` locally
+
 # 1.1.8
 
 * improved documentation
