@@ -29,6 +29,6 @@ module.exports = {
     },
   },
 
-  verbose: CI,
+  verbose: true,
 
 };
