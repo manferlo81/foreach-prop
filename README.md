@@ -4,7 +4,7 @@
 
 Array-like methods for objects
 
-> :warning: *some javascript implementations don't respect the object key order. keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
+> :warning: *Some javascript implementations don't respect the object key order. Keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
 
 ## Install
 
