@@ -35,7 +35,7 @@
     "preversion": "npm run clean && npm run build && npm test"
   },
   "dependencies": {
-    "args-to-arr": "^1.3.6"
+    "args-to-arr": "^1.3.7"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
@@ -43,7 +43,7 @@
     "eslint": "^5.16.0",
     "jest": "^24.8.0",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.1"
   },
   "author": "Manuel Fernandez <manferlo81@gmail.com>",
   "repository": {

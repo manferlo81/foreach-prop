@@ -1,3 +1,7 @@
+# 1.1.10
+
+* dependencies updated
+
 # 1.1.9
 
 * installed `typescript` locally
