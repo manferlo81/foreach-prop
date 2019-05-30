@@ -2,6 +2,7 @@
 
 * dependencies updated
 * fixed cdn links for latest version
+* improved documentation
 * changelog improved
 
 # 1.1.10 (30-05-2019)

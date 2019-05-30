@@ -71,6 +71,7 @@ console.log(result);
 ```
 
 ## API
+
 ### forEach
 
 *Similar to* `Array.prototype.forEach`*. It executes the provided callback function for every key-value-pair in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
@@ -121,6 +122,8 @@ lastKeyOf(object, value): string | null;
 
 ### includes
 
+*added in:* `v0.2.0`
+
 *Similar to* `Array.prototype.includes`*. It returns whether or not a value is present in an object.*
 
 ```typescript
@@ -144,6 +147,8 @@ findKey.call(thisArg, object, callback, ...extra);
 ```
 
 ### find
+
+*added in:* `v0.1.0`
 
 *Similar to* `Array.prototype.find`*. It executes the provided callback function for every key-value-pair in the object and returns the value once the provided callback function return a truthy value. It returns* `undefined` *if nothing found.*
 
@@ -216,6 +221,8 @@ reduce.call(thisArg, object, callback, initial?, ...extra);
 
 ### some
 
+*added in:* `v0.2.0`
+
 *Similar to* `Array.prototype.some`*. It returns whether at least one of the key-value-pairs satisfy the provided callback function.*
 
 ```javascript
@@ -231,6 +238,8 @@ some.call(thisrArg, object, callback, ...extra): boolean;
 ```
 
 ### every
+
+*added in:* `v0.2.0`
 
 *Similar to* `Array.prototype.every`*. It returns whether all key-value-pairs satisfy the provided callback function.*
 
