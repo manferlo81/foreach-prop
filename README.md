@@ -19,26 +19,32 @@ npm i foreach-prop
 *[www.jsdelivr.com](https://www.jsdelivr.com)*
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
 ##### for production
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop/dist/each-prop.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
 ```
 
-*[more options...](https://www.jsdelivr.com/package/npm/foreach-prop)*
+*[more options...](https://www.jsdelivr.com/package/npm/foreach-prop?version=latest)*
 
 ### unpkg
 
 *[unpkg.com](https://unpkg.com)*
 
 ```html
-<script src="https://unpkg.com/foreach-prop/dist/each-prop.umd.js"></script>
+<script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-*[more options...](https://unpkg.com/foreach-prop/)*
+##### for production
+
+```html
+<script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
+```
+
+*[more options...](https://unpkg.com/foreach-prop@latest/)*
 
 ## Usage
 

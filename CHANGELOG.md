@@ -1,6 +1,7 @@
 # 1.1.11
 
 * dependencies updated
+* fixed cdn links for latest version
 
 # 1.1.10
 
