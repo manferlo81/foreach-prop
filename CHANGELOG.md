@@ -97,7 +97,7 @@
 # 0.2.0 (04-05-2019)
 
 * changelog documented
-* added some, every & includes methods
+* added `some`, `every` & `includes` methods
 
 # 0.1.1 (04-05-2019)
 
@@ -105,10 +105,10 @@
 
 # 0.1.0 (04-05-2019)
 
-* added find method
+* added `find` method
 * test refactoring
 
 # 0.0.1 (01-05-2019)
 
 * first release
-* added forEach, map, keyOf, lasKeyOf, findKey, filter & reduce methods
+* added `forEach`, `map`, `keyOf`, `lasKeyOf`, `findKey`, `filter` & `reduce` methods
