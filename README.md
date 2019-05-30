@@ -71,7 +71,6 @@ console.log(result);
 ```
 
 ## API
-
 ### forEach
 
 *Similar to* `Array.prototype.forEach`*. It executes the provided callback function for every key-value-pair in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
