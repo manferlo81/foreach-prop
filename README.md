@@ -4,7 +4,7 @@
 
 Array-like methods for objects
 
-> :warning: *Some javascript implementations don't respect the object key order. Keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
+> :warning: *Some javascript implementations don't follow the object key order. Keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
 
 ## Install
 
@@ -15,8 +15,6 @@ npm i foreach-prop
 ## CDN
 
 ### jsDelivr
-
-*[www.jsdelivr.com](https://www.jsdelivr.com)*
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
@@ -31,8 +29,6 @@ npm i foreach-prop
 *[more options...](https://www.jsdelivr.com/package/npm/foreach-prop?version=latest)*
 
 ### unpkg
-
-*[unpkg.com](https://unpkg.com)*
 
 ```html
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
