@@ -38,15 +38,15 @@
     "preversion": "npm run clean && npm run build && npm test"
   },
   "dependencies": {
-    "args-to-arr": "^1.3.10"
+    "args-to-arr": "^1.3.11"
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
-    "@types/node": "^12.0.3",
-    "bundlib": "^0.3.2",
+    "@types/node": "^12.0.4",
+    "bundlib": "^0.4.1",
     "eslint": "^5.16.0",
     "jest": "^24.8.0",
-    "tslint": "^5.16.0",
+    "tslint": "^5.17.0",
     "typescript": "^3.5.1"
   },
   "author": "Manuel Fernandez <manferlo81@gmail.com>",
