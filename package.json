@@ -47,7 +47,10 @@
     "tslint": "^5.17.0",
     "typescript": "^3.5.1"
   },
-  "author": "Manuel Fernandez <manferlo81@gmail.com>",
+  "author": {
+    "name": "Manuel Fernández",
+    "email": "manferlo81@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/manferlo81/foreach-prop.git"
