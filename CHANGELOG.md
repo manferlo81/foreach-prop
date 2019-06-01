@@ -1,3 +1,7 @@
+# 1.1.13 (01-06-2019)
+
+* dependencies updated
+
 # 1.1.12 (01-06-2019)
 
 * dependencies updated
