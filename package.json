@@ -8,9 +8,7 @@
   "types": "types/index.d.ts",
   "bundlib": {
     "name": "eachProp",
-    "min": [
-      "browser"
-    ]
+    "min": "browser"
   },
   "keywords": [
     "for-in",
