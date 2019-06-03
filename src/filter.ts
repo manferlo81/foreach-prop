@@ -1,5 +1,4 @@
 import toArray from "args-to-arr";
-import callItBack from "./call-it-back";
 import hasOwn from "./has-own";
 import { FilterCallback } from "./types";
 
@@ -15,16 +14,47 @@ function filter<K extends keyof any, V, E extends any[], TH = any>(
   callback: FilterCallback<K, V, E, TH>,
 ): Record<K, V> {
 
-  const extra = toArray(arguments, 2);
+  const thisArg = this;
+  const args = arguments;
+  const extraLen = args.length - 2;
+
   const result: Record<keyof any, any> = {};
 
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key) &&
-      callItBack(callback, this, object, key, extra as E)
-    ) {
-      result[key] = object[key];
+  if (extraLen === 0) {
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        callback.call<TH, any, any>(thisArg, object[key], key)
+      ) {
+        result[key] = object[key];
+      }
     }
+
+  } else if (extraLen === 1) {
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        callback.call<TH, any, any>(thisArg, object[key], key, args[2])
+      ) {
+        result[key] = object[key];
+      }
+    }
+
+  } else {
+
+    const extra = toArray(args, 2) as E;
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        callback.call<TH, any, any>(thisArg, object[key], key, ...extra)
+      ) {
+        result[key] = object[key];
+      }
+    }
+
   }
 
   return result;
