@@ -1,5 +1,4 @@
-import toArray from "args-to-arr";
-import callItBack from "./call-it-back";
+import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { FilterCallback } from "./types";
 
@@ -15,12 +14,12 @@ function find<K extends keyof any, V, E extends any[], TH = any>(
   callback: FilterCallback<K, V, E, TH>,
 ): V | void {
 
-  const extra = toArray(arguments, 2);
+  const cb = createCallback(callback, arguments, 2);
 
   for (const key in object) {
     if (
       hasOwn.call(object, key) &&
-      callItBack(callback, this, object, key, extra as E)
+      cb(this, object, key)
     ) {
       return object[key];
     }
