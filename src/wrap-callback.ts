@@ -1,12 +1,12 @@
 import toArray from "args-to-arr";
 import isFunction from "is-function";
 import { invalidCallback } from "./errors";
-import { FilterCallback, ImprovedCallback, MapCallback, ReduceCallback } from "./types";
+import { FilterCallback, MapCallback, ReduceCallback, WrappedFilterCallback, WrappedReduceCallback } from "./types";
 
 export function wrapFilterCallback<K extends keyof any, V, E extends any[], TH = any, R = any>(
   callback: FilterCallback<K, V, E, TH>,
   args: IArguments,
-): ImprovedCallback<K, V, TH, R> {
+): WrappedFilterCallback<K, V, TH, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);
@@ -39,7 +39,7 @@ export function wrapFilterCallback<K extends keyof any, V, E extends any[], TH =
 export function wrapReduceCallback<K extends keyof any, V, E extends any[], R = any, TH = any>(
   callback: ReduceCallback<K, V, E, R, TH>,
   args: IArguments,
-) {
+): WrappedReduceCallback<K, V, TH, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);
