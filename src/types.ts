@@ -37,3 +37,9 @@ export type FilterCallback<
   V,
   E extends Extra,
   TH = any> = MapCallback<K, V, E, TH, any>;
+
+export type ImprovedCallback<
+  K extends Key,
+  V,
+  TH = any,
+  R = any> = (thisArg: TH, object: Record<K, V>, key: K) => R;
