@@ -11,10 +11,14 @@ function find<K extends keyof any, V, E extends any[], TH = any>(
 function find<K extends keyof any, V, E extends any[], TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E, TH>,
+  callback: unknown,
 ): V | void {
 
-  const cb = createCallback(callback, arguments, 2);
+  const cb = createCallback<K, V, E, TH, any>(
+    callback,
+    arguments,
+    2,
+  );
 
   for (const key in object) {
     if (

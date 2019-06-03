@@ -11,10 +11,10 @@ function forEach<K extends Key, V, E extends Extra, TH = any>(
 function forEach<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: ForEachCallback<K, V, E, TH>,
+  callback: unknown,
 ): void {
 
-  const cb = createCallback(callback, arguments, 2);
+  const cb = createCallback<K, V, E, TH, void>(callback, arguments, 2);
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {

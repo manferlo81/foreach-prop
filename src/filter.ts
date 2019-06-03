@@ -11,10 +11,15 @@ function filter<K extends keyof any, V, E extends any[], TH = any>(
 function filter<K extends keyof any, V, E extends any[], TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E, TH>,
+  callback: unknown,
 ): Record<K, V> {
 
-  const cb = createCallback(callback, arguments, 2);
+  const cb = createCallback<K, V, E, TH, any>(
+    callback,
+    arguments,
+    2,
+  );
+
   const result: Record<keyof any, any> = {};
 
   for (const key in object) {

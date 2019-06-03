@@ -11,10 +11,14 @@ function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
 function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: MapCallback<K, V, E, TH, RV>,
+  callback: unknown,
 ): Record<K, RV> {
 
-  const cb = createCallback(callback, arguments, 2);
+  const cb = createCallback<K, V, E, TH, RV>(
+    callback,
+    arguments,
+    2,
+  );
 
   const result: Record<Key, RV> = {};
 

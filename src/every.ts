@@ -11,10 +11,14 @@ function every<K extends Key, V, E extends Extra, TH = any>(
 function every<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E, TH>,
+  callback: unknown,
 ): boolean {
 
-  const cb = createCallback(callback, arguments, 2);
+  const cb = createCallback<K, V, E, TH, any>(
+    callback,
+    arguments,
+    2,
+  );
 
   for (const key in object) {
     if (
