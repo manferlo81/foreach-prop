@@ -1,6 +1,6 @@
-import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { Extra, FilterCallback, Key } from "./types";
+import { wrapFilterCallback } from "./wrap-callback";
 
 function every<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
@@ -11,13 +11,12 @@ function every<K extends Key, V, E extends Extra, TH = any>(
 function every<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: unknown,
+  callback: FilterCallback<K, V, E, TH>,
 ): boolean {
 
-  const cb = createCallback<K, V, E, TH, any>(
+  const cb = wrapFilterCallback<K, V, E, TH, any>(
     callback,
     arguments,
-    2,
   );
 
   for (const key in object) {

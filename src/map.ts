@@ -1,6 +1,6 @@
-import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { Key, MapCallback } from "./types";
+import { wrapFilterCallback } from "./wrap-callback";
 
 function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
   this: TH,
@@ -11,13 +11,12 @@ function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
 function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: unknown,
+  callback: MapCallback<K, V, E, TH, RV>,
 ): Record<K, RV> {
 
-  const cb = createCallback<K, V, E, TH, RV>(
+  const cb = wrapFilterCallback<K, V, E, TH, RV>(
     callback,
     arguments,
-    2,
   );
 
   const result: Record<Key, RV> = {};
