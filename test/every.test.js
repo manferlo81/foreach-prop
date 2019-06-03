@@ -51,26 +51,39 @@ describe("every method", () => {
 
   });
 
-  test("should pass extra arguments to callback", () => {
+  test("should pass 1 extra argument to callback", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 4 };
-    const keys = Object.keys(object);
-    const callback = jest.fn(() => true);
+    const callback = jest.fn(() => false);
+    const extra1 = {};
+
+    every(object, callback, extra1);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(String),
+      extra1,
+    );
+
+  });
+
+  test("should pass multiple extra arguments to callback", () => {
+
+    const object = { a: 1, b: 2, c: 3, d: 4 };
+    const callback = jest.fn(() => false);
     const extra1 = {};
     const extra2 = [];
 
     every(object, callback, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key],
-        key,
-        extra1,
-        extra2,
-      );
-    });
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(String),
+      extra1,
+      extra2,
+    );
 
   });
 

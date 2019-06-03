@@ -1,5 +1,4 @@
 import toArray from "args-to-arr";
-import callItBack from "./call-it-back";
 import hasOwn from "./has-own";
 import { Extra, FilterCallback, Key } from "./types";
 
@@ -15,15 +14,45 @@ function every<K extends Key, V, E extends Extra, TH = any>(
   callback: FilterCallback<K, V, E, TH>,
 ): boolean {
 
-  const extra = toArray(arguments, 2);
+  const thisArg = this;
+  const args = arguments;
+  const extraLen = args.length - 2;
 
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key) &&
-      !callItBack(callback, this, object, key, extra as E)
-    ) {
-      return false;
+  if (extraLen === 0) {
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        !callback.call<TH, any, any>(thisArg, object[key], key)
+      ) {
+        return false;
+      }
     }
+
+  } else if (extraLen === 1) {
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        !callback.call<TH, any, any>(thisArg, object[key], key, args[2])
+      ) {
+        return false;
+      }
+    }
+
+  } else {
+
+    const extra = toArray(args, 2) as E;
+
+    for (const key in object) {
+      if (
+        hasOwn.call(object, key) &&
+        !callback.call<TH, any, any>(thisArg, object[key], key, ...extra)
+      ) {
+        return false;
+      }
+    }
+
   }
 
   return true;
