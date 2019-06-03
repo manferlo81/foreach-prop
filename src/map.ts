@@ -1,5 +1,4 @@
-import toArray from "args-to-arr";
-import callItBack from "./call-it-back";
+import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { Key, MapCallback } from "./types";
 
@@ -15,12 +14,13 @@ function map<K extends keyof any, V, E extends any[], RV = any, TH = any>(
   callback: MapCallback<K, V, E, TH, RV>,
 ): Record<K, RV> {
 
-  const extra = toArray(arguments, 2);
+  const cb = createCallback(callback, arguments, 2);
+
   const result: Record<Key, RV> = {};
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result[key] = callItBack(callback, this, object, key, extra as E);
+      result[key] = cb(this, object, key) as any;
     }
   }
 
