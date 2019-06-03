@@ -58,26 +58,26 @@ describe("some method", () => {
 
   });
 
-  test("should pass extra arguments to callback", () => {
+  test("should pass multiple extra arguments to callback", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
+    const value = 1;
+    const key = "a";
+    const object = { [key]: value };
+
     const callback = jest.fn();
+
     const extra1 = {};
     const extra2 = [];
 
     some(object, callback, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key],
-        key,
-        extra1,
-        extra2,
-      );
-    });
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(
+      value,
+      key,
+      extra1,
+      extra2,
+    );
 
   });
 

@@ -39,39 +39,25 @@ describe("filter method", () => {
   test("should pass this argument to callback", () => {
 
     const thisArg = [];
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const count = Object.keys(object).length;
+    const object = { a: 1 };
     const callback = jest.fn(function () {
       expect(this).toBe(thisArg);
     });
 
     filter.call(thisArg, object, callback);
 
-    expect(callback).toHaveBeenCalledTimes(count);
-
-  });
-
-  test("should pass 1 extra argument to callback", () => {
-
-    const object = { a: 1 };
-    const callback = jest.fn(() => true);
-    const extra1 = {};
-
-    filter(object, callback, extra1);
-
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(
-      1,
-      "a",
-      extra1,
-    );
 
   });
 
   test("should pass multiple extra arguments to callback", () => {
 
-    const object = { a: 1 };
-    const callback = jest.fn(() => true);
+    const value = 1;
+    const key = "a";
+    const object = { [key]: value };
+
+    const callback = jest.fn();
+
     const extra1 = {};
     const extra2 = [];
 
@@ -79,8 +65,8 @@ describe("filter method", () => {
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(
-      1,
-      "a",
+      value,
+      key,
       extra1,
       extra2,
     );
