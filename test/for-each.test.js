@@ -51,26 +51,40 @@ describe("forEach method", () => {
 
   });
 
-  test("should pass extra arguments to callback", () => {
+  test("should pass 1 extra argument to callback", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const keys = Object.keys(object);
+    const object = { a: 1 };
+    const callback = jest.fn();
+    const extra1 = {};
+
+    forEach(object, callback, extra1);
+
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(
+      1,
+      "a",
+      extra1,
+    );
+
+  });
+
+  test("should pass multiple extra arguments to callback", () => {
+
+    const object = { a: 1 };
     const callback = jest.fn();
     const extra1 = {};
     const extra2 = [];
 
     forEach(object, callback, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key],
-        key,
-        extra1,
-        extra2,
-      );
-    });
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledWith(
+      1,
+      "a",
+      extra1,
+      extra2,
+    );
+
   });
 
   test("should return void", () => {

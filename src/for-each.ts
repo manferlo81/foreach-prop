@@ -1,5 +1,4 @@
-import toArray from "args-to-arr";
-import callItBack from "./call-it-back";
+import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { Extra, ForEachCallback, Key } from "./types";
 
@@ -15,11 +14,11 @@ function forEach<K extends Key, V, E extends Extra, TH = any>(
   callback: ForEachCallback<K, V, E, TH>,
 ): void {
 
-  const extra = toArray(arguments, 2) as E;
+  const cb = createCallback(callback, arguments, 2);
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      callItBack(callback, this, object, key, extra);
+      cb(this, object, key);
     }
   }
 
