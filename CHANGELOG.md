@@ -1,6 +1,7 @@
 # 1.1.14 (04-06-2019)
 
 * improved documentation
+* performance improvements for none & 1 extra arguments
 
 # 1.1.13 (01-06-2019)
 
