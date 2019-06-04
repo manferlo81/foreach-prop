@@ -1,6 +1,6 @@
-import toArray from "args-to-arr";
 import hasOwn from "./has-own";
 import { ReduceCallback } from "./types";
+import { wrapReduceCallback } from "./wrap-callback";
 
 function reduce<K extends keyof any, V, E extends any[], R = any, TH = any>(
   this: TH,
@@ -16,12 +16,13 @@ function reduce<K extends keyof any, V, E extends any[], R = any, TH = any>(
   initial?: R,
 ): R | undefined {
 
-  const extra = toArray(arguments, 3);
+  const cb = wrapReduceCallback(callback, arguments);
+
   let result = initial;
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result = callback.call<TH, any, R>(this, result, object[key], key, ...extra);
+      result = cb(this, object, key, result);
     }
   }
 

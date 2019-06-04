@@ -1,6 +1,6 @@
-import createCallback from "./create-callback";
 import hasOwn from "./has-own";
 import { FilterCallback } from "./types";
+import { wrapFilterCallback } from "./wrap-callback";
 
 function find<K extends keyof any, V, E extends any[], TH = any>(
   this: TH,
@@ -11,13 +11,12 @@ function find<K extends keyof any, V, E extends any[], TH = any>(
 function find<K extends keyof any, V, E extends any[], TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: unknown,
+  callback: FilterCallback<K, V, E, TH>,
 ): V | void {
 
-  const cb = createCallback<K, V, E, TH, any>(
+  const cb = wrapFilterCallback<K, V, E, TH, any>(
     callback,
     arguments,
-    2,
   );
 
   for (const key in object) {
