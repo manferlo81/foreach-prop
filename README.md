@@ -44,6 +44,8 @@ npm i foreach-prop
 
 ## Usage
 
+###### example
+
 ```javascript
 import { map } from "foreach-prop";
 
@@ -58,12 +60,28 @@ const result = map(object, (value, key, extra1) => {
 
 console.log(result);
 ```
-
 ```console
 {
   key1: "key1 $$",
   key2: "key2 $$",
 }
+```
+
+*See the [API section](#api) for mre details.*
+
+### Node.js
+
+```javascript
+const { forEach } = require("foreach-prop");
+forEach(object, callback);
+```
+
+### Browser
+
+*After adding the* `script` *tag,* `eachProp` *object will be available globally, containing all methods detailed in the [API section](#api).*
+
+```javascript
+eachProp.forEach(object, callback);
 ```
 
 ## API
