@@ -1,4 +1,6 @@
+import { invalidObject, notEnoughArgs } from "./errors";
 import hasOwn from "./has-own";
+import isObject from "./is-object";
 import { Extra, FilterCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
@@ -22,9 +24,20 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
   callback: FilterCallback<V, K, E, TH>,
 ): Record<K, V> {
 
+  const args = arguments;
+  const argsLen = args.length;
+
+  if (argsLen < 2) {
+    throw notEnoughArgs(argsLen, 2);
+  }
+
+  if (!isObject(object)) {
+    throw invalidObject(object);
+  }
+
   const cb = wrapFilterCallback<V, K, E, TH, any>(
     callback,
-    arguments,
+    args,
   );
 
   const result: Record<Key, any> = {};

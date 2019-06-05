@@ -3,6 +3,26 @@ const { Obj, ownProps, protoProps } = require("./vintage-class");
 
 describe("forEach method", () => {
 
+  test("should throw on insufficient arguments", () => {
+
+    expect(() => {
+      forEach();
+    }).toThrow(TypeError);
+
+    expect(() => {
+      forEach({});
+    }).toThrow(TypeError);
+
+  });
+
+  test("should throw on non object", () => {
+
+    expect(() => {
+      forEach(100, () => { });
+    }).toThrow(TypeError);
+
+  });
+
   test("should iterate properly", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 4 };

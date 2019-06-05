@@ -3,6 +3,26 @@ const { Obj, ownProps, protoProps } = require("./vintage-class");
 
 describe("find method", () => {
 
+  test("should throw on insufficient arguments", () => {
+
+    expect(() => {
+      find();
+    }).toThrow(TypeError);
+
+    expect(() => {
+      find({});
+    }).toThrow(TypeError);
+
+  });
+
+  test("should throw on non object", () => {
+
+    expect(() => {
+      find(100, () => { });
+    }).toThrow(TypeError);
+
+  });
+
   test("should iterate properly", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };

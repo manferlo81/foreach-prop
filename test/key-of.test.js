@@ -3,6 +3,26 @@ const { Obj, protoPropName } = require("./vintage-class");
 
 describe("keyOf method", () => {
 
+  test("should throw on insufficient arguments", () => {
+
+    expect(() => {
+      keyOf();
+    }).toThrow(TypeError);
+
+    expect(() => {
+      keyOf({});
+    }).toThrow(TypeError);
+
+  });
+
+  test("should throw on non object", () => {
+
+    expect(() => {
+      keyOf(100, 100);
+    }).toThrow(TypeError);
+
+  });
+
   test("should return the first found key", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };

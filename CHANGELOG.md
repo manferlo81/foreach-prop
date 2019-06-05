@@ -5,6 +5,7 @@
 * dependencies updated
 * `reduce` signatures improved
 * types refactoring
+* implemented error check
 
 # 1.1.13 (01-06-2019)
 

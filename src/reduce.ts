@@ -1,4 +1,6 @@
+import { invalidObject, notEnoughArgs } from "./errors";
 import hasOwn from "./has-own";
+import isObject from "./is-object";
 import { Extra, Key, ReduceCallback } from "./types";
 import { wrapReduceCallback } from "./wrap-callback";
 
@@ -40,6 +42,17 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
   callback: ReduceCallback<V, K, E, TH, R>,
   initial?: R,
 ): R | undefined {
+
+  const args = arguments;
+  const argsLen = args.length;
+
+  if (argsLen < 2) {
+    throw notEnoughArgs(argsLen, 2);
+  }
+
+  if (!isObject(object)) {
+    throw invalidObject(object);
+  }
 
   const cb = wrapReduceCallback<V, K, E, R, TH>(
     callback,

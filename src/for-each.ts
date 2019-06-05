@@ -1,4 +1,6 @@
+import { invalidObject, notEnoughArgs } from "./errors";
 import hasOwn from "./has-own";
+import isObject from "./is-object";
 import { Extra, ForEachCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
@@ -21,6 +23,17 @@ function forEach<V, K extends Key, E extends Extra, TH = any>(
   object: Record<K, V>,
   callback: ForEachCallback<V, K, E, TH>,
 ): void {
+
+  const args = arguments;
+  const argsLen = args.length;
+
+  if (argsLen < 2) {
+    throw notEnoughArgs(argsLen, 2);
+  }
+
+  if (!isObject(object)) {
+    throw invalidObject(object);
+  }
 
   const cb = wrapFilterCallback<V, K, E, TH, void>(
     callback,
