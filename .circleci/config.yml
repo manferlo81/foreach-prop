@@ -57,17 +57,7 @@ jobs:
           root: *working_directory
           paths: .
 
-  upload_coverage:
-    executor: node
-    steps:
-
-      - attach_workspace:
-          at: *working_directory
-
-      - codecov/upload:
-          file: coverage/*.json
-
-  publish_pkg:
+  coverage_and_publish:
     executor: node
     steps:
 
@@ -92,14 +82,7 @@ workflows:
             branches:
               only: /.*/
 
-      - upload_coverage:
-          requires:
-            - unit_test
-          filters:
-            branches:
-              only: /master/
-
-      - publish_pkg:
+      - coverage_and_publish:
           context: NPM
           requires:
             - unit_test
