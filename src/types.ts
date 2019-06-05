@@ -1,4 +1,4 @@
-export type Key = keyof any;
+export type Key = Extract<keyof any, string | number>;
 export type Extra = any[];
 
 export type MapCallback<
@@ -8,19 +8,6 @@ export type MapCallback<
   TH = any,
   R = any> = (
     this: TH,
-    value: V,
-    key: K,
-    ...extra: E
-  ) => R;
-
-export type ReduceCallback<
-  K extends Key,
-  V,
-  E extends Extra,
-  R = any,
-  TH = any> = (
-    this: TH,
-    prev: R,
     value: V,
     key: K,
     ...extra: E
@@ -43,6 +30,19 @@ export type WrappedFilterCallback<
   V,
   TH = any,
   R = any> = (thisArg: TH, object: Record<K, V>, key: K) => R;
+
+export type ReduceCallback<
+  K extends Key,
+  V,
+  E extends Extra,
+  R = any,
+  TH = any> = (
+    this: TH,
+    prev: R,
+    value: V,
+    key: K,
+    ...extra: E
+  ) => R;
 
 export type WrappedReduceCallback<
   K extends Key,

@@ -1,14 +1,15 @@
 import hasOwn from "./has-own";
-import { FilterCallback } from "./types";
+import { Extra, FilterCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
-function some<K extends keyof any, V, E extends any[], TH = any>(
+function some<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<K, V, E, TH>,
   ...extra: E
 ): boolean;
-function some<K extends keyof any, V, E extends any[], TH = any>(
+
+function some<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<K, V, E, TH>,

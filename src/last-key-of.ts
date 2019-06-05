@@ -1,11 +1,12 @@
 import hasOwn from "./has-own";
+import { Key } from "./types";
 
-function lastKeyOf<K extends keyof any, V>(
-  object: Record<K, V>,
-  value: V,
+function lastKeyOf<K extends Key>(
+  object: Record<K, any>,
+  value: any,
 ): K | null {
 
-  let result = null;
+  let result: K | null = null;
 
   for (const key in object) {
     if (

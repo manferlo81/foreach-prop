@@ -1,15 +1,15 @@
 import hasOwn from "./has-own";
-import { ReduceCallback } from "./types";
+import { Extra, Key, ReduceCallback } from "./types";
 import { wrapReduceCallback } from "./wrap-callback";
 
-function reduce<K extends keyof any, V, E extends any[], R = any, TH = any>(
+function reduce<K extends Key, V, E extends Extra, R = any, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: ReduceCallback<K, V, E, R, TH>,
   initial?: R,
   ...extra: E
 ): R | undefined;
-function reduce<K extends keyof any, V, E extends any[], R = any, TH = any>(
+function reduce<K extends Key, V, E extends Extra, R = any, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: ReduceCallback<K, V, E, R, TH>,

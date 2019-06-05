@@ -1,8 +1,9 @@
 import hasOwn from "./has-own";
+import { Key } from "./types";
 
-function keyOf<K extends keyof any, V>(
-  object: Record<K, V>,
-  value: V,
+function keyOf<K extends Key>(
+  object: Record<K, any>,
+  value: any,
 ): K | null {
 
   for (const key in object) {
@@ -10,7 +11,7 @@ function keyOf<K extends keyof any, V>(
       hasOwn.call(object, key) &&
       object[key] === value
     ) {
-      return key;
+      return key as K;
     }
   }
 

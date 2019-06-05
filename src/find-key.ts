@@ -1,14 +1,15 @@
 import hasOwn from "./has-own";
-import { FilterCallback } from "./types";
+import { Extra, FilterCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
-function findKey<K extends keyof any, V, E extends any[], TH = any>(
+function findKey<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<K, V, E, TH>,
   ...extra: E
 ): K | null;
-function findKey<K extends keyof any, V, E extends any[], TH = any>(
+
+function findKey<K extends Key, V, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<K, V, E, TH>,
