@@ -1,12 +1,20 @@
 import toArray from "args-to-arr";
 import isFunction from "is-function";
 import { invalidCallback } from "./errors";
-import { FilterCallback, MapCallback, ReduceCallback, WrappedFilterCallback, WrappedReduceCallback } from "./types";
+import {
+  Extra,
+  FilterCallback,
+  Key,
+  MapCallback,
+  ReduceCallback,
+  WrappedFilterCallback,
+  WrappedReduceCallback,
+} from "./types";
 
-export function wrapFilterCallback<K extends keyof any, V, E extends any[], TH = any, R = any>(
-  callback: FilterCallback<K, V, E, TH>,
+export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, R = any>(
+  callback: FilterCallback<V, K, E, TH>,
   args: IArguments,
-): WrappedFilterCallback<K, V, TH, R> {
+): WrappedFilterCallback<V, K, TH, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);
@@ -15,19 +23,19 @@ export function wrapFilterCallback<K extends keyof any, V, E extends any[], TH =
   const extraLen = args.length - 2;
 
   return (extraLen === 0)
-    ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<K, V, E, TH, R>).call<TH, any, R>(
+    ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
       thisArg,
       object[key],
       key,
     )
     : (extraLen === 1)
-      ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<K, V, E, TH, R>).call<TH, any, R>(
+      ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
         args[2],
       )
-      : (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<K, V, E, TH, R>).call<TH, any, R>(
+      : (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
@@ -36,10 +44,10 @@ export function wrapFilterCallback<K extends keyof any, V, E extends any[], TH =
 
 }
 
-export function wrapReduceCallback<K extends keyof any, V, E extends any[], R = any, TH = any>(
-  callback: ReduceCallback<K, V, E, R, TH>,
+export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, TH = any>(
+  callback: ReduceCallback<V, K, E, TH, R>,
   args: IArguments,
-): WrappedReduceCallback<K, V, TH, R> {
+): WrappedReduceCallback<V, K, TH, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);

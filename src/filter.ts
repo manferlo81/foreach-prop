@@ -2,19 +2,27 @@ import hasOwn from "./has-own";
 import { Extra, FilterCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
-function filter<K extends Key, V, E extends Extra, TH = any>(
+function filter<V, K extends Key, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E, TH>,
+  callback: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): Record<K, V>;
-function filter<K extends Key, V, E extends Extra, TH = any>(
+
+function filter<V, K extends Key, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: FilterCallback<K, V, E, TH>,
+  callback: FilterCallback<V, K, Extra, TH>,
+  ...extra: Extra
+): Record<K, V>;
+
+function filter<V, K extends Key, E extends Extra, TH = any>(
+  this: TH,
+  object: Record<K, V>,
+  callback: FilterCallback<V, K, E, TH>,
 ): Record<K, V> {
 
-  const cb = wrapFilterCallback<K, V, E, TH, any>(
+  const cb = wrapFilterCallback<V, K, E, TH, any>(
     callback,
     arguments,
   );

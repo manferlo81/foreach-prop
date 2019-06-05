@@ -2,20 +2,27 @@ import hasOwn from "./has-own";
 import { Extra, Key, MapCallback } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
-function map<K extends Key, V, E extends Extra, RV = any, TH = any>(
+function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: MapCallback<K, V, E, TH, RV>,
+  callback: MapCallback<V, K, E, TH, RV>,
   ...extra: E
 ): Record<K, RV>;
 
-function map<K extends Key, V, E extends Extra, RV = any, TH = any>(
+function map<V, K extends Key, RV = any, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: MapCallback<K, V, E, TH, RV>,
+  callback: MapCallback<V, K, Extra, TH, RV>,
+  ...extra: Extra
+): Record<K, RV>;
+
+function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
+  this: TH,
+  object: Record<K, V>,
+  callback: MapCallback<V, K, E, TH, RV>,
 ): Record<K, RV> {
 
-  const cb = wrapFilterCallback<K, V, E, TH, RV>(
+  const cb = wrapFilterCallback<V, K, E, TH, RV>(
     callback,
     arguments,
   );

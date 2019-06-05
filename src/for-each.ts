@@ -2,19 +2,27 @@ import hasOwn from "./has-own";
 import { Extra, ForEachCallback, Key } from "./types";
 import { wrapFilterCallback } from "./wrap-callback";
 
-function forEach<K extends Key, V, E extends Extra, TH = any>(
+function forEach<V, K extends Key, E extends Extra, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: ForEachCallback<K, V, E, TH>,
+  callback: ForEachCallback<V, K, E, TH>,
   ...extra: E
 ): void;
-function forEach<K extends Key, V, E extends Extra, TH = any>(
+
+function forEach<V, K extends Key, TH = any>(
   this: TH,
   object: Record<K, V>,
-  callback: ForEachCallback<K, V, E, TH>,
+  callback: ForEachCallback<V, K, Extra, TH>,
+  ...extra: Extra
+): void;
+
+function forEach<V, K extends Key, E extends Extra, TH = any>(
+  this: TH,
+  object: Record<K, V>,
+  callback: ForEachCallback<V, K, E, TH>,
 ): void {
 
-  const cb = wrapFilterCallback<K, V, E, TH, void>(
+  const cb = wrapFilterCallback<V, K, E, TH, void>(
     callback,
     arguments,
   );
