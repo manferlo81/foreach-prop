@@ -38,6 +38,7 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
   const cb = wrapFilterCallback<V, K, E, TH, any>(
     callback,
     args,
+    argsLen,
   );
 
   const result: Record<Key, any> = {};

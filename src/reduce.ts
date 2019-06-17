@@ -56,7 +56,8 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
 
   const cb = wrapReduceCallback<V, K, E, R, TH>(
     callback,
-    arguments,
+    args,
+    argsLen,
   );
 
   let result = initial;

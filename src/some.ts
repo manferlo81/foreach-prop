@@ -37,7 +37,8 @@ function some<V, K extends Key, E extends Extra, TH = any>(
 
   const cb = wrapFilterCallback<V, K, E, TH, any>(
     callback,
-    arguments,
+    args,
+    argsLen,
   );
 
   for (const key in object) {

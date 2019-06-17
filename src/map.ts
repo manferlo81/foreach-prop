@@ -37,7 +37,8 @@ function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
 
   const cb = wrapFilterCallback<V, K, E, TH, RV>(
     callback,
-    arguments,
+    args,
+    argsLen,
   );
 
   const result: Record<Key, RV> = {};

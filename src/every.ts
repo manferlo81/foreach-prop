@@ -38,6 +38,7 @@ function every<V, K extends Key, E extends Extra, TH = any>(
   const cb = wrapFilterCallback<V, K, E, TH, any>(
     callback,
     args,
+    argsLen,
   );
 
   for (const key in object) {
