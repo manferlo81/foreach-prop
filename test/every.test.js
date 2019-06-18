@@ -1,3 +1,5 @@
+// @ts-check
+
 const { every } = require("..");
 const { Obj, ownProps, protoProps } = require("./vintage-class");
 
@@ -5,21 +7,28 @@ describe("every method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      every();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => every()).toThrow(TypeError);
 
-    expect(() => {
-      every({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => every({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      every(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => every(object, () => { })).toThrow(TypeError);
+    });
 
   });
 
@@ -33,7 +42,11 @@ describe("every method", () => {
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
     keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key],
+        key,
+      );
     });
 
   });
