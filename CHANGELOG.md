@@ -1,6 +1,6 @@
 # foreach-prop changelog
 
-## next
+## 2.0.2 (18-06-2019)
 
 * dependencies updated
 * minor improvements
