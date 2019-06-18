@@ -5,21 +5,28 @@ describe("reduce method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      reduce();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => reduce()).toThrow(TypeError);
 
-    expect(() => {
-      reduce({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => reduce({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      reduce(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => reduce(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

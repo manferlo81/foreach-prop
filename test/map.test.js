@@ -5,21 +5,28 @@ describe("map method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      map();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => map()).toThrow(TypeError);
 
-    expect(() => {
-      map({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => map({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      map(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => map(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

@@ -4,6 +4,7 @@
 
 * dependencies updated
 * refactoring
+* test refactoring
 
 ## 2.0.2 (18-06-2019)
 

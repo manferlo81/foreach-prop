@@ -5,21 +5,28 @@ describe("find method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      find();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => find()).toThrow(TypeError);
 
-    expect(() => {
-      find({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => find({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      find(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => find(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

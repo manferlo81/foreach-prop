@@ -5,21 +5,28 @@ describe("some method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      some();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => some()).toThrow(TypeError);
 
-    expect(() => {
-      some({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => some({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      some(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => some(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

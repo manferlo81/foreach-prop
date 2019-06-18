@@ -5,21 +5,28 @@ describe("forEach method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      forEach();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => forEach()).toThrow(TypeError);
 
-    expect(() => {
-      forEach({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => forEach({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      forEach(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => forEach(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

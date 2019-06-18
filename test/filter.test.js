@@ -1,3 +1,5 @@
+// @ts-check
+
 const { filter } = require("..");
 const { Obj, ownProps, protoProps } = require("./vintage-class");
 
@@ -5,21 +7,28 @@ describe("filter method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      filter();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => filter()).toThrow(TypeError);
 
-    expect(() => {
-      filter({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => filter({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      filter(100, () => { });
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => filter(object, () => { })).toThrow(TypeError);
+    });
 
   });
 

@@ -5,21 +5,28 @@ describe("keyOf method", () => {
 
   test("should throw on insufficient arguments", () => {
 
-    expect(() => {
-      keyOf();
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => keyOf()).toThrow(TypeError);
 
-    expect(() => {
-      keyOf({});
-    }).toThrow(TypeError);
+    // @ts-ignore
+    expect(() => keyOf({})).toThrow(TypeError);
 
   });
 
   test("should throw on non object", () => {
 
-    expect(() => {
-      keyOf(100, 100);
-    }).toThrow(TypeError);
+    const invalidObjects = [
+      100,
+      true,
+      false,
+      "",
+      "string",
+    ];
+
+    invalidObjects.forEach((object) => {
+      // @ts-ignore
+      expect(() => keyOf(object, 100)).toThrow(TypeError);
+    });
 
   });
 
