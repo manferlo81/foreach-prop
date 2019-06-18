@@ -26,10 +26,8 @@ export type FilterCallback<
   TH = any> = MapCallback<V, K, E, TH, any>;
 
 export type WrappedFilterCallback<
-  V,
   K extends Key,
-  TH = any,
-  R = any> = (thisArg: TH, object: Record<K, V>, key: K) => R;
+  R = any> = (key: K) => R;
 
 export type ReduceCallback<
   V,
@@ -45,7 +43,5 @@ export type ReduceCallback<
   ) => R;
 
 export type WrappedReduceCallback<
-  V,
   K extends Key,
-  TH = any,
-  R = any> = (thisArg: TH, object: Record<K, V>, key: K, result: R | undefined) => R;
+  R = any> = (key: K, result: R | undefined) => R;

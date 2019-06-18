@@ -54,8 +54,10 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
     throw invalidObject(object);
   }
 
-  const cb = wrapReduceCallback<V, K, E, R, TH>(
+  const wrapped = wrapReduceCallback<V, K, E, R, TH>(
     callback,
+    this,
+    object,
     args,
     argsLen,
   );
@@ -64,7 +66,7 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result = cb(this, object, key, result);
+      result = wrapped(key, result);
     }
   }
 

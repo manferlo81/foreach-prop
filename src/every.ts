@@ -35,8 +35,10 @@ function every<V, K extends Key, E extends Extra, TH = any>(
     throw invalidObject(object);
   }
 
-  const cb = wrapFilterCallback<V, K, E, TH, any>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, any>(
     callback,
+    this,
+    object,
     args,
     argsLen,
   );
@@ -44,7 +46,7 @@ function every<V, K extends Key, E extends Extra, TH = any>(
   for (const key in object) {
     if (
       hasOwn.call(object, key) &&
-      !cb(this, object, key)
+      !wrapped(key)
     ) {
       return false;
     }

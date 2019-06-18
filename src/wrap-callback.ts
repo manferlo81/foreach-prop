@@ -13,28 +13,30 @@ import {
 
 export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, R = any>(
   callback: FilterCallback<V, K, E, TH>,
+  thisArg: TH,
+  object: Record<K, V>,
   args: IArguments,
   argsLen: number,
-): WrappedFilterCallback<V, K, TH, R> {
+): WrappedFilterCallback<K, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);
   }
 
   return (argsLen === 2)
-    ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+    ? (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
       thisArg,
       object[key],
       key,
     )
     : (argsLen === 3)
-      ? (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+      ? (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
         args[2],
       )
-      : (thisArg: TH, object: Record<K, V>, key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+      : (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
@@ -45,30 +47,32 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
 
 export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, TH = any>(
   callback: ReduceCallback<V, K, E, TH, R>,
+  thisArg: TH,
+  object: Record<K, V>,
   args: IArguments,
   argsLen: number,
-): WrappedReduceCallback<V, K, TH, R> {
+): WrappedReduceCallback<K, R> {
 
   if (!isFunction(callback)) {
     throw invalidCallback(callback);
   }
 
   return (argsLen === 3)
-    ? (thisArg: TH, object: Record<K, V>, key: K, result: R | undefined) => callback.call<TH, any, R>(
+    ? (key: K, result: R | undefined) => callback.call<TH, any, R>(
       thisArg,
       result,
       object[key],
       key,
     )
     : (argsLen === 4)
-      ? (thisArg: TH, object: Record<K, V>, key: K, result: R | undefined) => callback.call<TH, any, R>(
+      ? (key: K, result: R | undefined) => callback.call<TH, any, R>(
         thisArg,
         result,
         object[key],
         key,
         args[3],
       )
-      : (thisArg: TH, object: Record<K, V>, key: K, result: R | undefined) => callback.call<TH, any, R>(
+      : (key: K, result: R | undefined) => callback.call<TH, any, R>(
         thisArg,
         result,
         object[key],

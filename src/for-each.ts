@@ -35,15 +35,17 @@ function forEach<V, K extends Key, E extends Extra, TH = any>(
     throw invalidObject(object);
   }
 
-  const cb = wrapFilterCallback<V, K, E, TH, void>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, void>(
     callback,
+    this,
+    object,
     args,
     argsLen,
   );
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      cb(this, object, key);
+      wrapped(key);
     }
   }
 

@@ -35,8 +35,10 @@ function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
     throw invalidObject(object);
   }
 
-  const cb = wrapFilterCallback<V, K, E, TH, RV>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, RV>(
     callback,
+    this,
+    object,
     args,
     argsLen,
   );
@@ -45,7 +47,7 @@ function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result[key as Key] = cb(this, object, key) as RV;
+      result[key as Key] = wrapped(key) as RV;
     }
   }
 
