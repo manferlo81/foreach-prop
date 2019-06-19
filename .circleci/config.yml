@@ -28,45 +28,41 @@ jobs:
   unit_test:
     executor: node
     steps:
-
       - checkout
-
       - restore_cache:
           keys:
             - v1-deps-foreach-prop-{{ checksum "package-lock.json" }}
             - v1-deps-foreach-prop-
-
       - run:
           name: Install Dependencies
           command: npm install
-
       - save_cache:
           key: v1-deps-foreach-prop-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
-
       - run:
           name: Build
           command: npm run build
-
       - run:
           name: Run Tests
           command: npm test
-
       - persist_to_workspace:
           root: *working_directory
           paths: .
 
-  coverage_and_publish:
+  upload_coverage:
     executor: node
     steps:
-
       - attach_workspace:
           at: *working_directory
-
       - codecov/upload:
           file: coverage/*.json
 
+  publish:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: *working_directory
       - npm_publish
 
 workflows:
@@ -82,7 +78,14 @@ workflows:
             branches:
               only: /.*/
 
-      - coverage_and_publish:
+      - upload_coverage:
+          requires:
+            - unit_test
+          filters:
+            branches:
+              only: /master/
+
+      - publish:
           context: NPM
           requires:
             - unit_test
