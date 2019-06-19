@@ -7,24 +7,42 @@ describe("create callback", () => {
   test("should throw on invalid filter callback", () => {
 
     const object = { a: 1 };
-    const callback = {};
+    const invalidCallbacks = [
+      {},
+      [],
+      true,
+      false,
+      0,
+      null,
+      "",
+      "string",
+    ];
 
-    expect(() => {
+    invalidCallbacks.forEach((callback) => {
       // @ts-ignore
-      forEach(object, callback);
-    }).toThrow(TypeError);
+      expect(() => forEach(object, callback)).toThrow(TypeError);
+    });
 
   });
 
   test("should throw on invalid reduce callback", () => {
 
     const object = { a: 1 };
-    const callback = {};
+    const invalidCallbacks = [
+      {},
+      [],
+      true,
+      false,
+      0,
+      null,
+      "",
+      "string",
+    ];
 
-    expect(() => {
+    invalidCallbacks.forEach((callback) => {
       // @ts-ignore
-      reduce(object, callback, 0);
-    }).toThrow(TypeError);
+      expect(() => reduce(object, callback)).toThrow(TypeError);
+    });
 
   });
 
