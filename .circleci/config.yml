@@ -14,11 +14,9 @@ commands:
 
   npm_publish:
     steps:
-
       - run:
           name: Login to npm
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-
       - run:
           name: Publish to npm
           command: npm publish
