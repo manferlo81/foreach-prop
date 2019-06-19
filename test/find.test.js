@@ -1,5 +1,6 @@
-const { find } = require("..");
+// @ts-check
 
+const { find } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 
@@ -120,7 +121,7 @@ describe("find method", () => {
 
   test("should return undefined if not found", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const object = { a: 1, b: 2, c: 3, d: 2, e: "" };
 
     const result = find(object, (val) => {
       return val === "does-not-exist";

@@ -1,5 +1,6 @@
-const { keyOf } = require("..");
+// @ts-check
 
+const { keyOf } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, protoPropName } = require("./helpers/vintage-class");
 

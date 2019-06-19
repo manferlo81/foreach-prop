@@ -1,5 +1,6 @@
-const { forEach } = require("..");
+// @ts-check
 
+const { forEach } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 

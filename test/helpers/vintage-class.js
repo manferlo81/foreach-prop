@@ -1,3 +1,5 @@
+// @ts-check
+
 // old school class declaration
 
 const ownPropName = "propA";

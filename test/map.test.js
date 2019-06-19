@@ -1,5 +1,6 @@
-const { map } = require("..");
+// @ts-check
 
+const { map } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 

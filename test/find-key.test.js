@@ -1,5 +1,6 @@
-const { findKey } = require("..");
+// @ts-check
 
+const { findKey } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 
@@ -109,7 +110,7 @@ describe("findKey method", () => {
 
   test("should return null if not found", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const object = { a: 1, b: 2, c: 3, d: 2, e: "" };
 
     const result = findKey(object, (val) => {
       return val === "does-not-exist";

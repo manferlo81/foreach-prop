@@ -1,5 +1,6 @@
-const { reduce } = require("..");
+// @ts-check
 
+const { reduce } = require("..");
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 

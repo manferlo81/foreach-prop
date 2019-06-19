@@ -1,7 +1,6 @@
 // @ts-check
 
 const { every } = require("..");
-
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 

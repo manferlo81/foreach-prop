@@ -1,7 +1,6 @@
 // @ts-check
 
 const { filter } = require("..");
-
 const invalidObjects = require("./helpers/invalid-objects");
 const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 

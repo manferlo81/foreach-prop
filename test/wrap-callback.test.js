@@ -1,7 +1,6 @@
 // @ts-check
 
 const { forEach, reduce } = require("..");
-
 const invalidCallbacks = require("./helpers/invalid-callbacks");
 
 describe("create callback", () => {

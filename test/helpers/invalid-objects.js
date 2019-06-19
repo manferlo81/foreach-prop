@@ -1,3 +1,5 @@
+// @ts-check
+
 const invalidObjects = [
   0,
   1,
