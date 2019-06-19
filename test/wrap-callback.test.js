@@ -4,19 +4,21 @@ const { forEach, reduce } = require("..");
 
 describe("create callback", () => {
 
+  const invalidCallbacks = [
+    {},
+    [],
+    true,
+    false,
+    10,
+    null,
+    undefined,
+    "",
+    "string",
+  ];
+
   test("should throw on invalid filter callback", () => {
 
     const object = { a: 1 };
-    const invalidCallbacks = [
-      {},
-      [],
-      true,
-      false,
-      0,
-      null,
-      "",
-      "string",
-    ];
 
     invalidCallbacks.forEach((callback) => {
       // @ts-ignore
@@ -28,16 +30,6 @@ describe("create callback", () => {
   test("should throw on invalid reduce callback", () => {
 
     const object = { a: 1 };
-    const invalidCallbacks = [
-      {},
-      [],
-      true,
-      false,
-      0,
-      null,
-      "",
-      "string",
-    ];
 
     invalidCallbacks.forEach((callback) => {
       // @ts-ignore
