@@ -1,5 +1,10 @@
 # foreach-prop changelog
 
+## 2.0.4 (19-06-2019)
+
+* fix: throw on null object
+* test refactoring
+
 ## 2.0.3 (18-06-2019)
 
 * dependencies updated

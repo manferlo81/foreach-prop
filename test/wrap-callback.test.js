@@ -2,19 +2,9 @@
 
 const { forEach, reduce } = require("..");
 
-describe("create callback", () => {
+const invalidCallbacks = require("./helpers/invalid-callbacks");
 
-  const invalidCallbacks = [
-    {},
-    [],
-    true,
-    false,
-    10,
-    null,
-    undefined,
-    "",
-    "string",
-  ];
+describe("create callback", () => {
 
   test("should throw on invalid filter callback", () => {
 

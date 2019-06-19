@@ -1,5 +1,7 @@
 const { map } = require("..");
-const { Obj, ownProps, protoProps } = require("./vintage-class");
+
+const invalidObjects = require("./helpers/invalid-objects");
+const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 
 describe("map method", () => {
 
@@ -14,14 +16,6 @@ describe("map method", () => {
   });
 
   test("should throw on non object", () => {
-
-    const invalidObjects = [
-      100,
-      true,
-      false,
-      "",
-      "string",
-    ];
 
     invalidObjects.forEach((object) => {
       // @ts-ignore

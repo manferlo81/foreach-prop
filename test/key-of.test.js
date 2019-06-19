@@ -1,5 +1,7 @@
 const { keyOf } = require("..");
-const { Obj, protoPropName } = require("./vintage-class");
+
+const invalidObjects = require("./helpers/invalid-objects");
+const { Obj, protoPropName } = require("./helpers/vintage-class");
 
 describe("keyOf method", () => {
 
@@ -14,14 +16,6 @@ describe("keyOf method", () => {
   });
 
   test("should throw on non object", () => {
-
-    const invalidObjects = [
-      100,
-      true,
-      false,
-      "",
-      "string",
-    ];
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
