@@ -24,8 +24,7 @@
   ],
   "files": [
     "dist",
-    "types",
-    "src"
+    "types"
   ],
   "scripts": {
     "lint": "tslint src/**/*.ts",
