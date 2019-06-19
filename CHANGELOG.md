@@ -2,6 +2,7 @@
 
 ## 2.0.4 (19-06-2019)
 
+* improved documentation
 * fix: throw on null object
 * test refactoring
 

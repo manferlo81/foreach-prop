@@ -88,13 +88,13 @@ eachProp.forEach(object, callback);
 
 ### forEach
 
-*Similar to* `Array.prototype.forEach`*. It executes the provided callback function for every key-value-pair in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
+*Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
 
 ```typescript
 forEach(object, function callback(value, key, ...extra) => void, ...extra): void;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -104,13 +104,13 @@ forEach.call(thisArg, object, callback, ...extra);
 
 ### map
 
-*Similar to* `Array.prototype.map`*. It executes the provided callback function for every key-value-pair in the object and returns a new object.*
+*Similar to* `Array.prototype.map`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object.*
 
 ```typescript
 map(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -146,13 +146,13 @@ includes(object, value): boolean;
 
 ### findKey
 
-*Similar to* `Array.prototype.findIndex`*. It executes the provided callback function for every key-value-pair in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
+*Similar to* `Array.prototype.findIndex`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
 
 ```typescript
 findKey(object, function callback(value, key, ...extra) => any, ...extra): string | null;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -164,7 +164,7 @@ findKey.call(thisArg, object, callback, ...extra);
 
 *added in:* `v0.1.0`
 
-*Similar to* `Array.prototype.find`*. It executes the provided callback function for every key-value-pair in the object and returns the value once the provided callback function return a truthy value. It returns* `undefined` *if nothing found.*
+*Similar to* `Array.prototype.find`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the value once the provided callback function return a truthy value. It returns* `undefined` *if nothing found.*
 
 ```typescript
 find(object, function callback(value, key, ...extra) => any, ...extra): any;
@@ -193,7 +193,7 @@ console.log(value);
 undefined
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -203,13 +203,13 @@ find.call(thisArg, object, callback, ...extra);
 
 ### filter
 
-*Similar to* `Array.prototype.filter`*. It executes the provided callback function for every key-value-pair in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
+*Similar to* `Array.prototype.filter`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
 
 ```typescript
 filter(object, function callback(value, key, ...extra) => any, ...extra): object;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -225,7 +225,7 @@ filter.call(thisArg, object, callback, ...extra);
 reduce(object, function callback(current, value, key, ...extra) => any, initial?, ...extra): any;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -243,7 +243,7 @@ reduce.call(thisArg, object, callback, initial?, ...extra);
 some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
@@ -261,7 +261,7 @@ some.call(thisrArg, object, callback, ...extra): boolean;
 every(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 ```
 
-*Any* `extra` *arguments will be passed to the callback function.*
+*Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
