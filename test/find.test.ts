@@ -1,18 +1,16 @@
-// @ts-check
+import { find } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
 
-const { map } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
-
-describe("map method", () => {
+describe("find method", () => {
 
   test("should throw on insufficient arguments", () => {
 
     // @ts-ignore
-    expect(() => map()).toThrow(TypeError);
+    expect(() => find()).toThrow(TypeError);
 
     // @ts-ignore
-    expect(() => map({})).toThrow(TypeError);
+    expect(() => find({})).toThrow(TypeError);
 
   });
 
@@ -20,7 +18,7 @@ describe("map method", () => {
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
-      expect(() => map(object, () => { })).toThrow(TypeError);
+      expect(() => find(object, () => null)).toThrow(TypeError);
     });
 
   });
@@ -31,14 +29,14 @@ describe("map method", () => {
     const keys = Object.keys(object);
     const callback = jest.fn();
 
-    map(object, callback);
+    find(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
 
     keys.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
-        object[key],
+        object[key as keyof typeof object],
         key,
       );
     });
@@ -47,16 +45,17 @@ describe("map method", () => {
 
   test("should skip prototype properties", () => {
 
+    // @ts-ignore
     const instance = new Obj();
     const callback = jest.fn();
 
-    map(instance, callback);
+    find(instance, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
     protoProps.forEach((key) => {
       expect(callback).not.toHaveBeenCalledWith(
         expect.anything(),
-        key
+        key,
       );
     });
     ownProps.forEach((key, index) => {
@@ -71,13 +70,13 @@ describe("map method", () => {
 
   test("should pass this argument to callback", () => {
 
-    const thisArg = [];
+    const thisArg = {};
     const object = { a: 1 };
-    const callback = jest.fn(function () {
+    const callback = jest.fn(function cb(this: any) {
       expect(this).toBe(thisArg);
     });
 
-    map.call(thisArg, object, callback);
+    find.call(thisArg, object, callback);
 
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -89,12 +88,12 @@ describe("map method", () => {
     const key = "a";
     const object = { [key]: value };
 
-    const callback = jest.fn(() => 0);
+    const callback = jest.fn(() => true);
 
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
-    map(object, callback, extra1, extra2);
+    find(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(
@@ -106,30 +105,28 @@ describe("map method", () => {
 
   });
 
-  test("should return a new object", () => {
+  test("should return the found value", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
+    const expectedResult = object.b;
 
-    const result = map(object, (val) => val);
+    const result = find(object, (val) => {
+      return val === expectedResult;
+    });
 
-    expect(typeof result).toBe("object");
-    expect(result).toEqual(object);
-    expect(result).not.toBe(object);
+    expect(result).toBe(expectedResult);
 
   });
 
-  test("should return a mapped object", () => {
+  test("should return undefined if not found", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
+    const object = { a: 1, b: 2, c: 3, d: 2, e: "" };
 
-    const result = map(object, (val) => (val * 2));
-
-    expect(Object.keys(result)).toEqual(keys);
-
-    keys.forEach((key) => {
-      expect(result[key]).toBe(object[key] * 2);
+    const result = find(object, (val) => {
+      return val === "does-not-exist";
     });
+
+    expect(result).toBeUndefined();
 
   });
 

@@ -1,8 +1,10 @@
-// @ts-check
+import { every } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
 
-const { every } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
+// const { every } = require("..");
+// const invalidObjects = require("./helpers/invalid-objects");
+// const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
 
 describe("every method", () => {
 
@@ -20,7 +22,7 @@ describe("every method", () => {
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
-      expect(() => every(object, () => { })).toThrow(TypeError);
+      expect(() => every(object, () => true)).toThrow(TypeError);
     });
 
   });
@@ -37,7 +39,7 @@ describe("every method", () => {
     keys.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
-        object[key],
+        object[key as keyof typeof object],
         key,
       );
     });
@@ -46,6 +48,7 @@ describe("every method", () => {
 
   test("should skip prototype properties", () => {
 
+    // @ts-ignore
     const instance = new Obj();
     const callback = jest.fn(() => true);
 
@@ -56,16 +59,20 @@ describe("every method", () => {
       expect(callback).not.toHaveBeenCalledWith(expect.anything(), key);
     });
     ownProps.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, instance[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        instance[key],
+        key,
+      );
     });
 
   });
 
   test("should pass this argument to callback", () => {
 
-    const thisArg = [];
+    const thisArg = {};
     const object = { a: 1 };
-    const callback = jest.fn(function () {
+    const callback = jest.fn(function cb(this: any) {
       expect(this).toBe(thisArg);
     });
 
@@ -84,7 +91,7 @@ describe("every method", () => {
     const callback = jest.fn();
 
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
     every(object, callback, extra1, extra2);
 

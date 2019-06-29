@@ -1,8 +1,6 @@
-// @ts-check
-
-const { keyOf } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, protoPropName } = require("./helpers/vintage-class");
+import { keyOf } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, protoPropA } from "./helpers/vintage-class";
 
 describe("keyOf method", () => {
 
@@ -49,12 +47,16 @@ describe("keyOf method", () => {
 
   test("should return null if not own property", () => {
 
+    // @ts-ignore
     const object = new Obj();
 
-    const result = keyOf(object, object[protoPropName]);
+    // tslint:disable-next-line: no-console
+    console.log(object);
 
-    expect(object).toHaveProperty(protoPropName);
-    expect(object[protoPropName]).toBeDefined();
+    const result = keyOf(object, object[protoPropA]);
+
+    expect(object).toHaveProperty(protoPropA);
+    expect(object[protoPropA]).toBeDefined();
     expect(result).toBeNull();
 
   });

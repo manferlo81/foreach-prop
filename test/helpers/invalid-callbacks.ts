@@ -1,5 +1,3 @@
-// @ts-check
-
 const invalidCallbacks = [
   {},
   [],
@@ -12,4 +10,4 @@ const invalidCallbacks = [
   "string",
 ];
 
-module.exports = invalidCallbacks;
+export default invalidCallbacks;

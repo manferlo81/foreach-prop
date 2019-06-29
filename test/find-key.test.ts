@@ -1,18 +1,16 @@
-// @ts-check
+import { findKey } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
 
-const { forEach } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
-
-describe("forEach method", () => {
+describe("findKey method", () => {
 
   test("should throw on insufficient arguments", () => {
 
     // @ts-ignore
-    expect(() => forEach()).toThrow(TypeError);
+    expect(() => findKey()).toThrow(TypeError);
 
     // @ts-ignore
-    expect(() => forEach({})).toThrow(TypeError);
+    expect(() => findKey({})).toThrow(TypeError);
 
   });
 
@@ -20,33 +18,38 @@ describe("forEach method", () => {
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
-      expect(() => forEach(object, () => { })).toThrow(TypeError);
+      expect(() => findKey(object, () => null)).toThrow(TypeError);
     });
 
   });
 
   test("should iterate properly", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 4 };
+    const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
     const callback = jest.fn();
 
-    forEach(object, callback);
+    findKey(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
 
     keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key as keyof typeof object],
+        key,
+      );
     });
 
   });
 
   test("should skip prototype properties", () => {
 
+    // @ts-ignore
     const instance = new Obj();
     const callback = jest.fn();
 
-    forEach(instance, callback);
+    findKey(instance, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
     protoProps.forEach((key) => {
@@ -60,13 +63,13 @@ describe("forEach method", () => {
 
   test("should pass this argument to callback", () => {
 
-    const thisArg = [];
+    const thisArg = {};
     const object = { a: 1 };
-    const callback = jest.fn(function () {
+    const callback = jest.fn(function cb(this: any) {
       expect(this).toBe(thisArg);
     });
 
-    forEach.call(thisArg, object, callback);
+    findKey.call(thisArg, object, callback);
 
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -81,9 +84,9 @@ describe("forEach method", () => {
     const callback = jest.fn();
 
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
-    forEach(object, callback, extra1, extra2);
+    findKey(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(
@@ -95,12 +98,28 @@ describe("forEach method", () => {
 
   });
 
-  test("should return void", () => {
+  test("should return the found key", () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const result = forEach(object, () => { });
+    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const expectedResult = "b";
 
-    expect(result).toBeUndefined();
+    const result = findKey(object, (val, key) => {
+      return key === expectedResult;
+    });
+
+    expect(result).toBe(expectedResult);
+
+  });
+
+  test("should return null if not found", () => {
+
+    const object = { a: 1, b: 2, c: 3, d: 2, e: "" };
+
+    const result = findKey(object, (val) => {
+      return val === "does-not-exist";
+    });
+
+    expect(result).toBeNull();
 
   });
 

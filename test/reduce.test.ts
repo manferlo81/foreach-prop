@@ -1,8 +1,6 @@
-// @ts-check
-
-const { reduce } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
+import { reduce } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
 
 describe("reduce method", () => {
 
@@ -20,7 +18,7 @@ describe("reduce method", () => {
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
-      expect(() => reduce(object, () => { })).toThrow(TypeError);
+      expect(() => reduce(object, () => null)).toThrow(TypeError);
     });
 
   });
@@ -36,13 +34,19 @@ describe("reduce method", () => {
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
     keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, initial, object[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        initial,
+        object[key as keyof typeof object],
+        key,
+      );
     });
 
   });
 
   test("should skip prototype properties", () => {
 
+    // @ts-ignore
     const instance = new Obj();
     const callback = jest.fn((result) => result);
     const initial = {};
@@ -69,10 +73,10 @@ describe("reduce method", () => {
 
   test("should pass this argument to callback", () => {
 
-    const thisArg = [];
+    const thisArg = {};
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const count = Object.keys(object).length;
-    const callback = jest.fn(function (result) {
+    const callback = jest.fn(function cb(this: any, result) {
       expect(this).toBe(thisArg);
       return result;
     });
@@ -91,7 +95,7 @@ describe("reduce method", () => {
     const callback = jest.fn((result) => result);
     const initial = {};
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
     reduce(object, callback, initial, extra1, extra2);
 
@@ -100,7 +104,7 @@ describe("reduce method", () => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
         initial,
-        object[key],
+        object[key as keyof typeof object],
         key,
         extra1,
         extra2,
@@ -113,10 +117,10 @@ describe("reduce method", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const initial = {};
-    const result = reduce(object, (result, val, key) => {
-      result[key] = val * 2;
-      return result;
-    }, initial);
+    const result = reduce(object, (acc, val, key) => {
+      acc[key] = val * 2;
+      return acc;
+    }, initial as Record<keyof typeof object, number>);
 
     expect(result).toBe(initial);
 
@@ -127,9 +131,9 @@ describe("reduce method", () => {
     const object = { a: 100, b: -2 };
     const expectedResult = 99;
 
-    const result = reduce(object, (result, val) => {
-      return result + val;
-    }, 1);
+    const result = reduce(object, (acc, val) => {
+      return acc + val;
+    }, 1 as number);
 
     expect(result).toBe(expectedResult);
 

@@ -1,7 +1,5 @@
-// @ts-check
-
-const { forEach, reduce } = require("..");
-const invalidCallbacks = require("./helpers/invalid-callbacks");
+import { forEach, reduce } from "../src";
+import invalidCallbacks from "./helpers/invalid-callbacks";
 
 describe("create callback", () => {
 
@@ -49,7 +47,7 @@ describe("create callback", () => {
     const object = { a: 1 };
     const callback = jest.fn();
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
     forEach(object, callback, extra1, extra2);
 
@@ -66,7 +64,7 @@ describe("create callback", () => {
   test("should pass 1 extra argument to reduce callback", () => {
 
     const object = { a: 1 };
-    const callback = jest.fn(r => r);
+    const callback = jest.fn((r) => r);
     const extra1 = {};
 
     // @ts-ignore
@@ -85,9 +83,9 @@ describe("create callback", () => {
   test("should pass multiple extra arguments to reduce callback", () => {
 
     const object = { a: 1 };
-    const callback = jest.fn(r => r);
+    const callback = jest.fn((r) => r);
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
     // @ts-ignore
     reduce(object, callback, 0, extra1, extra2);

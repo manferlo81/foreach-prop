@@ -1,6 +1,4 @@
-// @ts-check
-
-const { includes } = require("..");
+import { includes } from "../src";
 
 describe("includes method", () => {
 

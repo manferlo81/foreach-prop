@@ -1,8 +1,6 @@
-// @ts-check
-
-const { lastKeyOf } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, protoPropName } = require("./helpers/vintage-class");
+import { lastKeyOf } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, protoPropA } from "./helpers/vintage-class";
 
 describe("lastKeyOf method", () => {
 
@@ -49,15 +47,15 @@ describe("lastKeyOf method", () => {
 
   test("should return null if not own property", () => {
 
+    // @ts-ignore
     const object = new Obj();
 
-    const result = lastKeyOf(object, object[protoPropName]);
+    const result = lastKeyOf(object, object[protoPropA]);
 
-    expect(object).toHaveProperty(protoPropName);
-    expect(object[protoPropName]).toBeDefined();
+    expect(object).toHaveProperty(protoPropA);
+    expect(object[protoPropA]).toBeDefined();
     expect(result).toBeNull();
 
   });
-
 
 });

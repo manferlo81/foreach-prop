@@ -1,18 +1,16 @@
-// @ts-check
+import { forEach } from "../src";
+import invalidObjects from "./helpers/invalid-objects";
+import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
 
-const { filter } = require("..");
-const invalidObjects = require("./helpers/invalid-objects");
-const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
-
-describe("filter method", () => {
+describe("forEach method", () => {
 
   test("should throw on insufficient arguments", () => {
 
     // @ts-ignore
-    expect(() => filter()).toThrow(TypeError);
+    expect(() => forEach()).toThrow(TypeError);
 
     // @ts-ignore
-    expect(() => filter({})).toThrow(TypeError);
+    expect(() => forEach({})).toThrow(TypeError);
 
   });
 
@@ -20,7 +18,7 @@ describe("filter method", () => {
 
     invalidObjects.forEach((object) => {
       // @ts-ignore
-      expect(() => filter(object, () => { })).toThrow(TypeError);
+      expect(() => forEach(object, () => null)).toThrow(TypeError);
     });
 
   });
@@ -31,22 +29,27 @@ describe("filter method", () => {
     const keys = Object.keys(object);
     const callback = jest.fn();
 
-    filter(object, callback);
+    forEach(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(keys.length);
 
     keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, object[key], key);
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        object[key as keyof typeof object],
+        key,
+      );
     });
 
   });
 
   test("should skip prototype properties", () => {
 
+    // @ts-ignore
     const instance = new Obj();
     const callback = jest.fn();
 
-    filter(instance, callback);
+    forEach(instance, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
     protoProps.forEach((key) => {
@@ -60,13 +63,13 @@ describe("filter method", () => {
 
   test("should pass this argument to callback", () => {
 
-    const thisArg = [];
+    const thisArg = {};
     const object = { a: 1 };
-    const callback = jest.fn(function () {
+    const callback = jest.fn(function cb(this: any) {
       expect(this).toBe(thisArg);
     });
 
-    filter.call(thisArg, object, callback);
+    forEach.call(thisArg, object, callback);
 
     expect(callback).toHaveBeenCalledTimes(1);
 
@@ -81,9 +84,9 @@ describe("filter method", () => {
     const callback = jest.fn();
 
     const extra1 = {};
-    const extra2 = [];
+    const extra2: any[] = [];
 
-    filter(object, callback, extra1, extra2);
+    forEach(object, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(
@@ -95,33 +98,12 @@ describe("filter method", () => {
 
   });
 
-  test("should return a new object", () => {
+  test("should return void", () => {
 
     const object = { a: 1, b: 2, c: 3, d: 4 };
-    const count = Object.keys(object).length;
-    const callback = jest.fn(() => true);
-    const result = filter(object, callback);
+    const result = forEach(object, () => null);
 
-    expect(callback).toHaveBeenCalledTimes(count);
-    expect(typeof result).toBe("object");
-    expect(result).toEqual(object);
-    expect(result).not.toBe(object);
-
-  });
-
-  test("should return a filtered object", () => {
-
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const count = Object.keys(object).length;
-    const callback = jest.fn((val) => {
-      return val >= 2 && val <= 3;
-    });
-    const expectedResult = { b: 2, c: 3, d: 2 };
-
-    const result = filter(object, callback);
-
-    expect(callback).toHaveBeenCalledTimes(count);
-    expect(result).toEqual(expectedResult);
+    expect(result).toBeUndefined();
 
   });
 

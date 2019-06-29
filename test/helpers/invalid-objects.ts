@@ -1,5 +1,3 @@
-// @ts-check
-
 const invalidObjects = [
   0,
   1,
@@ -11,4 +9,4 @@ const invalidObjects = [
   "string",
 ];
 
-module.exports = invalidObjects;
+export default invalidObjects;

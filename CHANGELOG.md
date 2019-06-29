@@ -1,9 +1,10 @@
 # foreach-prop changelog
 
 ## 2.0.6
-*27-JUN-2019*
+*29-JUN-2019*
 
 * dependencies updated
+* `ts-jest` for typescript test
 
 ## 2.0.5
 *22-JUN-2019*
