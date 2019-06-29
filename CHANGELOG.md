@@ -5,6 +5,7 @@
 
 * dependencies updated
 * `ts-jest` for typescript test
+* added `husky`
 
 ## 2.0.5
 *22-JUN-2019*
