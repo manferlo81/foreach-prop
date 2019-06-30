@@ -1,4 +1,3 @@
-const CI = !!process.env.CI;
 const coverageThreshold = 95;
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
     "src/**/*.ts",
   ],
   coverageReporters: [
-    CI ? "json" : "lcov",
+    process.env.CI ? "json" : "lcov",
     "text",
     "text-summary",
   ],
