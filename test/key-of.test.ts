@@ -50,9 +50,6 @@ describe("keyOf method", () => {
     // @ts-ignore
     const object = new Obj();
 
-    // tslint:disable-next-line: no-console
-    console.log(object);
-
     const result = keyOf(object, object[protoPropA]);
 
     expect(object).toHaveProperty(protoPropA);
