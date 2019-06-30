@@ -20,7 +20,7 @@ npm i foreach-prop
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-##### for production
+***for production***
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -34,7 +34,7 @@ npm i foreach-prop
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-##### for production
+***for production***
 
 ```html
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -44,7 +44,7 @@ npm i foreach-prop
 
 ## Usage
 
-###### example
+***example***
 
 ```javascript
 import { map } from "foreach-prop";
@@ -60,6 +60,7 @@ const result = map(object, (value, key, extra1) => {
 
 console.log(result);
 ```
+
 ```console
 {
   key1: "key1 $$",
@@ -172,7 +173,7 @@ find(object, function callback(value, key, ...extra) => any, ...extra): any;
 
 > *Note that the returned value may be* `undefined` *even if the condition is met and the value is* `undefined`*.*
 
-###### example
+***example***
 
 ```javascript
 const undef;
