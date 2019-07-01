@@ -35,7 +35,7 @@
     "preversion": "npm run clean && npm run build && npm test"
   },
   "dependencies": {
-    "args-to-arr": "^1.4.3",
+    "args-to-arr": "^1.4.4",
     "is-function": "^1.0.1"
   },
   "devDependencies": {
