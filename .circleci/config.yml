@@ -8,7 +8,7 @@ executors:
   node:
     docker:
       - image: circleci/node:10
-    working_directory: &working_directory ~/repo
+    working_directory: &working_directory ~/foreach-prop
 
 commands:
 
@@ -29,7 +29,7 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-deps-foreach-prop-{{ checksum "package-lock.json" }}
+            - v2-deps-foreach-prop-{{ checksum "package.json" }}
             - v2-deps-foreach-prop-
       - run:
           name: Install Dependencies
@@ -41,7 +41,7 @@ jobs:
           name: Run Tests
           command: npm test
       - save_cache:
-          key: v2-deps-foreach-prop-{{ checksum "package-lock.json" }}
+          key: v2-deps-foreach-prop-{{ checksum "package.json" }}
           paths:
             - node_modules
       - persist_to_workspace:
@@ -56,7 +56,7 @@ jobs:
       - codecov/upload:
           file: coverage/*.json
 
-  publish:
+  publish_pkg:
     executor: node
     steps:
       - attach_workspace: *attach_workspace
@@ -82,7 +82,7 @@ workflows:
             branches:
               only: /master/
 
-      - publish:
+      - publish_pkg:
           context: npm
           requires:
             - unit_test
