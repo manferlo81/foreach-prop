@@ -1,5 +1,11 @@
 # foreach-prop changelog
 
+## 2.0.7
+
+***14-SEP-2019***
+
+* dependencies updated
+
 ## 2.0.6
 
 ***29-AUG-2019***
