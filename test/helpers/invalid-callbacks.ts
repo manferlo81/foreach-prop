@@ -6,8 +6,8 @@ const invalidCallbacks = [
   10,
   null,
   undefined,
-  "",
-  "string",
-];
+  '',
+  'string',
+]
 
-export default invalidCallbacks;
+export default invalidCallbacks

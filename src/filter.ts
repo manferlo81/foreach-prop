@@ -1,8 +1,8 @@
-import { invalidObject, notEnoughArgs } from "./errors";
-import hasOwn from "./has-own";
-import isObject from "./is-object";
-import { Extra, FilterCallback, Key } from "./types";
-import { wrapFilterCallback } from "./wrap-callback";
+import { invalidObject, notEnoughArgs } from './errors'
+import hasOwn from './has-own'
+import isObject from './is-object'
+import { Extra, FilterCallback, Key } from './types'
+import { wrapFilterCallback } from './wrap-callback'
 
 function filter<V, K extends Key, E extends Extra, TH = any>(
   this: TH,
@@ -25,15 +25,15 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
 ): Record<K, V> {
 
   // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
+  const args = arguments
+  const argsLen = args.length
 
   if (argsLen < 2) {
-    throw notEnoughArgs(argsLen, 2);
+    throw notEnoughArgs(argsLen, 2)
   }
 
   if (!isObject(object)) {
-    throw invalidObject(object);
+    throw invalidObject(object)
   }
 
   const wrapped = wrapFilterCallback<V, K, E, TH, any>(
@@ -42,21 +42,21 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
     object,
     args,
     argsLen,
-  );
+  )
 
-  const result: Record<Key, any> = {};
+  const result: Record<Key, any> = {}
 
   for (const key in object) {
     if (
       hasOwn.call(object, key) &&
       wrapped(key)
     ) {
-      result[key] = object[key];
+      result[key] = object[key]
     }
   }
 
-  return result;
+  return result
 
 }
 
-export default filter;
+export default filter

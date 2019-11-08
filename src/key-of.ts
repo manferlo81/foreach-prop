@@ -1,21 +1,21 @@
-import { invalidObject, notEnoughArgs } from "./errors";
-import hasOwn from "./has-own";
-import isObject from "./is-object";
-import { Key } from "./types";
+import { invalidObject, notEnoughArgs } from './errors'
+import hasOwn from './has-own'
+import isObject from './is-object'
+import { Key } from './types'
 
 function keyOf(object: {}, value: any): null;
 function keyOf<K extends Key>(object: Record<K, any>, value: any): K | null;
 
 function keyOf<K extends Key>(object: Record<K, any>, value: any): K | null {
 
-  const argsLen = arguments.length;
+  const argsLen = arguments.length
 
   if (argsLen < 2) {
-    throw notEnoughArgs(argsLen, 2);
+    throw notEnoughArgs(argsLen, 2)
   }
 
   if (!isObject(object)) {
-    throw invalidObject(object);
+    throw invalidObject(object)
   }
 
   for (const key in object) {
@@ -23,12 +23,12 @@ function keyOf<K extends Key>(object: Record<K, any>, value: any): K | null {
       hasOwn.call(object, key) &&
       object[key] === value
     ) {
-      return key as K;
+      return key as K
     }
   }
 
-  return null;
+  return null
 
 }
 
-export default keyOf;
+export default keyOf

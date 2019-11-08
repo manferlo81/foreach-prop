@@ -1,2 +1,2 @@
-const hasOwn = {}.hasOwnProperty;
-export default hasOwn;
+const hasOwn = {}.hasOwnProperty
+export default hasOwn

@@ -5,8 +5,8 @@ const invalidObjects = [
   false,
   null,
   undefined,
-  "",
-  "string",
-];
+  '',
+  'string',
+]
 
-export default invalidObjects;
+export default invalidObjects

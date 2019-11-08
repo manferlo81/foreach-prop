@@ -1,8 +1,8 @@
-import { invalidObject, notEnoughArgs } from "./errors";
-import hasOwn from "./has-own";
-import isObject from "./is-object";
-import { Extra, Key, ReduceCallback } from "./types";
-import { wrapReduceCallback } from "./wrap-callback";
+import { invalidObject, notEnoughArgs } from './errors'
+import hasOwn from './has-own'
+import isObject from './is-object'
+import { Extra, Key, ReduceCallback } from './types'
+import { wrapReduceCallback } from './wrap-callback'
 
 function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
   this: TH,
@@ -44,15 +44,15 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
 ): R | undefined {
 
   // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
+  const args = arguments
+  const argsLen = args.length
 
   if (argsLen < 2) {
-    throw notEnoughArgs(argsLen, 2);
+    throw notEnoughArgs(argsLen, 2)
   }
 
   if (!isObject(object)) {
-    throw invalidObject(object);
+    throw invalidObject(object)
   }
 
   const wrapped = wrapReduceCallback<V, K, E, R, TH>(
@@ -61,18 +61,18 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
     object,
     args,
     argsLen,
-  );
+  )
 
-  let result = initial;
+  let result = initial
 
   for (const key in object) {
     if (hasOwn.call(object, key)) {
-      result = wrapped(key, result);
+      result = wrapped(key, result)
     }
   }
 
-  return result;
+  return result
 
 }
 
-export default reduce;
+export default reduce

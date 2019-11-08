@@ -1,12 +1,12 @@
-export { default as forEach } from "./for-each";
-export { default as map } from "./map";
-export { default as keyOf } from "./key-of";
-export { default as lastKeyOf } from "./last-key-of";
-export { default as includes } from "./includes";
-export { default as findKey } from "./find-key";
-export { default as find } from "./find";
-export { default as filter } from "./filter";
-export { default as reduce } from "./reduce";
-export { default as some } from "./some";
-export { default as every } from "./every";
-export { FilterCallback, ForEachCallback, MapCallback, ReduceCallback } from "./types";
+export { default as forEach } from './for-each'
+export { default as map } from './map'
+export { default as keyOf } from './key-of'
+export { default as lastKeyOf } from './last-key-of'
+export { default as includes } from './includes'
+export { default as findKey } from './find-key'
+export { default as find } from './find'
+export { default as filter } from './filter'
+export { default as reduce } from './reduce'
+export { default as some } from './some'
+export { default as every } from './every'
+export { FilterCallback, ForEachCallback, MapCallback, ReduceCallback } from './types'

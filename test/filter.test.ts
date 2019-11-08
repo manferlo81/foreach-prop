@@ -1,139 +1,139 @@
-import { filter } from "../src";
-import invalidObjects from "./helpers/invalid-objects";
-import { Obj, ownProps, protoProps } from "./helpers/vintage-class";
+import { filter } from '../src'
+import invalidObjects from './helpers/invalid-objects'
+import { Obj, ownProps, protoProps } from './helpers/vintage-class'
 
-describe("filter method", () => {
+describe('filter method', () => {
 
-  test("should throw on insufficient arguments", () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    expect(() => filter()).toThrow(TypeError);
+  test('should throw on insufficient arguments', () => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    expect(() => filter({})).toThrow(TypeError);
+    expect(() => filter()).toThrow(TypeError)
 
-  });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    expect(() => filter({})).toThrow(TypeError)
 
-  test("should throw on non object", () => {
+  })
+
+  test('should throw on non object', () => {
 
     invalidObjects.forEach((object) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(() => filter(object, () => null)).toThrow(TypeError);
-    });
+      expect(() => filter(object, () => null)).toThrow(TypeError)
+    })
 
-  });
+  })
 
-  test("should iterate properly", () => {
+  test('should iterate properly', () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const keys = Object.keys(object);
-    const callback = jest.fn();
+    const object = { a: 1, b: 2, c: 3, d: 4 }
+    const keys = Object.keys(object)
+    const callback = jest.fn()
 
-    filter(object, callback);
+    filter(object, callback)
 
-    expect(callback).toHaveBeenCalledTimes(keys.length);
+    expect(callback).toHaveBeenCalledTimes(keys.length)
 
     keys.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
         object[key as keyof typeof object],
         key,
-      );
-    });
+      )
+    })
 
-  });
+  })
 
-  test("should skip prototype properties", () => {
+  test('should skip prototype properties', () => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    const instance = new Obj();
-    const callback = jest.fn();
+    const instance = new Obj()
+    const callback = jest.fn()
 
-    filter(instance, callback);
+    filter(instance, callback)
 
-    expect(callback).toHaveBeenCalledTimes(ownProps.length);
+    expect(callback).toHaveBeenCalledTimes(ownProps.length)
     protoProps.forEach((key) => {
-      expect(callback).not.toHaveBeenCalledWith(expect.anything(), key);
-    });
+      expect(callback).not.toHaveBeenCalledWith(expect.anything(), key)
+    })
     ownProps.forEach((key, index) => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
         instance[key],
         key,
-      );
-    });
+      )
+    })
 
-  });
+  })
 
-  test("should pass this argument to callback", () => {
+  test('should pass this argument to callback', () => {
 
-    const thisArg = {};
-    const object = { a: 1 };
+    const thisArg = {}
+    const object = { a: 1 }
     const callback = jest.fn(function cb(this: any) {
-      expect(this).toBe(thisArg);
-    });
+      expect(this).toBe(thisArg)
+    })
 
-    filter.call(thisArg, object, callback);
+    filter.call(thisArg, object, callback)
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1)
 
-  });
+  })
 
-  test("should pass multiple extra arguments to callback", () => {
+  test('should pass multiple extra arguments to callback', () => {
 
-    const value = 1;
-    const key = "a";
-    const object = { [key]: value };
+    const value = 1
+    const key = 'a'
+    const object = { [key]: value }
 
-    const callback = jest.fn();
+    const callback = jest.fn()
 
-    const extra1 = {};
-    const extra2: any[] = [];
+    const extra1 = {}
+    const extra2: any[] = []
 
-    filter(object, callback, extra1, extra2);
+    filter(object, callback, extra1, extra2)
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(1)
     expect(callback).toHaveBeenCalledWith(
       value,
       key,
       extra1,
       extra2,
-    );
+    )
 
-  });
+  })
 
-  test("should return a new object", () => {
+  test('should return a new object', () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const count = Object.keys(object).length;
-    const callback = jest.fn(() => true);
-    const result = filter(object, callback);
+    const object = { a: 1, b: 2, c: 3, d: 4 }
+    const count = Object.keys(object).length
+    const callback = jest.fn(() => true)
+    const result = filter(object, callback)
 
-    expect(callback).toHaveBeenCalledTimes(count);
-    expect(typeof result).toBe("object");
-    expect(result).toEqual(object);
-    expect(result).not.toBe(object);
+    expect(callback).toHaveBeenCalledTimes(count)
+    expect(typeof result).toBe('object')
+    expect(result).toEqual(object)
+    expect(result).not.toBe(object)
 
-  });
+  })
 
-  test("should return a filtered object", () => {
+  test('should return a filtered object', () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const count = Object.keys(object).length;
+    const object = { a: 1, b: 2, c: 3, d: 2 }
+    const count = Object.keys(object).length
     const callback = jest.fn((val) => {
-      return val >= 2 && val <= 3;
-    });
-    const expectedResult = { b: 2, c: 3, d: 2 };
+      return val >= 2 && val <= 3
+    })
+    const expectedResult = { b: 2, c: 3, d: 2 }
 
-    const result = filter(object, callback);
+    const result = filter(object, callback)
 
-    expect(callback).toHaveBeenCalledTimes(count);
-    expect(result).toEqual(expectedResult);
+    expect(callback).toHaveBeenCalledTimes(count)
+    expect(result).toEqual(expectedResult)
 
-  });
+  })
 
-});
+})

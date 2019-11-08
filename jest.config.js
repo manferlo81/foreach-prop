@@ -1,23 +1,22 @@
-const coverageThreshold = 95;
+const coverageThreshold = 95
 
 module.exports = {
 
-  testEnvironment: "node",
+  testEnvironment: 'node',
   browser: false,
 
-  cacheDirectory: "node_modules/.cache/jest",
-
-  preset: "ts-jest",
+  cacheDirectory: 'node_modules/.cache/jest',
+  preset: 'ts-jest',
 
   collectCoverage: true,
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
   collectCoverageFrom: [
-    "src/**/*.ts",
+    'src/**/*.ts',
   ],
   coverageReporters: [
-    process.env.CI ? "json" : "lcov",
-    "text",
-    "text-summary",
+    process.env.CI ? 'json' : 'lcov',
+    'text',
+    'text-summary',
   ],
   coverageThreshold: {
     global: {
@@ -30,4 +29,4 @@ module.exports = {
 
   verbose: true,
 
-};
+}
