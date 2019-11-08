@@ -24,19 +24,19 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
   }
 
   return (argsLen === 2)
-    ? (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+    ? (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
       thisArg,
       object[key],
       key,
     )
     : (argsLen === 3)
-      ? (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+      ? (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
         args[2],
       )
-      : (key: K) => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+      : (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
         thisArg,
         object[key],
         key,
@@ -58,21 +58,21 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
   }
 
   return (argsLen === 3)
-    ? (key: K, result: R | undefined) => callback.call<TH, any, R>(
+    ? (key: K, result: R | undefined): R => callback.call<TH, any, R>(
       thisArg,
       result,
       object[key],
       key,
     )
     : (argsLen === 4)
-      ? (key: K, result: R | undefined) => callback.call<TH, any, R>(
+      ? (key: K, result: R | undefined): R => callback.call<TH, any, R>(
         thisArg,
         result,
         object[key],
         key,
         args[3],
       )
-      : (key: K, result: R | undefined) => callback.call<TH, any, R>(
+      : (key: K, result: R | undefined): R => callback.call<TH, any, R>(
         thisArg,
         result,
         object[key],

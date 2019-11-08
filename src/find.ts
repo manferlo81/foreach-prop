@@ -24,6 +24,7 @@ function find<V, K extends Key, E extends Extra, TH = any>(
   callback: FilterCallback<V, K, E, TH>,
 ): V | void {
 
+  // eslint-disable-next-line prefer-rest-params
   const args = arguments;
   const argsLen = args.length;
 

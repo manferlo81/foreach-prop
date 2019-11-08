@@ -24,6 +24,7 @@ function map<V, K extends Key, E extends Extra, RV = any, TH = any>(
   callback: MapCallback<V, K, E, TH, RV>,
 ): Record<K, RV> {
 
+  // eslint-disable-next-line prefer-rest-params
   const args = arguments;
   const argsLen = args.length;
 

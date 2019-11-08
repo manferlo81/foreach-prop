@@ -6,9 +6,11 @@ describe("lastKeyOf method", () => {
 
   test("should throw on insufficient arguments", () => {
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     expect(() => lastKeyOf()).toThrow(TypeError);
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     expect(() => lastKeyOf({})).toThrow(TypeError);
 
@@ -17,6 +19,7 @@ describe("lastKeyOf method", () => {
   test("should throw on non object", () => {
 
     invalidObjects.forEach((object) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(() => lastKeyOf(object, 100)).toThrow(TypeError);
     });
@@ -47,6 +50,7 @@ describe("lastKeyOf method", () => {
 
   test("should return null if not own property", () => {
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     const object = new Obj();
 

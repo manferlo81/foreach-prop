@@ -8,6 +8,7 @@ describe("create callback", () => {
     const object = { a: 1 };
 
     invalidCallbacks.forEach((callback) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(() => forEach(object, callback)).toThrow(TypeError);
     });
@@ -19,6 +20,7 @@ describe("create callback", () => {
     const object = { a: 1 };
 
     invalidCallbacks.forEach((callback) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(() => reduce(object, callback)).toThrow(TypeError);
     });
@@ -67,7 +69,6 @@ describe("create callback", () => {
     const callback = jest.fn((r) => r);
     const extra1 = {};
 
-    // @ts-ignore
     reduce(object, callback, 0, extra1);
 
     expect(callback).toHaveBeenCalledTimes(1);
@@ -87,7 +88,6 @@ describe("create callback", () => {
     const extra1 = {};
     const extra2: any[] = [];
 
-    // @ts-ignore
     reduce(object, callback, 0, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(1);

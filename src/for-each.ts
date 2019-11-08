@@ -24,6 +24,7 @@ function forEach<V, K extends Key, E extends Extra, TH = any>(
   callback: ForEachCallback<V, K, E, TH>,
 ): void {
 
+  // eslint-disable-next-line prefer-rest-params
   const args = arguments;
   const argsLen = args.length;
 

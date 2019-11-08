@@ -43,6 +43,7 @@ function reduce<V, K extends Key, E extends Extra, R = any, TH = any>(
   initial?: R,
 ): R | undefined {
 
+  // eslint-disable-next-line prefer-rest-params
   const args = arguments;
   const argsLen = args.length;
 
