@@ -14,8 +14,8 @@
     "reduce",
     "map"
   ],
-  "main": "dist/each-prop.cjs.js",
-  "module": "dist/each-prop.es.js",
+  "main": "dist/each-prop.js",
+  "module": "dist/each-prop.mjs",
   "browser": "dist/each-prop.umd.js",
   "types": "types/index.d.ts",
   "typings": "types/index.d.ts",
