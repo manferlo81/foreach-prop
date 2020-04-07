@@ -1,11 +1,13 @@
-export function notEnoughArgs(count: number, expected: number): TypeError {
-  return new TypeError(`expected ${expected} arguments, got ${count}.`);
+function createErrorFactory<T extends (...args: any[]) => TypeError>(template: string): T {
+  return (function (): TypeError {
+    // eslint-disable-next-line prefer-rest-params
+    const args = arguments as ArrayLike<unknown>;
+    return new TypeError(template.replace(/$(\d)/g, (_, i) => {
+      return `${args[i]}`;
+    }));
+  }) as T;
 }
 
-export function invalidObject(object: unknown): TypeError {
-  return new TypeError(`${object} is not an object.`);
-}
-
-export function invalidCallback(callback: unknown): TypeError {
-  return new TypeError(`${callback} is not a function.`);
-}
+export const notEnoughArgs = createErrorFactory<(count: number, expected: number) => TypeError>('expected $1 arguments, got $0.');
+export const invalidObject = createErrorFactory<(object: unknown) => TypeError>('$0 is not an object.');
+export const invalidCallback = createErrorFactory<(callback: unknown) => TypeError>('$0 is not a function.');
