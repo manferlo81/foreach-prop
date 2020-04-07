@@ -27,6 +27,10 @@ module.exports = {
     },
   },
 
+  testMatch: [
+    '**/__test__/**/*.test.ts',
+  ],
+
   verbose: true,
 
 }
