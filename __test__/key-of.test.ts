@@ -1,6 +1,6 @@
 import { keyOf } from '../src'
-import invalidObjects from './helpers/invalid-objects'
-import { Obj, protoPropA } from './helpers/vintage-class'
+import { createObject, protoPropA } from './tools/create-object'
+import { invalidObjects } from './tools/values'
 
 describe('keyOf method', () => {
 
@@ -50,9 +50,7 @@ describe('keyOf method', () => {
 
   test('should return null if not own property', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const object = new Obj()
+    const object = createObject()
 
     const result = keyOf(object, object[protoPropA])
 

@@ -1,10 +1,6 @@
 import { every } from '../src'
-import invalidObjects from './helpers/invalid-objects'
-import { Obj, ownProps, protoProps } from './helpers/vintage-class'
-
-// const { every } = require("..");
-// const invalidObjects = require("./helpers/invalid-objects");
-// const { Obj, ownProps, protoProps } = require("./helpers/vintage-class");
+import { createObject, ownProps, protoProps } from './tools/create-object'
+import { invalidObjects } from './tools/values'
 
 describe('every method', () => {
 
@@ -51,9 +47,7 @@ describe('every method', () => {
 
   test('should skip prototype properties', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const instance = new Obj()
+    const instance = createObject()
     const callback = jest.fn(() => true)
 
     every(instance, callback)

@@ -1,6 +1,6 @@
 import { lastKeyOf } from '../src'
-import invalidObjects from './helpers/invalid-objects'
-import { Obj, protoPropA } from './helpers/vintage-class'
+import { invalidObjects } from './tools/values'
+import { protoPropA, createObject } from './tools/create-object'
 
 describe('lastKeyOf method', () => {
 
@@ -50,9 +50,7 @@ describe('lastKeyOf method', () => {
 
   test('should return null if not own property', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const object = new Obj()
+    const object = createObject()
 
     const result = lastKeyOf(object, object[protoPropA])
 

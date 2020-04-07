@@ -1,6 +1,6 @@
 import { findKey } from '../src'
-import invalidObjects from './helpers/invalid-objects'
-import { Obj, ownProps, protoProps } from './helpers/vintage-class'
+import { createObject, ownProps, protoProps } from './tools/create-object'
+import { invalidObjects } from './tools/values'
 
 describe('findKey method', () => {
 
@@ -48,9 +48,7 @@ describe('findKey method', () => {
 
   test('should skip prototype properties', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    const instance = new Obj()
+    const instance = createObject()
     const callback = jest.fn()
 
     findKey(instance, callback)

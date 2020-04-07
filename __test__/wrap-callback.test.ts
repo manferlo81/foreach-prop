@@ -1,5 +1,5 @@
 import { forEach, reduce } from '../src'
-import invalidCallbacks from './helpers/invalid-callbacks'
+import { invalidCallbacks } from './tools/values'
 
 describe('create callback', () => {
 
