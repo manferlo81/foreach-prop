@@ -21,7 +21,8 @@
   "typings": "types/index.d.ts",
   "bundlib": {
     "name": "eachProp",
-    "min": "browser"
+    "min": "browser",
+    "project": "tsconfig-bundlib.json"
   },
   "files": [
     "dist",
