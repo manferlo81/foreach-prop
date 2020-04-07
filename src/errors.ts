@@ -1,11 +1,11 @@
 function createErrorFactory<T extends (...args: any[]) => TypeError>(template: string): T {
-  return (function (): TypeError {
+  return function (): TypeError {
     // eslint-disable-next-line prefer-rest-params
     const args = arguments as ArrayLike<unknown>;
-    return new TypeError(template.replace(/$(\d)/g, (_, i) => {
+    return new TypeError(template.replace(/\$(\d+)/g, (_, i) => {
       return `${args[i]}`;
     }));
-  }) as T;
+  } as T;
 }
 
 export const notEnoughArgs = createErrorFactory<(count: number, expected: number) => TypeError>('expected $1 arguments, got $0.');
