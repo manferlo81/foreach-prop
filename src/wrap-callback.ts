@@ -1,6 +1,6 @@
-import toArray from 'args-to-arr'
-import isFunction from 'is-function'
-import { invalidCallback } from './errors'
+import toArray from 'args-to-arr';
+import isFunction from 'is-function';
+import { invalidCallback } from './errors';
 import {
   Extra,
   FilterCallback,
@@ -9,7 +9,7 @@ import {
   ReduceCallback,
   WrappedFilterCallback,
   WrappedReduceCallback,
-} from './types'
+} from './types';
 
 export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, R = any>(
   callback: FilterCallback<V, K, E, TH>,
@@ -20,7 +20,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
 ): WrappedFilterCallback<K, R> {
 
   if (!isFunction(callback)) {
-    throw invalidCallback(callback)
+    throw invalidCallback(callback);
   }
 
   return (argsLen === 2)
@@ -41,7 +41,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
         object[key],
         key,
         ...toArray(args, 2) as E,
-      )
+      );
 
 }
 
@@ -54,7 +54,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
 ): WrappedReduceCallback<K, R> {
 
   if (!isFunction(callback)) {
-    throw invalidCallback(callback)
+    throw invalidCallback(callback);
   }
 
   return (argsLen === 3)
@@ -78,6 +78,6 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
         object[key],
         key,
         ...toArray(args, 3) as E,
-      )
+      );
 
 }
