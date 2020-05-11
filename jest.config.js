@@ -1,10 +1,8 @@
-const coverageThreshold = 95
+const coverageThreshold = 95;
 
 module.exports = {
 
   testEnvironment: 'node',
-  browser: false,
-
   cacheDirectory: 'node_modules/.cache/jest',
   preset: 'ts-jest',
 
@@ -33,4 +31,4 @@ module.exports = {
 
   verbose: true,
 
-}
+};
