@@ -2,6 +2,13 @@
 
 ## Version History
 
+### [2.0.8](https://github.com/manferlo81/foreach-prop/compare/v2.0.7...v2.0.8) (2020-05-11)
+
+
+### Bug Fixes
+
+* Update vulnerable dependencies ([782b3ff](https://github.com/manferlo81/foreach-prop/commit/782b3ff0bf3cca2c638d78c5ded5d76005cc43e1))
+
 ### [2.0.7](https://github.com/manferlo81/foreach-prop/compare/v2.0.6...v2.0.7) (2019-SEP-14)
 
 * dependencies updated
