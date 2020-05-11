@@ -10,24 +10,23 @@
     "property",
     "key",
     "keys",
+    "forEach",
+    "map",
     "filter",
+    "keyOf",
+    "lastKeyOf",
+    "find",
+    "findKey",
     "reduce",
-    "map"
+    "includes",
+    "some",
+    "every"
   ],
   "main": "dist/each-prop.js",
   "module": "dist/each-prop.mjs",
   "browser": "dist/each-prop.umd.js",
   "types": "types/index.d.ts",
   "typings": "types/index.d.ts",
-  "bundlib": {
-    "name": "eachProp",
-    "min": "browser",
-    "project": "tsconfig-bundlib.json"
-  },
-  "files": [
-    "dist",
-    "types"
-  ],
   "scripts": {
     "dev": "bundlib -dw",
     "build": "bundlib -d",
@@ -66,6 +65,10 @@
     "ts-jest": "^25.5.1",
     "typescript": "^3.8.3"
   },
+  "files": [
+    "dist",
+    "types"
+  ],
   "author": {
     "name": "Manuel Fernández",
     "email": "manferlo81@gmail.com"
