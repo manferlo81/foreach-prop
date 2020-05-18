@@ -23,25 +23,32 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
     throw invalidCallback(callback);
   }
 
-  return (argsLen === 2)
-    ? (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+  if (argsLen === 2) {
+    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
       thisArg,
       object[key],
       key,
-    )
-    : (argsLen === 3)
-      ? (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
-        thisArg,
-        object[key],
-        key,
-        args[2],
-      )
-      : (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
-        thisArg,
-        object[key],
-        key,
-        ...toArray(args, 2) as E,
-      );
+    );
+  }
+
+  if (argsLen === 3) {
+    const extra = args[2];
+    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+      thisArg,
+      object[key],
+      key,
+      extra,
+    );
+  }
+
+  const extra = toArray(args, 2) as E;
+
+  return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+    thisArg,
+    object[key],
+    key,
+    ...extra,
+  );
 
 }
 
@@ -57,27 +64,34 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
     throw invalidCallback(callback);
   }
 
-  return (argsLen === 3)
-    ? (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+  if (argsLen === 3) {
+    return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
       thisArg,
       result,
       object[key],
       key,
-    )
-    : (argsLen === 4)
-      ? (key: K, result: R | undefined): R => callback.call<TH, any, R>(
-        thisArg,
-        result,
-        object[key],
-        key,
-        args[3],
-      )
-      : (key: K, result: R | undefined): R => callback.call<TH, any, R>(
-        thisArg,
-        result,
-        object[key],
-        key,
-        ...toArray(args, 3) as E,
-      );
+    );
+  }
+
+  if (argsLen === 4) {
+    const extra = args[3];
+    return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+      thisArg,
+      result,
+      object[key],
+      key,
+      extra,
+    );
+  }
+
+  const extra = toArray(args, 3) as E;
+
+  return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+    thisArg,
+    result,
+    object[key],
+    key,
+    ...extra,
+  );
 
 }
