@@ -6,12 +6,14 @@ describe('reduce method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     expect(() => reduce()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     expect(() => reduce({})).toThrow(TypeError);
 
   });
@@ -19,9 +21,7 @@ describe('reduce method', () => {
   test('should throw on non object', () => {
 
     invalidObjects.forEach((object) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => reduce(object, () => null)).toThrow(TypeError);
+      expect(() => reduce(object as never, () => null)).toThrow(TypeError);
     });
 
   });
@@ -31,7 +31,7 @@ describe('reduce method', () => {
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
     const initial = {};
-    const callback = jest.fn((result) => result);
+    const callback = jest.fn(<T>(result: T): T => result);
 
     reduce(object, callback, initial);
 
@@ -50,7 +50,7 @@ describe('reduce method', () => {
   test('should skip prototype properties', () => {
 
     const instance = createObject();
-    const callback = jest.fn((result) => result);
+    const callback = jest.fn(<T>(result: T): T => result);
     const initial = {};
 
     reduce(instance, callback, initial);
@@ -78,7 +78,7 @@ describe('reduce method', () => {
     const thisArg = {};
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const count = Object.keys(object).length;
-    const callback = jest.fn(function cb(this: any, result) {
+    const callback = jest.fn(function <T>(this: any, result: T): T {
       expect(this).toBe(thisArg);
       return result;
     });
@@ -94,7 +94,7 @@ describe('reduce method', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
-    const callback = jest.fn((result) => result);
+    const callback = jest.fn(<T>(result: T): T => result);
     const initial = {};
     const extra1 = {};
     const extra2: any[] = [];

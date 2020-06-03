@@ -6,11 +6,11 @@ describe('keyOf method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => keyOf()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => keyOf({})).toThrow(TypeError);
 
@@ -19,9 +19,7 @@ describe('keyOf method', () => {
   test('should throw on non object', () => {
 
     invalidObjects.forEach((object) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => keyOf(object, 100)).toThrow(TypeError);
+      expect(() => keyOf(object as never, 100)).toThrow(TypeError);
     });
 
   });

@@ -6,11 +6,11 @@ describe('map method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => map()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => map({})).toThrow(TypeError);
 
@@ -19,9 +19,7 @@ describe('map method', () => {
   test('should throw on non object', () => {
 
     invalidObjects.forEach((object) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => map(object, () => null)).toThrow(TypeError);
+      expect(() => map(object as never, () => null)).toThrow(TypeError);
     });
 
   });

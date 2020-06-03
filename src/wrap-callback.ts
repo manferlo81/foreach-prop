@@ -32,7 +32,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
   }
 
   if (argsLen === 3) {
-    const extra = args[2];
+    const extra = args[2] as never;
     return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
       thisArg,
       object[key],
@@ -74,7 +74,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
   }
 
   if (argsLen === 4) {
-    const extra = args[3];
+    const extra = args[3] as never;
     return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
       thisArg,
       result,

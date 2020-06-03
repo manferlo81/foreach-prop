@@ -8,9 +8,7 @@ describe('create callback', () => {
     const object = { a: 1 };
 
     invalidCallbacks.forEach((callback) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => forEach(object, callback)).toThrow(TypeError);
+      expect(() => forEach(object, callback as never)).toThrow(TypeError);
     });
 
   });
@@ -20,9 +18,8 @@ describe('create callback', () => {
     const object = { a: 1 };
 
     invalidCallbacks.forEach((callback) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => reduce(object, callback)).toThrow(TypeError);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      expect(() => reduce(object, callback as never)).toThrow(TypeError);
     });
 
   });
@@ -66,7 +63,7 @@ describe('create callback', () => {
   test('should pass 1 extra argument to reduce callback', () => {
 
     const object = { a: 1 };
-    const callback = jest.fn((r) => r);
+    const callback = jest.fn(<T>(r: T): T => r);
     const extra1 = {};
 
     reduce(object, callback, 0, extra1);
@@ -84,7 +81,7 @@ describe('create callback', () => {
   test('should pass multiple extra arguments to reduce callback', () => {
 
     const object = { a: 1 };
-    const callback = jest.fn((r) => r);
+    const callback = jest.fn(<T>(r: T): T => r);
     const extra1 = {};
     const extra2: any[] = [];
 

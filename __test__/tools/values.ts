@@ -3,10 +3,10 @@ const numbers = [0, 10, -10, NaN, Infinity, -Infinity];
 const booleans = [true, false];
 const nulls = [null, undefined];
 
-const objects = [
-  {},
-  Object.create({}),
-  Object.create(null),
+const objects: Record<keyof any, any>[] = [
+  {} as never,
+  Object.create({}) as never,
+  Object.create(null) as never,
   [],
 ];
 

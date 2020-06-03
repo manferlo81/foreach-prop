@@ -6,11 +6,11 @@ describe('some method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => some()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => some({})).toThrow(TypeError);
 
@@ -19,9 +19,7 @@ describe('some method', () => {
   test('should throw on non object', () => {
 
     invalidObjects.forEach((object) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => some(object, () => null)).toThrow(TypeError);
+      expect(() => some(object as never, () => null)).toThrow(TypeError);
     });
 
   });

@@ -3,9 +3,7 @@ import hasOwn from './has-own';
 import isObject from './is-object';
 import { Key } from './types';
 
-function lastKeyOf(object: {}, value: any): null;
-function lastKeyOf<K extends Key>(object: Record<K, any>, value: any): K | null;
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function lastKeyOf<K extends Key>(object: Record<K, any>, value: any): K | null {
 
   const argsLen = arguments.length;

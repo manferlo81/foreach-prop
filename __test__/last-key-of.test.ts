@@ -6,24 +6,20 @@ describe('lastKeyOf method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => lastKeyOf()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     expect(() => lastKeyOf({})).toThrow(TypeError);
 
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      expect(() => lastKeyOf(object, 100)).toThrow(TypeError);
+      expect(() => lastKeyOf(object as never, 100)).toThrow(TypeError);
     });
-
   });
 
   test('should return the last found key', () => {

@@ -2,8 +2,9 @@ function createErrorFactory<T extends (...args: any[]) => TypeError>(template: s
   return function (): TypeError {
     // eslint-disable-next-line prefer-rest-params
     const args = arguments as ArrayLike<unknown>;
-    return new TypeError(template.replace(/\$(\d+)/g, (_, i) => {
-      return `${args[i]}`;
+    return new TypeError(template.replace(/\$(\d+)/g, (_, i: string) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      return `${args[+i]}`;
     }));
   } as T;
 }

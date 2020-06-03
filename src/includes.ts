@@ -1,9 +1,7 @@
 import keyOf from './key-of';
 import { Key } from './types';
 
-function includes(object: {}, value: any): false;
-function includes(object: Record<Key, any>, value: any): boolean;
-
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function includes(object: Record<Key, any>, value: any): boolean {
   return keyOf(object, value) !== null;
 }
