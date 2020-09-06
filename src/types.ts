@@ -4,6 +4,7 @@ export type Extra = any[];
 export type MapCallback<
   V,
   K extends Key,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   E extends Extra,
   TH = any,
   R = any> = (
@@ -32,6 +33,7 @@ export type WrappedFilterCallback<
 export type ReduceCallback<
   V,
   K extends Key,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   E extends Extra,
   TH = any,
   R = any> = (
