@@ -25,13 +25,13 @@
   "main": "dist/each-prop.js",
   "module": "dist/each-prop.mjs",
   "browser": "dist/each-prop.umd.js",
-  "types": "types/index.d.ts",
-  "typings": "types/index.d.ts",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "dev": "bundlib -dw",
     "build": "bundlib -d",
     "test": "jest --color -w 3",
-    "clean": "rimraf node_modules/.cache/bundlib node_modules/.cache/jest dist types coverage",
+    "clean": "rimraf node_modules/.cache/bundlib node_modules/.cache/jest dist coverage",
     "lint": "eslint src/**/*.ts __test__/**/*.ts",
     "prerelease": "npm run clean && npm run lint && npm test && npm run build",
     "release": "standard-version"
@@ -59,8 +59,7 @@
     "typescript": "^4.0.3"
   },
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "author": {
     "name": "Manuel Fernández",
