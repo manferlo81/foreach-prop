@@ -31,7 +31,7 @@ describe('reduce method', () => {
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
     const initial = {};
-    const callback = jest.fn(<T>(result: T): T => result);
+    const callback = jest.fn<unknown, [unknown, number, string]>((result) => result);
 
     reduce(object, callback, initial);
 
@@ -50,7 +50,7 @@ describe('reduce method', () => {
   test('should skip prototype properties', () => {
 
     const instance = createObject();
-    const callback = jest.fn(<T>(result: T): T => result);
+    const callback = jest.fn<unknown, [unknown, unknown, string]>((result) => result);
     const initial = {};
 
     reduce(instance, callback, initial);
@@ -58,6 +58,7 @@ describe('reduce method', () => {
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
     protoProps.forEach((key) => {
       expect(callback).not.toHaveBeenCalledWith(
+        expect.anything(),
         expect.anything(),
         key,
       );
@@ -94,7 +95,7 @@ describe('reduce method', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
-    const callback = jest.fn(<T>(result: T): T => result);
+    const callback = jest.fn<unknown, [unknown, unknown, string, unknown, unknown]>((result) => result);
     const initial = {};
     const extra1 = {};
     const extra2: any[] = [];

@@ -63,7 +63,7 @@ describe('create callback', () => {
   test('should pass 1 extra argument to reduce callback', () => {
 
     const object = { a: 1 };
-    const callback = jest.fn(<T>(r: T): T => r);
+    const callback = jest.fn<unknown, [unknown, unknown, string, unknown]>((result) => result);
     const extra1 = {};
 
     reduce(object, callback, 0, extra1);
@@ -81,7 +81,7 @@ describe('create callback', () => {
   test('should pass multiple extra arguments to reduce callback', () => {
 
     const object = { a: 1 };
-    const callback = jest.fn(<T>(r: T): T => r);
+    const callback = jest.fn<unknown, [unknown, unknown, string, unknown, unknown]>((result) => result);
     const extra1 = {};
     const extra2: any[] = [];
 

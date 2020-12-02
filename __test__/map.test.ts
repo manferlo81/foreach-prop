@@ -88,7 +88,7 @@ describe('map method', () => {
     const key = 'a';
     const object = { [key]: value };
 
-    const callback = jest.fn(() => 0);
+    const callback = jest.fn<0, [number, string, unknown, unknown[]]>(() => 0);
 
     const extra1 = {};
     const extra2: any[] = [];

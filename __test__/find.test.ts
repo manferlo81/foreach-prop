@@ -88,7 +88,7 @@ describe('find method', () => {
     const key = 'a';
     const object = { [key]: value };
 
-    const callback = jest.fn(() => true);
+    const callback = jest.fn<boolean, [unknown, string, unknown, unknown]>(() => true);
 
     const extra1 = {};
     const extra2: any[] = [];

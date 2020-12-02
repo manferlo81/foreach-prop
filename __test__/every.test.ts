@@ -26,7 +26,7 @@ describe('every method', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 4 };
     const keys = Object.keys(object);
-    const callback = jest.fn(() => true);
+    const callback = jest.fn<true, [unknown, string]>(() => true);
 
     every(object, callback);
 
@@ -44,7 +44,7 @@ describe('every method', () => {
   test('should skip prototype properties', () => {
 
     const instance = createObject();
-    const callback = jest.fn(() => true);
+    const callback = jest.fn<boolean, [unknown, string]>(() => true);
 
     every(instance, callback);
 
