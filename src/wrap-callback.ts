@@ -2,6 +2,7 @@ import toArray from 'args-to-arr';
 import isFunction from 'is-function';
 import { invalidCallback } from './errors';
 import {
+  Anything,
   Extra,
   FilterCallback,
   Key,
@@ -11,7 +12,7 @@ import {
   WrappedReduceCallback,
 } from './types';
 
-export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, R = any>(
+export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anything, R = Anything>(
   callback: FilterCallback<V, K, E, TH>,
   thisArg: TH,
   object: Record<K, V>,
@@ -24,7 +25,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
   }
 
   if (argsLen === 2) {
-    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, Anything, R>(
       thisArg,
       object[key],
       key,
@@ -33,7 +34,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
 
   if (argsLen === 3) {
     const extra = args[2] as never;
-    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+    return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, Anything, R>(
       thisArg,
       object[key],
       key,
@@ -43,7 +44,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
 
   const extra = toArray(args, 2) as E;
 
-  return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, any, R>(
+  return (key: K): R => (callback as MapCallback<V, K, E, TH, R>).call<TH, Anything, R>(
     thisArg,
     object[key],
     key,
@@ -52,7 +53,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = any, 
 
 }
 
-export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, TH = any>(
+export function wrapReduceCallback<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   callback: ReduceCallback<V, K, E, TH, R>,
   thisArg: TH,
   object: Record<K, V>,
@@ -65,7 +66,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
   }
 
   if (argsLen === 3) {
-    return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+    return (key: K, result: R | undefined): R => callback.call<TH, Anything, R>(
       thisArg,
       result,
       object[key],
@@ -75,7 +76,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
 
   if (argsLen === 4) {
     const extra = args[3] as never;
-    return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+    return (key: K, result: R | undefined): R => callback.call<TH, Anything, R>(
       thisArg,
       result,
       object[key],
@@ -86,7 +87,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = any, T
 
   const extra = toArray(args, 3) as E;
 
-  return (key: K, result: R | undefined): R => callback.call<TH, any, R>(
+  return (key: K, result: R | undefined): R => callback.call<TH, Anything, R>(
     thisArg,
     result,
     object[key],

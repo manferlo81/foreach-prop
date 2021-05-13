@@ -1,9 +1,9 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Key } from './types';
+import { Anything, Key } from './types';
 
-function fill<V, K extends Key, RV = any>(
+function fill<V, K extends Key, RV = Anything>(
   object: Record<K, V>,
   value: RV,
 ): Record<K, RV> {

@@ -1,10 +1,9 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Key } from './types';
+import { Anything, Key } from './types';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function keyOf<K extends Key>(object: Record<K, any>, value: any): K | null {
+function keyOf<K extends Key>(object: Record<K, Anything>, value: Anything): K | null {
 
   const argsLen = arguments.length;
 

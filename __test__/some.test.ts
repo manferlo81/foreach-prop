@@ -73,7 +73,7 @@ describe('some method', () => {
     const thisArg = {};
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const count = Object.keys(object).length;
-    const callback = jest.fn(function cb(this: any) {
+    const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
@@ -92,7 +92,7 @@ describe('some method', () => {
     const callback = jest.fn();
 
     const extra1 = {};
-    const extra2: any[] = [];
+    const extra2: never[] = [];
 
     some(object, callback, extra1, extra2);
 

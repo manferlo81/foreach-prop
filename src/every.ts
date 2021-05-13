@@ -1,24 +1,24 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Extra, FilterCallback, Key } from './types';
+import { Anything, Extra, FilterCallback, Key } from './types';
 import { wrapFilterCallback } from './wrap-callback';
 
-function every<V, K extends Key, E extends Extra, TH = any>(
+function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): boolean;
 
-function every<V, K extends Key, TH = any>(
+function every<V, K extends Key, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): boolean;
 
-function every<V, K extends Key, E extends Extra, TH = any>(
+function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
@@ -36,7 +36,7 @@ function every<V, K extends Key, E extends Extra, TH = any>(
     throw invalidObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, any>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, Anything>(
     callback,
     this,
     object,

@@ -79,7 +79,7 @@ describe('reduce method', () => {
     const thisArg = {};
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const count = Object.keys(object).length;
-    const callback = jest.fn(function <T>(this: any, result: T): T {
+    const callback = jest.fn(function <T>(this: unknown, result: T): T {
       expect(this).toBe(thisArg);
       return result;
     });
@@ -98,7 +98,7 @@ describe('reduce method', () => {
     const callback = jest.fn<unknown, [unknown, unknown, string, unknown, unknown]>((result) => result);
     const initial = {};
     const extra1 = {};
-    const extra2: any[] = [];
+    const extra2: never[] = [];
 
     reduce(object, callback, initial, extra1, extra2);
 

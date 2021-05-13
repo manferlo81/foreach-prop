@@ -1,4 +1,6 @@
-function createErrorFactory<T extends (...args: any[]) => TypeError>(template: string): T {
+import { Anything } from './types';
+
+function createErrorFactory<T extends (...args: Anything[]) => TypeError>(template: string): T {
   return function (): TypeError {
     // eslint-disable-next-line prefer-rest-params
     const args = arguments as ArrayLike<unknown>;

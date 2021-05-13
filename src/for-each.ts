@@ -1,24 +1,24 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Extra, ForEachCallback, Key } from './types';
+import { Anything, Extra, ForEachCallback, Key } from './types';
 import { wrapFilterCallback } from './wrap-callback';
 
-function forEach<V, K extends Key, E extends Extra, TH = any>(
+function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: ForEachCallback<V, K, E, TH>,
   ...extra: E
 ): void;
 
-function forEach<V, K extends Key, TH = any>(
+function forEach<V, K extends Key, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: ForEachCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): void;
 
-function forEach<V, K extends Key, E extends Extra, TH = any>(
+function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: ForEachCallback<V, K, E, TH>,

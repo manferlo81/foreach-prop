@@ -1,24 +1,24 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Extra, FilterCallback, Key } from './types';
+import { Anything, Extra, FilterCallback, Key } from './types';
 import { wrapFilterCallback } from './wrap-callback';
 
-function findKey<V, K extends Key, E extends Extra, TH = any>(
+function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): K | null;
 
-function findKey<V, K extends Key, TH = any>(
+function findKey<V, K extends Key, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): K | null;
 
-function findKey<V, K extends Key, E extends Extra, TH = any>(
+function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
@@ -36,7 +36,7 @@ function findKey<V, K extends Key, E extends Extra, TH = any>(
     throw invalidObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, any>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, Anything>(
     callback,
     this,
     object,

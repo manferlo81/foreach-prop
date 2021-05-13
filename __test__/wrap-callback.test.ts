@@ -46,7 +46,7 @@ describe('create callback', () => {
     const object = { a: 1 };
     const callback = jest.fn();
     const extra1 = {};
-    const extra2: any[] = [];
+    const extra2: never[] = [];
 
     forEach(object, callback, extra1, extra2);
 
@@ -83,7 +83,7 @@ describe('create callback', () => {
     const object = { a: 1 };
     const callback = jest.fn<unknown, [unknown, unknown, string, unknown, unknown]>((result) => result);
     const extra1 = {};
-    const extra2: any[] = [];
+    const extra2: never[] = [];
 
     reduce(object, callback, 0, extra1, extra2);
 

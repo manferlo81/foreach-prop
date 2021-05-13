@@ -1,13 +1,16 @@
-export type Key = Extract<keyof any, string | number>;
-export type Extra = any[];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Anything = any;
+
+export type Key = Extract<keyof Anything, string | number>;
+export type Extra = Anything[];
 
 export type MapCallback<
   V,
   K extends Key,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   E extends Extra,
-  TH = any,
-  R = any> = (
+  TH = Anything,
+  R = Anything> = (
     this: TH,
     value: V,
     key: K,
@@ -18,25 +21,24 @@ export type ForEachCallback<
   V,
   K extends Key,
   E extends Extra,
-  TH = any> = MapCallback<V, K, E, TH, void>;
+  TH = Anything> = MapCallback<V, K, E, TH, void>;
 
 export type FilterCallback<
   V,
   K extends Key,
   E extends Extra,
-  TH = any> = MapCallback<V, K, E, TH, any>;
+  TH = Anything> = MapCallback<V, K, E, TH, Anything>;
 
 export type WrappedFilterCallback<
   K extends Key,
-  R = any> = (key: K) => R;
+  R = Anything> = (key: K) => R;
 
 export type ReduceCallback<
   V,
   K extends Key,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   E extends Extra,
-  TH = any,
-  R = any> = (
+  TH = Anything,
+  R = Anything> = (
     this: TH,
     prev: R,
     value: V,
@@ -46,4 +48,4 @@ export type ReduceCallback<
 
 export type WrappedReduceCallback<
   K extends Key,
-  R = any> = (key: K, result: R | undefined) => R;
+  R = Anything> = (key: K, result: R | undefined) => R;

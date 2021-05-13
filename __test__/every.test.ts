@@ -66,7 +66,7 @@ describe('every method', () => {
 
     const thisArg = {};
     const object = { a: 1 };
-    const callback = jest.fn(function cb(this: any) {
+    const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
@@ -85,7 +85,7 @@ describe('every method', () => {
     const callback = jest.fn();
 
     const extra1 = {};
-    const extra2: any[] = [];
+    const extra2: never[] = [];
 
     every(object, callback, extra1, extra2);
 

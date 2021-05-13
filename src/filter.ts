@@ -1,24 +1,24 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Extra, FilterCallback, Key } from './types';
+import { Anything, Extra, FilterCallback, Key } from './types';
 import { wrapFilterCallback } from './wrap-callback';
 
-function filter<V, K extends Key, E extends Extra, TH = any>(
+function filter<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): Record<K, V>;
 
-function filter<V, K extends Key, TH = any>(
+function filter<V, K extends Key, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): Record<K, V>;
 
-function filter<V, K extends Key, E extends Extra, TH = any>(
+function filter<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: Record<K, V>,
   callback: FilterCallback<V, K, E, TH>,
@@ -36,7 +36,7 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
     throw invalidObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, any>(
+  const wrapped = wrapFilterCallback<V, K, E, TH, Anything>(
     callback,
     this,
     object,
@@ -44,7 +44,7 @@ function filter<V, K extends Key, E extends Extra, TH = any>(
     argsLen,
   );
 
-  const result: Record<Key, any> = {};
+  const result: Record<Key, Anything> = {};
 
   for (const key in object) {
     if (
