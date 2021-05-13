@@ -68,7 +68,7 @@ console.log(result);
 }
 ```
 
-*See the [API section](#api) for mre details.*
+*See the [API section](#api) for more details.*
 
 ### Node.js
 
@@ -89,7 +89,7 @@ eachProp.forEach(object, callback);
 
 ### forEach
 
-*Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once iniciated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
+*Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once initiated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
 
 ```typescript
 forEach(object, function callback(value, key, ...extra) => void, ...extra): void;
@@ -249,7 +249,7 @@ some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
-some.call(thisrArg, object, callback, ...extra): boolean;
+some.call(thisArg, object, callback, ...extra): boolean;
 ```
 
 ### every
@@ -267,9 +267,19 @@ every(object, function callback(value, key, ...extra) => any, ...extra): boolean
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
 ```javascript
-every.call(thisrArg, object, callback, ...extra): boolean;
+every.call(thisArg, object, callback, ...extra): boolean;
+```
+
+### fill
+
+*added in:* `v2.1.0`
+
+*Similar to* `Array.prototype.fill` *with a difference, it returns a new object instead of modifying the given one. Every property in the new object will be set to the provided value.*
+
+```typescript
+fill(object, value): object;
 ```
 
 ## License
 
-[MIT](LICENSE) &copy; [Manuel Fernández](https://github.com/manferlo81)
+[MIT](LICENSE) &copy; 2019 [Manuel Fernández](https://github.com/manferlo81)
