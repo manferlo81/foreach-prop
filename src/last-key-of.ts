@@ -1,9 +1,9 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Anything, Key } from './types';
+import { Anything, ImmutableObject, Key } from './types';
 
-function lastKeyOf<K extends Key>(object: Record<K, Anything>, value: Anything): K | null {
+function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anything): K | null {
 
   const argsLen = arguments.length;
 

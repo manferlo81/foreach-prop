@@ -1,26 +1,26 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Anything, Extra, FilterCallback, Key } from './types';
+import { Anything, Extra, FilterCallback, ImmutableObject, Key } from './types';
 import { wrapFilterCallback } from './wrap-callback';
 
 function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): boolean;
 
 function every<V, K extends Key, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): boolean;
 
 function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
 ): boolean {
 

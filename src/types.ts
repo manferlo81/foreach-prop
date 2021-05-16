@@ -4,6 +4,8 @@ export type Anything = any;
 export type Key = Extract<keyof Anything, string | number>;
 export type Extra = Anything[];
 
+export type ImmutableObject<K extends Key, V> = Readonly<Record<K, V>>;
+
 export type MapCallback<
   V,
   K extends Key,

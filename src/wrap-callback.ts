@@ -1,21 +1,12 @@
 import toArray from 'args-to-arr';
 import isFunction from 'is-function';
 import { invalidCallback } from './errors';
-import {
-  Anything,
-  Extra,
-  FilterCallback,
-  Key,
-  MapCallback,
-  ReduceCallback,
-  WrappedFilterCallback,
-  WrappedReduceCallback,
-} from './types';
+import { Anything, Extra, FilterCallback, ImmutableObject, Key, MapCallback, ReduceCallback, WrappedFilterCallback, WrappedReduceCallback } from './types';
 
 export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anything, R = Anything>(
   callback: FilterCallback<V, K, E, TH>,
   thisArg: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   args: IArguments,
   argsLen: number,
 ): WrappedFilterCallback<K, R> {
@@ -56,7 +47,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anyth
 export function wrapReduceCallback<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   callback: ReduceCallback<V, K, E, TH, R>,
   thisArg: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   args: IArguments,
   argsLen: number,
 ): WrappedReduceCallback<K, R> {

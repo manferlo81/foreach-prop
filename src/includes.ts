@@ -1,7 +1,7 @@
 import keyOf from './key-of';
-import { Anything, Key } from './types';
+import { Anything, ImmutableObject, Key } from './types';
 
-function includes(object: Record<Key, Anything>, value: Anything): boolean {
+function includes(object: ImmutableObject<Key, Anything>, value: Anything): boolean {
   return keyOf(object, value) !== null;
 }
 

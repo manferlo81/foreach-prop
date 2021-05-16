@@ -1,12 +1,12 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Anything, Extra, Key, ReduceCallback } from './types';
+import { Anything, Extra, ImmutableObject, Key, ReduceCallback } from './types';
 import { wrapReduceCallback } from './wrap-callback';
 
 function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
   initial: R,
   ...extra: E
@@ -14,7 +14,7 @@ function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
 
 function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, Extra, TH, R>,
   initial: R,
   ...extra: Extra
@@ -22,7 +22,7 @@ function reduce<V, K extends Key, R = Anything, TH = Anything>(
 
 function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
   initial?: R,
   ...extra: E
@@ -30,7 +30,7 @@ function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
 
 function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, Extra, TH, R>,
   initial?: R,
   ...extra: Extra
@@ -38,7 +38,7 @@ function reduce<V, K extends Key, R = Anything, TH = Anything>(
 
 function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
   initial?: R,
 ): R | undefined {

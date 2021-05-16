@@ -1,10 +1,10 @@
 import { invalidObject, notEnoughArgs } from './errors';
 import hasOwn from './has-own';
 import isObject from './is-object';
-import { Anything, Key } from './types';
+import { Anything, ImmutableObject, Key } from './types';
 
 function fill<V, K extends Key, RV = Anything>(
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   value: RV,
 ): Record<K, RV> {
 
