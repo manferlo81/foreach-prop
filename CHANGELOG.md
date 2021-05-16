@@ -2,6 +2,14 @@
 
 ## Version History
 
+## [2.1.0](https://github.com/manferlo81/foreach-prop/compare/v2.0.8...v2.1.0) (2021-05-16)
+
+
+### Features
+
+* Implement "create" method ([6fff7da](https://github.com/manferlo81/foreach-prop/commit/6fff7daa07867f42238842b4175206561a38134c))
+* Implement "fill" method ([8989385](https://github.com/manferlo81/foreach-prop/commit/89893856d43285b8c92c8cf42b858165569c1a4d))
+
 ### [2.0.8](https://github.com/manferlo81/foreach-prop/compare/v2.0.7...v2.0.8) (2020-05-11)
 
 
