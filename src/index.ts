@@ -1,3 +1,4 @@
+export { create } from './create';
 export { default as every } from './every';
 export { default as fill } from './fill';
 export { default as filter } from './filter';

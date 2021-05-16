@@ -35,6 +35,7 @@
     "lint:src": "eslint src/**/*.ts",
     "lint": "run-p lint:*",
     "test": "jest --color -w 3",
+    "test:watch": "jest --color -w 3 --watch-all",
     "dev": "bundlib -dw",
     "build": "bundlib -d",
     "prerelease": "run-s clean lint test build",

@@ -6,6 +6,26 @@ Array-like methods for objects
 
 > :warning: *Some javascript implementations don't follow the object key order. Keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
 
+## Content
+
+* [Install](#install)
+* [CDN](#cdn)
+* [Usage](#usage)
+* [API](#api)
+  * [forEach](#foreach)
+  * [map](#map)
+  * [keyOf](#keyof)
+  * [lastKeyOf](#lastkeyof)
+  * [includes](#includes)
+  * [findKey](#findkey)
+  * [find](#find)
+  * [filter](#filter)
+  * [reduce](#reduce)
+  * [some](#some)
+  * [every](#every)
+  * [create](#create)
+  * [fill](#fill)
+
 ## Install
 
 ```bash
@@ -20,7 +40,7 @@ npm i foreach-prop
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-***for production***
+**_for production_**
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -34,7 +54,7 @@ npm i foreach-prop
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-***for production***
+**_for production_**
 
 ```html
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -44,7 +64,7 @@ npm i foreach-prop
 
 ## Usage
 
-***example***
+**_example_**
 
 ```javascript
 import { map } from "foreach-prop";
@@ -173,7 +193,7 @@ find(object, function callback(value, key, ...extra) => any, ...extra): any;
 
 > *Note that the returned value may be* `undefined` *even if the condition is met and the value is* `undefined`*.*
 
-***example***
+**_example_**
 
 ```javascript
 const undef;
@@ -268,6 +288,27 @@ every(object, function callback(value, key, ...extra) => any, ...extra): boolean
 
 ```javascript
 every.call(thisArg, object, callback, ...extra): boolean;
+```
+
+### create
+
+*added in:* `v2.1.0`
+
+*Similar to* `new Array()`*. It creates a new object with the given keys. If a value is provided, every property will be populated with the given value or* `undefined` *otherwise.*
+
+```typescript
+create(keys: Array<string | number>, value?: any): object;
+```
+
+**_example_**
+
+```typescript
+const object = create(['a', 'b'], true);
+console.log(object);
+```
+
+```bach
+{ a: true, b: true }
 ```
 
 ### fill

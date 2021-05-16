@@ -3,11 +3,19 @@ const numbers = [0, 10, -10, NaN, Infinity, -Infinity];
 const booleans = [true, false];
 const nulls = [null, undefined];
 
-const objects: Array<Record<string | number, never>> = [
+const dictionaries = [
   {} as never,
   Object.create({}) as never,
   Object.create(null) as never,
-  [] as never,
+];
+
+const arrays = [
+  [],
+];
+
+const objects = [
+  ...dictionaries,
+  ...arrays,
 ];
 
 export const invalidObjects = [
@@ -20,4 +28,9 @@ export const invalidObjects = [
 export const invalidCallbacks = [
   ...invalidObjects,
   ...objects,
+];
+
+export const invalidArrays = [
+  ...invalidObjects,
+  ...dictionaries,
 ];

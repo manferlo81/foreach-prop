@@ -14,3 +14,4 @@ function createErrorFactory<T extends (...args: Anything[]) => TypeError>(templa
 export const notEnoughArgs = createErrorFactory<(count: number, expected: number) => TypeError>('expected $1 arguments, got $0.');
 export const invalidObject = createErrorFactory<(object: unknown) => TypeError>('$0 is not an object.');
 export const invalidCallback = createErrorFactory<(callback: unknown) => TypeError>('$0 is not a function.');
+export const invalidArray = createErrorFactory<(object: unknown) => TypeError>('$0 is not an array.');
