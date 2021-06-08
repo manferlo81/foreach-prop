@@ -22,11 +22,17 @@
     "some",
     "every"
   ],
-  "main": "dist/each-prop.js",
-  "module": "dist/each-prop.mjs",
-  "browser": "dist/each-prop.umd.js",
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
+  "type": "commonjs",
+  "exports": {
+    "import": "./dist/each-prop.mjs",
+    "default": "./dist/each-prop.js"
+  },
+  "main": "./dist/each-prop.js",
+  "module": "./dist/each-prop.mjs",
+  "jsnext:main": "./dist/each-prop.mjs",
+  "browser": "./dist/each-prop.umd.js",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "clean:cache": "rimraf node_modules/.cache/{bundlib,jest}",
     "clean:build": "rimraf dist coverage",
@@ -36,8 +42,8 @@
     "lint": "run-p lint:*",
     "test": "jest --color -w 3",
     "test:watch": "jest --color -w 3 --watch-all",
-    "dev": "bundlib -dw",
     "build": "bundlib -d",
+    "dev": "bundlib -dw",
     "prerelease": "run-s clean lint test build",
     "release": "standard-version"
   },
