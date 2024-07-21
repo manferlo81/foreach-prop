@@ -8,8 +8,9 @@ export const ownProps = [ownPropA, ownPropB];
 export const protoProps = [protoPropA, protoPropB];
 
 export function createObject(): Record<string, string> {
+  const pattern = { [protoPropA]: protoPropA, [protoPropB]: protoPropB };
   return Object.assign<Record<string, string>, Record<string, string>>(
-    Object.create({ [protoPropA]: protoPropA, [protoPropB]: protoPropB }),
+    Object.create(pattern) as typeof pattern,
     { [ownPropA]: ownPropA, [ownPropB]: ownPropB },
   );
 }
