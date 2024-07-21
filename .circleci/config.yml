@@ -9,21 +9,35 @@ executors:
       - image: cimg/node:18.20
     working_directory: ~/foreach-prop
 
+  executor_node_20:
+    docker:
+      - image: cimg/node:20.15
+    working_directory: ~/foreach-prop
+
 commands:
-  command_checkout_cache_install:
+  command_ci:
+    parameters:
+      cache_key:
+        type: string
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v3-deps-foreach-prop-{{ checksum "package.json" }}
-            - v3-deps-foreach-prop-
+            - << parameters.cache_key >>-{{ checksum "package-lock.json" }}
+            - << parameters.cache_key >>-
       - run:
           name: Install Dependencies
           command: npm install
       - save_cache:
-          key: v3-deps-foreach-prop-{{ checksum "package.json" }}
+          key: << parameters.cache_key >>-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
+      - run:
+          name: Run Tests
+          command: npm test
+      - run:
+          name: Build
+          command: npm run build
 
   command_save_workspace:
     steps:
@@ -47,17 +61,18 @@ commands:
           command: npm publish
 
 jobs:
-  job_test_and_build:
+  job_node_18_ci:
     executor: executor_node_18
     steps:
-      - command_checkout_cache_install
-      - run:
-          name: Run Tests
-          command: npm test
-      - run:
-          name: Build
-          command: npm run build
+      - command_ci:
+          cache_key: v1-node-18-deps-foreach-prop
       - command_save_workspace
+
+  job_node_20_ci:
+    executor: executor_node_20
+    steps:
+      - command_ci:
+          cache_key: v1-node-20-deps-foreach-prop
 
   job_upload_coverage:
     executor: executor_node_18
@@ -75,7 +90,14 @@ jobs:
 workflows:
   workflow_ci:
     jobs:
-      - job_test_and_build:
+      - job_node_18_ci:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
+
+      - job_node_20_ci:
           filters:
             tags:
               only: /.*/
@@ -84,7 +106,8 @@ workflows:
 
       - job_upload_coverage:
           requires:
-            - job_test_and_build
+            - job_node_18_ci
+            - job_node_20_ci
           filters:
             branches:
               only: /master/
@@ -92,7 +115,8 @@ workflows:
       - job_publish_to_npm:
           context: npm
           requires:
-            - job_test_and_build
+            - job_node_18_ci
+            - job_node_20_ci
           filters:
             tags:
               only: /^v\d+\.\d+\.\d+$/
