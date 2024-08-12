@@ -101,7 +101,7 @@ describe('findKey method', () => {
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const expectedResult = 'b';
 
-    const result = findKey(object, (val, key) => {
+    const result = findKey(object, (_val, key) => {
       return key === expectedResult;
     });
 

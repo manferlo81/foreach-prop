@@ -9,7 +9,6 @@ export type ImmutableObject<K extends Key, V> = Readonly<Record<K, V>>;
 export type MapCallback<
   V,
   K extends Key,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   E extends Extra,
   TH = Anything,
   R = Anything> = (
@@ -29,7 +28,7 @@ export type FilterCallback<
   V,
   K extends Key,
   E extends Extra,
-  TH = Anything> = MapCallback<V, K, E, TH, Anything>;
+  TH = Anything> = MapCallback<V, K, E, TH>;
 
 export type WrappedFilterCallback<
   K extends Key,

@@ -17,8 +17,8 @@ function keyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anyth
 
   for (const key in object) {
     if (
-      hasOwn.call(object, key) &&
-      object[key] === value
+      hasOwn.call(object, key)
+      && object[key] === value
     ) {
       return key as K;
     }

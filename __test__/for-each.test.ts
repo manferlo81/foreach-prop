@@ -6,19 +6,29 @@ describe('forEach method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => forEach()).toThrow(TypeError);
+    const newLocal = () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      forEach();
+    };
+    expect(newLocal).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => forEach({})).toThrow(TypeError);
+    const newLocal_1 = () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      forEach({});
+    };
+
+    expect(newLocal_1).toThrow(TypeError);
 
   });
 
   test('should throw on non object', () => {
     invalidObjects.forEach((object) => {
-      expect(() => forEach(object as never, () => null)).toThrow(TypeError);
+      const exec = () => {
+        forEach(object as never, () => null);
+      };
+      expect(exec).toThrow(TypeError);
     });
   });
 
@@ -99,6 +109,7 @@ describe('forEach method', () => {
   test('should return void', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 4 };
+    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
     const result = forEach(object, () => null);
 
     expect(result).toBeUndefined();

@@ -1,5 +1,6 @@
 import { Anything } from './types';
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function createErrorFactory<T extends (...args: Anything[]) => TypeError>(template: string): T {
   return function (): TypeError {
     // eslint-disable-next-line prefer-rest-params

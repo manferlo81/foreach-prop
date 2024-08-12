@@ -10,9 +10,11 @@ describe('find method', () => {
     // @ts-ignore
     expect(() => find()).toThrow(TypeError);
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => find({})).toThrow(TypeError);
+    expect(() => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      find({});
+    }).toThrow(TypeError);
 
   });
 

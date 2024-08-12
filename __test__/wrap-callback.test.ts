@@ -8,7 +8,10 @@ describe('create callback', () => {
     const object = { a: 1 };
 
     invalidCallbacks.forEach((callback) => {
-      expect(() => forEach(object, callback as never)).toThrow(TypeError);
+      const exec = () => {
+        forEach(object, callback as never);
+      };
+      expect(exec).toThrow(TypeError);
     });
 
   });

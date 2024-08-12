@@ -9,20 +9,20 @@ function find<V, K extends Key, E extends Extra, TH = Anything>(
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
-): V | void;
+): V | undefined;
 
 function find<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
-): V | void;
+): V | undefined;
 
 function find<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
-): V | void {
+): V | undefined {
 
   // eslint-disable-next-line prefer-rest-params
   const args = arguments;
@@ -36,7 +36,7 @@ function find<V, K extends Key, E extends Extra, TH = Anything>(
     throw invalidObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, Anything>(
+  const wrapped = wrapFilterCallback<V, K, E, TH>(
     callback,
     this,
     object,
@@ -46,8 +46,8 @@ function find<V, K extends Key, E extends Extra, TH = Anything>(
 
   for (const key in object) {
     if (
-      hasOwn.call(object, key) &&
-      wrapped(key)
+      hasOwn.call(object, key)
+      && wrapped(key)
     ) {
       return object[key];
     }

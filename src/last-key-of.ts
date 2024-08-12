@@ -19,8 +19,8 @@ function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: A
 
   for (const key in object) {
     if (
-      hasOwn.call(object, key) &&
-      object[key] === value
+      hasOwn.call(object, key)
+      && object[key] === value
     ) {
       result = key as K;
     }

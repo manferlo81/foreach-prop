@@ -36,7 +36,7 @@ function findKey<V, K extends Key, E extends Extra, TH = Anything>(
     throw invalidObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, Anything>(
+  const wrapped = wrapFilterCallback<V, K, E, TH>(
     callback,
     this,
     object,
@@ -46,8 +46,8 @@ function findKey<V, K extends Key, E extends Extra, TH = Anything>(
 
   for (const key in object) {
     if (
-      hasOwn.call(object, key) &&
-      wrapped(key)
+      hasOwn.call(object, key)
+      && wrapped(key)
     ) {
       return key;
     }
