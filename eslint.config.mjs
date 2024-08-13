@@ -19,9 +19,12 @@ const typescriptFlatConfig = config(
 );
 
 const stylisticRules = pluginRules('@stylistic', {
-  'semi': rule('always'),
-  'padded-blocks': 'off',
+  semi: rule('always'),
+  quotes: rule('single'),
+  'linebreak-style': rule('unix'),
+  'quote-props': rule('as-needed'),
   'arrow-parens': rule('always'),
+  'padded-blocks': 'off',
 });
 
 export default config(
