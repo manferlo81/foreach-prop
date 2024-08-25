@@ -1,7 +1,7 @@
 import pluginJs from '@eslint/js';
 import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
-import { config, configs } from 'typescript-eslint';
+import { config, configs as typescriptConfigs } from 'typescript-eslint';
 
 const rule = (options) => ['error', options];
 
@@ -11,12 +11,10 @@ const pluginRules = (pluginName, rules) => Object.keys(rules).reduce((output, ru
   return ({ ...output, [pluginRuleName]: value });
 }, {});
 
-const typescriptFlatConfig = config(
-  ...configs.strictTypeChecked,
-  ...configs.stylisticTypeChecked,
-  { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
-  { files: ['*.{js,cjs,mjs}'], ...configs.disableTypeChecked },
-);
+const eslintRules = {
+  'no-useless-rename': 'error',
+  'object-shorthand': 'error',
+};
 
 const stylisticRules = pluginRules('@stylistic', {
   semi: rule('always'),
@@ -27,11 +25,18 @@ const stylisticRules = pluginRules('@stylistic', {
   'padded-blocks': 'off',
 });
 
+const typescriptFlatConfig = config(
+  ...typescriptConfigs.strictTypeChecked,
+  ...typescriptConfigs.stylisticTypeChecked,
+  { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
+  { files: ['*.{js,cjs,mjs}'], ...typescriptConfigs.disableTypeChecked },
+);
+
 export default config(
   { ignores: ['dist', 'coverage'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
-  ...typescriptFlatConfig,
   stylistic.configs['recommended-flat'],
-  { rules: { ...stylisticRules } },
+  ...typescriptFlatConfig,
+  { rules: { ...eslintRules, ...stylisticRules } },
 );
