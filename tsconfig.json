@@ -15,8 +15,7 @@
   },
   "include": [
     "__test__/**/*.ts",
-    "src/**/*.ts",
-    "bundlib.config.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules/**"
