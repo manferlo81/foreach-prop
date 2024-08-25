@@ -1,6 +1,14 @@
 # foreach-prop
 
-[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop) [![npm](https://badgen.net/npm/v/foreach-prop)](https://www.npmjs.com/package/foreach-prop) [![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/master/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop) [![jsDelivr](https://data.jsdelivr.com/v1/package/npm/foreach-prop/badge?style=rounded)](https://www.jsdelivr.com/package/npm/foreach-prop) [![dependencies](https://badgen.net/david/dep/manferlo81/foreach-prop)](https://david-dm.org/manferlo81/foreach-prop) [![dev dependencies](https://badgen.net/david/dev/manferlo81/foreach-prop)](https://david-dm.org/manferlo81/foreach-prop?type=dev) [![packagephobia](https://badgen.net/packagephobia/install/foreach-prop)](https://packagephobia.now.sh/result?p=foreach-prop) [![bundlephobia](https://badgen.net/bundlephobia/min/foreach-prop)](https://bundlephobia.com/result?p=foreach-prop) [![types](https://img.shields.io/npm/types/foreach-prop.svg)](https://github.com/microsoft/typescript) [![Known Vulnerabilities](https://snyk.io/test/github/manferlo81/foreach-prop/badge.svg?targetFile=package.json)](https://snyk.io/test/github/manferlo81/foreach-prop?targetFile=package.json) [![license](https://badgen.net/github/license/manferlo81/foreach-prop)](LICENSE)
+[![CircleCI](https://circleci.com/gh/manferlo81/foreach-prop.svg?style=svg)](https://circleci.com/gh/manferlo81/foreach-prop)
+[![npm](https://badgen.net/npm/v/foreach-prop)](https://www.npmjs.com/package/foreach-prop)
+[![codecov](https://codecov.io/gh/manferlo81/foreach-prop/branch/main/graph/badge.svg)](https://codecov.io/gh/manferlo81/foreach-prop)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/foreach-prop/badge?style=rounded)](https://www.jsdelivr.com/package/npm/foreach-prop)
+[![packagephobia](https://badgen.net/packagephobia/install/foreach-prop)](https://packagephobia.now.sh/result?p=foreach-prop)
+[![bundlephobia](https://badgen.net/bundlephobia/min/foreach-prop)](https://bundlephobia.com/result?p=foreach-prop)
+[![types](https://img.shields.io/npm/types/foreach-prop.svg)](https://github.com/microsoft/typescript)
+[![Known Vulnerabilities](https://snyk.io/test/github/manferlo81/foreach-prop/badge.svg?targetFile=package.json)](https://snyk.io/test/github/manferlo81/foreach-prop?targetFile=package.json)
+[![license](https://badgen.net/github/license/manferlo81/foreach-prop)](LICENSE)
 
 Array-like methods for objects
 
@@ -40,7 +48,7 @@ npm i foreach-prop
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-**_for production_**
+***for production***
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -54,7 +62,7 @@ npm i foreach-prop
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
 ```
 
-**_for production_**
+***for production***
 
 ```html
 <script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
@@ -64,7 +72,7 @@ npm i foreach-prop
 
 ## Usage
 
-**_example_**
+***example***
 
 ```javascript
 import { map } from "foreach-prop";
@@ -193,7 +201,7 @@ find(object, function callback(value, key, ...extra) => any, ...extra): any;
 
 > *Note that the returned value may be* `undefined` *even if the condition is met and the value is* `undefined`*.*
 
-**_example_**
+***example***
 
 ```javascript
 const undef;
@@ -300,7 +308,7 @@ every.call(thisArg, object, callback, ...extra): boolean;
 create(keys: Array<string | number>, value?: any): object;
 ```
 
-**_example_**
+***example***
 
 ```typescript
 const object = create(['a', 'b'], true);
