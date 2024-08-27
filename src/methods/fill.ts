@@ -1,5 +1,5 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
+import { fillObject } from '../tools/fill-object';
 import { isObject } from '../tools/is-object';
 import type { Anything, ImmutableObject, Key } from '../types/private-types';
 
@@ -19,14 +19,10 @@ export function fill<V, K extends Key, RV = Anything>(
     throw errorNotObject(object);
   }
 
-  const result: Record<Key, RV> = {};
+  // get keys from object
+  const keys = Object.keys(object) as K[];
 
-  for (const key in object) {
-    if (hasOwn.call(object, key)) {
-      result[key as Key] = value;
-    }
-  }
-
-  return result;
+  // return new object
+  return fillObject(keys, value);
 
 }
