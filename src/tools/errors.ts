@@ -1,18 +1,11 @@
-import type { Anything } from '../types/private-types';
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
-function createErrorFactory<T extends (...args: Anything[]) => TypeError>(template: string): T {
-  return function (): TypeError {
-    // eslint-disable-next-line prefer-rest-params
-    const args = arguments as ArrayLike<unknown>;
-    return new TypeError(template.replace(/\$(\d+)/g, (_, i: string) => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      return `${args[+i]}`;
-    }));
-  } as T;
+export function createErrorFunction<F extends (...args: never[]) => string>(createMessage: F): (...args: Parameters<F>) => TypeError {
+  return (...args) => new TypeError(createMessage(...args));
 }
 
-export const notEnoughArgs = createErrorFactory<(count: number, expected: number) => TypeError>('expected $1 arguments, got $0.');
-export const invalidObject = createErrorFactory<(object: unknown) => TypeError>('$0 is not an object.');
-export const invalidCallback = createErrorFactory<(callback: unknown) => TypeError>('$0 is not a function.');
-export const invalidArray = createErrorFactory<(object: unknown) => TypeError>('$0 is not an array.');
+export const errorIsNot = createErrorFunction((value: unknown, expected: string) => `${value} is not ${expected}.`);
+export const errorNotEnoughArgs = createErrorFunction((count: number, expected: number) => `expected ${expected} arguments, got ${count}.`);
+
+export const errorNotObject = (object: unknown) => errorIsNot(object, 'an object');
+export const errorNotCallback = (callback: unknown) => errorIsNot(callback, 'a function');

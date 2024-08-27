@@ -1,4 +1,4 @@
-import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import type { Anything, ImmutableObject, Key } from '../types/private-types';
@@ -12,11 +12,11 @@ export function fill<V, K extends Key, RV = Anything>(
   const { length: argsLen } = arguments;
 
   if (argsLen < 2) {
-    throw notEnoughArgs(argsLen, 2);
+    throw errorNotEnoughArgs(argsLen, 2);
   }
 
   if (!isObject(object)) {
-    throw invalidObject(object);
+    throw errorNotObject(object);
   }
 
   const result: Record<Key, RV> = {};

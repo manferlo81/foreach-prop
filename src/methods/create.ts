@@ -1,4 +1,4 @@
-import { invalidArray } from '../tools/errors';
+import { errorIsNot } from '../tools/errors';
 import type { Key } from '../types/private-types';
 
 export function create<V, K extends Key>(keys: K[], value: V): Record<K, V>;
@@ -6,7 +6,7 @@ export function create<K extends Key>(keys: K[], value?: undefined): Record<K, u
 export function create<V, K extends Key>(keys: K[], value?: V): Record<K, V | undefined> {
 
   if (!Array.isArray(keys)) {
-    throw invalidArray(keys);
+    throw errorIsNot(keys, 'an array');
   }
 
   const result: Record<Key, V | undefined> = {};

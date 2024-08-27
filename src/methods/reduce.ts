@@ -1,4 +1,4 @@
-import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import { wrapReduceCallback } from '../tools/wrap-callback';
@@ -49,11 +49,11 @@ export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Any
   const argsLen = args.length;
 
   if (argsLen < 2) {
-    throw notEnoughArgs(argsLen, 2);
+    throw errorNotEnoughArgs(argsLen, 2);
   }
 
   if (!isObject(object)) {
-    throw invalidObject(object);
+    throw errorNotObject(object);
   }
 
   const wrapped = wrapReduceCallback<V, K, E, R, TH>(

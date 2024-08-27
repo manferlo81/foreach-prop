@@ -2,7 +2,7 @@ import toArray from 'args-to-arr';
 import isFunction from 'is-function';
 import type { Anything, Extra, ImmutableObject, Key, WrappedFilterCallback, WrappedReduceCallback } from '../types/private-types';
 import type { FilterCallback, MapCallback, ReduceCallback } from '../types/types';
-import { invalidCallback } from './errors';
+import { errorNotCallback } from './errors';
 
 export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anything, R = Anything>(
   callback: FilterCallback<V, K, E, TH>,
@@ -13,7 +13,7 @@ export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anyth
 ): WrappedFilterCallback<K, R> {
 
   if (!isFunction(callback)) {
-    throw invalidCallback(callback);
+    throw errorNotCallback(callback);
   }
 
   if (argsLen === 2) {
@@ -54,7 +54,7 @@ export function wrapReduceCallback<V, K extends Key, E extends Extra, R = Anythi
 ): WrappedReduceCallback<K, R> {
 
   if (!isFunction(callback)) {
-    throw invalidCallback(callback);
+    throw errorNotCallback(callback);
   }
 
   if (argsLen === 3) {
