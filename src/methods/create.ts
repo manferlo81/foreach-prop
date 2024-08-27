@@ -1,5 +1,5 @@
-import { invalidArray } from './errors';
-import { Key } from './types';
+import { invalidArray } from '../tools/errors';
+import type { Key } from '../types/private-types';
 
 export function create<V, K extends Key>(keys: K[], value: V): Record<K, V>;
 export function create<K extends Key>(keys: K[], value?: undefined): Record<K, undefined>;

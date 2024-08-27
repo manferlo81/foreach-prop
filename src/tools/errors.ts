@@ -1,4 +1,4 @@
-import { Anything } from './types';
+import type { Anything } from '../types/private-types';
 
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-parameters
 function createErrorFactory<T extends (...args: Anything[]) => TypeError>(template: string): T {

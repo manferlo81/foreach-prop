@@ -1,9 +1,9 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, ImmutableObject, Key } from './types';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import type { Anything, ImmutableObject, Key } from '../types/private-types';
 
-function fill<V, K extends Key, RV = Anything>(
+export function fill<V, K extends Key, RV = Anything>(
   object: ImmutableObject<K, V>,
   value: RV,
 ): Record<K, RV> {
@@ -30,5 +30,3 @@ function fill<V, K extends Key, RV = Anything>(
   return result;
 
 }
-
-export default fill;

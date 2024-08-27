@@ -1,28 +1,29 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, Extra, FilterCallback, ImmutableObject, Key } from './types';
-import { wrapFilterCallback } from './wrap-callback';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import { wrapFilterCallback } from '../tools/wrap-callback';
+import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { FilterCallback } from '../types/types';
 
-function some<V, K extends Key, E extends Extra, TH = Anything>(
+export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
-): boolean;
+): K | null;
 
-function some<V, K extends Key, TH = Anything>(
+export function findKey<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
-): boolean;
+): K | null;
 
-function some<V, K extends Key, E extends Extra, TH = Anything>(
+export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
-): boolean {
+): K | null {
 
   // eslint-disable-next-line prefer-rest-params
   const args = arguments;
@@ -49,12 +50,10 @@ function some<V, K extends Key, E extends Extra, TH = Anything>(
       hasOwn.call(object, key)
       && wrapped(key)
     ) {
-      return true;
+      return key;
     }
   }
 
-  return false;
+  return null;
 
 }
-
-export default some;

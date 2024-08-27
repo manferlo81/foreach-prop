@@ -1,24 +1,25 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, Extra, ForEachCallback, ImmutableObject, Key } from './types';
-import { wrapFilterCallback } from './wrap-callback';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import { wrapFilterCallback } from '../tools/wrap-callback';
+import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { ForEachCallback } from '../types/types';
 
-function forEach<V, K extends Key, E extends Extra, TH = Anything>(
+export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ForEachCallback<V, K, E, TH>,
   ...extra: E
 ): void;
 
-function forEach<V, K extends Key, TH = Anything>(
+export function forEach<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ForEachCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): void;
 
-function forEach<V, K extends Key, E extends Extra, TH = Anything>(
+export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ForEachCallback<V, K, E, TH>,
@@ -51,5 +52,3 @@ function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   }
 
 }
-
-export default forEach;

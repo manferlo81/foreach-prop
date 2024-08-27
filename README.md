@@ -20,19 +20,19 @@ Array-like methods for objects
 * [CDN](#cdn)
 * [Usage](#usage)
 * [API](#api)
-  * [forEach](#foreach)
-  * [map](#map)
-  * [keyOf](#keyof)
-  * [lastKeyOf](#lastkeyof)
-  * [includes](#includes)
-  * [findKey](#findkey)
-  * [find](#find)
-  * [filter](#filter)
-  * [reduce](#reduce)
-  * [some](#some)
-  * [every](#every)
-  * [create](#create)
-  * [fill](#fill)
+  * [`forEach`](#foreach)
+  * [`map`](#map)
+  * [`keyOf`](#keyof)
+  * [`lastKeyOf`](#lastkeyof)
+  * [`includes`](#includes)
+  * [`findKey`](#findkey)
+  * [`find`](#find)
+  * [`filter`](#filter)
+  * [`reduce`](#reduce)
+  * [`some`](#some)
+  * [`every`](#every)
+  * [`create`](#create)
+  * [`fill`](#fill)
 
 ## Install
 
@@ -115,7 +115,7 @@ eachProp.forEach(object, callback);
 
 ## API
 
-### forEach
+### `forEach`
 
 *Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once initiated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
 
@@ -131,9 +131,9 @@ forEach(object, function callback(value, key, ...extra) => void, ...extra): void
 forEach.call(thisArg, object, callback, ...extra);
 ```
 
-### map
+### `map`
 
-*Similar to* `Array.prototype.map`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object.*
+*Similar to* `Array.prototype.map`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object with the callback* `return` *as value.*
 
 ```typescript
 map(object, function callback(value, key, ...extra) => any, ...extra): object;
@@ -147,7 +147,7 @@ map(object, function callback(value, key, ...extra) => any, ...extra): object;
 map.call(thisArg, object, callback, ...extra);
 ```
 
-### keyOf
+### `keyOf`
 
 *Similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one, or* `null` *if not found.*
 
@@ -155,7 +155,7 @@ map.call(thisArg, object, callback, ...extra);
 keyOf(object, value): string | null;
 ```
 
-### lastKeyOf
+### `lastKeyOf`
 
 *Similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one, or* `null` *if not found.*
 
@@ -163,7 +163,7 @@ keyOf(object, value): string | null;
 lastKeyOf(object, value): string | null;
 ```
 
-### includes
+### `includes`
 
 *added in:* `v0.2.0`
 
@@ -173,7 +173,7 @@ lastKeyOf(object, value): string | null;
 includes(object, value): boolean;
 ```
 
-### findKey
+### `findKey`
 
 *Similar to* `Array.prototype.findIndex`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
 
@@ -189,7 +189,7 @@ findKey(object, function callback(value, key, ...extra) => any, ...extra): strin
 findKey.call(thisArg, object, callback, ...extra);
 ```
 
-### find
+### `find`
 
 *added in:* `v0.1.0`
 
@@ -199,7 +199,7 @@ findKey.call(thisArg, object, callback, ...extra);
 find(object, function callback(value, key, ...extra) => any, ...extra): any;
 ```
 
-> *Note that the returned value may be* `undefined` *even if the condition is met and the value is* `undefined`*.*
+> *Note that the returned value may be* `undefined` *even if the condition is met but the value is* `undefined`*.*
 
 ***example***
 
@@ -230,7 +230,7 @@ undefined
 find.call(thisArg, object, callback, ...extra);
 ```
 
-### filter
+### `filter`
 
 *Similar to* `Array.prototype.filter`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
 
@@ -246,7 +246,7 @@ filter(object, function callback(value, key, ...extra) => any, ...extra): object
 filter.call(thisArg, object, callback, ...extra);
 ```
 
-### reduce
+### `reduce`
 
 *Similar to* `Array.prototype.reduce` *but with a major difference: if no initial value provided it defaults to* `undefined`*.*
 
@@ -262,7 +262,7 @@ reduce(object, function callback(current, value, key, ...extra) => any, initial?
 reduce.call(thisArg, object, callback, initial?, ...extra);
 ```
 
-### some
+### `some`
 
 *added in:* `v0.2.0`
 
@@ -280,7 +280,7 @@ some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
 some.call(thisArg, object, callback, ...extra): boolean;
 ```
 
-### every
+### `every`
 
 *added in:* `v0.2.0`
 
@@ -298,7 +298,7 @@ every(object, function callback(value, key, ...extra) => any, ...extra): boolean
 every.call(thisArg, object, callback, ...extra): boolean;
 ```
 
-### create
+### `create`
 
 *added in:* `v2.1.0`
 
@@ -319,7 +319,7 @@ console.log(object);
 { a: true, b: true }
 ```
 
-### fill
+### `fill`
 
 *added in:* `v2.1.0`
 

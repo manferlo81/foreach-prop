@@ -1,10 +1,11 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, Extra, ImmutableObject, Key, ReduceCallback } from './types';
-import { wrapReduceCallback } from './wrap-callback';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import { wrapReduceCallback } from '../tools/wrap-callback';
+import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { ReduceCallback } from '../types/types';
 
-function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
+export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
@@ -12,7 +13,7 @@ function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   ...extra: E
 ): R;
 
-function reduce<V, K extends Key, R = Anything, TH = Anything>(
+export function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, Extra, TH, R>,
@@ -20,7 +21,7 @@ function reduce<V, K extends Key, R = Anything, TH = Anything>(
   ...extra: Extra
 ): R;
 
-function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
+export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
@@ -28,7 +29,7 @@ function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   ...extra: E
 ): R | undefined;
 
-function reduce<V, K extends Key, R = Anything, TH = Anything>(
+export function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, Extra, TH, R>,
@@ -36,7 +37,7 @@ function reduce<V, K extends Key, R = Anything, TH = Anything>(
   ...extra: Extra
 ): R | undefined;
 
-function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
+export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
@@ -74,5 +75,3 @@ function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   return result;
 
 }
-
-export default reduce;

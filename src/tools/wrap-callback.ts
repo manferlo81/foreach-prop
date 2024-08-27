@@ -1,7 +1,8 @@
 import toArray from 'args-to-arr';
 import isFunction from 'is-function';
+import type { Anything, Extra, ImmutableObject, Key, WrappedFilterCallback, WrappedReduceCallback } from '../types/private-types';
+import type { FilterCallback, MapCallback, ReduceCallback } from '../types/types';
 import { invalidCallback } from './errors';
-import { Anything, Extra, FilterCallback, ImmutableObject, Key, MapCallback, ReduceCallback, WrappedFilterCallback, WrappedReduceCallback } from './types';
 
 export function wrapFilterCallback<V, K extends Key, E extends Extra, TH = Anything, R = Anything>(
   callback: FilterCallback<V, K, E, TH>,

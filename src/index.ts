@@ -1,14 +1,19 @@
-export { create } from './create';
-export { default as every } from './every';
-export { default as fill } from './fill';
-export { default as filter } from './filter';
-export { default as find } from './find';
-export { default as findKey } from './find-key';
-export { default as forEach } from './for-each';
-export { default as includes } from './includes';
-export { default as keyOf } from './key-of';
-export { default as lastKeyOf } from './last-key-of';
-export { default as map } from './map';
-export { default as reduce } from './reduce';
-export { default as some } from './some';
-export { FilterCallback, ForEachCallback, MapCallback, ReduceCallback } from './types';
+export { create } from './methods/create';
+export { every } from './methods/every';
+export { fill } from './methods/fill';
+export { filter } from './methods/filter';
+export { find } from './methods/find';
+export { findKey } from './methods/find-key';
+export { forEach } from './methods/for-each';
+export { includes } from './methods/includes';
+export { keyOf } from './methods/key-of';
+export { lastKeyOf } from './methods/last-key-of';
+export { map } from './methods/map';
+export { reduce } from './methods/reduce';
+export { some } from './methods/some';
+export {
+  FilterCallback,
+  ForEachCallback,
+  MapCallback,
+  ReduceCallback,
+} from './types/types';

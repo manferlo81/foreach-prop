@@ -1,9 +1,9 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, ImmutableObject, Key } from './types';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import type { Anything, ImmutableObject, Key } from '../types/private-types';
 
-function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anything): K | null {
+export function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anything): K | null {
 
   const argsLen = arguments.length;
 
@@ -29,5 +29,3 @@ function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: A
   return result;
 
 }
-
-export default lastKeyOf;

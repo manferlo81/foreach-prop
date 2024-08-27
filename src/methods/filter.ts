@@ -1,28 +1,29 @@
-import { invalidObject, notEnoughArgs } from './errors';
-import hasOwn from './has-own';
-import isObject from './is-object';
-import { Anything, Extra, FilterCallback, ImmutableObject, Key } from './types';
-import { wrapFilterCallback } from './wrap-callback';
+import { invalidObject, notEnoughArgs } from '../tools/errors';
+import { hasOwn } from '../tools/has-own';
+import { isObject } from '../tools/is-object';
+import { wrapFilterCallback } from '../tools/wrap-callback';
+import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { FilterCallback } from '../types/types';
 
-function find<V, K extends Key, E extends Extra, TH = Anything>(
+export function filter<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
   ...extra: E
-): V | undefined;
+): Record<K, V>;
 
-function find<V, K extends Key, TH = Anything>(
+export function filter<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
-): V | undefined;
+): Record<K, V>;
 
-function find<V, K extends Key, E extends Extra, TH = Anything>(
+export function filter<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
-): V | undefined {
+): Record<K, V> {
 
   // eslint-disable-next-line prefer-rest-params
   const args = arguments;
@@ -44,15 +45,17 @@ function find<V, K extends Key, E extends Extra, TH = Anything>(
     argsLen,
   );
 
+  const result: Record<Key, Anything> = {};
+
   for (const key in object) {
     if (
       hasOwn.call(object, key)
       && wrapped(key)
     ) {
-      return object[key];
+      result[key] = object[key];
     }
   }
 
-}
+  return result;
 
-export default find;
+}

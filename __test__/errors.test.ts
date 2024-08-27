@@ -1,4 +1,4 @@
-import { notEnoughArgs, invalidObject, invalidCallback } from '../src/errors';
+import { invalidCallback, invalidObject, notEnoughArgs } from '../src/tools/errors';
 
 describe('errors', () => {
 
