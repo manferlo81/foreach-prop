@@ -1,23 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "module": "ES2015",
-    "moduleResolution": "Node",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node10",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "importHelpers": true,
+    "newLine": "lf",
+    "pretty": true
   },
   "include": [
-    "__test__/**/*.ts",
-    "src/**/*.ts"
+    "__test__",
+    "src"
   ],
   "exclude": [
-    "node_modules/**"
+    "node_modules",
+    "dist",
+    "coverage"
   ]
 }
