@@ -1,5 +1,4 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import type { Anything, ImmutableObject, Key } from '../types/private-types';
 
@@ -7,25 +6,16 @@ export function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, v
 
   const argsLen = arguments.length;
 
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
+  if (!isObject(object)) throw errorNotObject(object);
 
-  let result: K | null = null;
+  const keys = Object.keys(object) as K[];
+  const values = keys.map((key) => object[key] as unknown);
+  const valueIndex = values.lastIndexOf(value);
 
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key)
-      && object[key] === value
-    ) {
-      result = key as K;
-    }
-  }
+  if (valueIndex === -1) return null;
 
-  return result;
+  return keys[valueIndex];
 
 }

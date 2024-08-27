@@ -1,5 +1,4 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import { wrapFilterCallback } from '../tools/wrap-callback';
 import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
@@ -45,15 +44,11 @@ export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
     argsLen,
   );
 
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key)
-      && wrapped(key)
-    ) {
-      return key;
-    }
-  }
+  const keys = Object.keys(object) as K[];
+  const key = keys.find(wrapped);
 
-  return null;
+  if (key == null) return null;
+
+  return key;
 
 }

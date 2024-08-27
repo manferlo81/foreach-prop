@@ -1,5 +1,4 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import type { Anything, ImmutableObject, Key } from '../types/private-types';
 
@@ -15,15 +14,12 @@ export function keyOf<K extends Key>(object: ImmutableObject<K, Anything>, value
     throw errorNotObject(object);
   }
 
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key)
-      && object[key] === value
-    ) {
-      return key as K;
-    }
-  }
+  const keys = Object.keys(object) as K[];
+  const values = keys.map((key) => object[key] as unknown);
+  const valueIndex = values.indexOf(value);
 
-  return null;
+  if (valueIndex === -1) return null;
+
+  return keys[valueIndex];
 
 }
