@@ -1,5 +1,4 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
 import { isObject } from '../tools/is-object';
 import { wrapFilterCallback } from '../tools/wrap-callback';
 import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
@@ -29,26 +28,25 @@ export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   const args = arguments;
   const argsLen = args.length;
 
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  // throw if not enough arguments
+  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
+  // throw if not an object
+  if (!isObject(object)) throw errorNotObject(object);
 
+  // wrap callback
   const wrapped = wrapFilterCallback<V, K, E, TH, undefined>(
     callback,
     this,
     object,
-    args,
+    args as never,
     argsLen,
   );
 
-  for (const key in object) {
-    if (hasOwn.call(object, key)) {
-      wrapped(key);
-    }
-  }
+  // get keys from object
+  const keys = Object.keys(object) as K[];
+
+  // iterate through keys
+  keys.forEach(wrapped);
 
 }
