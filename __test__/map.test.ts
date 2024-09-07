@@ -122,7 +122,7 @@ describe('map method', () => {
     const object = { a: 1, b: 2, c: 3, d: 2 };
     const keys = Object.keys(object);
 
-    const result = map(object, (val) => (val * 2));
+    const result = map(object, (val) => val * 2);
 
     expect(Object.keys(result)).toEqual(keys);
 

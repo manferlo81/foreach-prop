@@ -1,28 +1,50 @@
 import pluginJs from '@eslint/js';
-import globals from 'globals';
 import stylistic from '@stylistic/eslint-plugin';
+import globals from 'globals';
 import { config, configs as typescriptConfigs } from 'typescript-eslint';
 
-const rule = (options) => ['error', options];
+function normalizeRuleEntry(entry) {
+  if (Array.isArray(entry)) return entry;
+  if (['off', 'warn', 'error'].includes(entry)) return entry;
+  return ['error', entry];
+}
 
-const pluginRules = (pluginName, rules) => Object.keys(rules).reduce((output, ruleName) => {
-  const value = rules[ruleName];
-  const pluginRuleName = `${pluginName}/${ruleName}`;
-  return ({ ...output, [pluginRuleName]: value });
-}, {});
+function createRuleNameNormalizer(pluginName) {
+  if (!pluginName) return (ruleName) => ruleName;
+  const pluginPrefix = `${pluginName}/`;
+  return (ruleName) => {
+    if (ruleName.startsWith(pluginPrefix)) return ruleName;
+    return `${pluginPrefix}${ruleName}`;
+  };
+}
 
-const eslintRules = {
+function normalizeRules(pluginName, rules) {
+  const normalizeRuleName = createRuleNameNormalizer(pluginName);
+  return Object.fromEntries(
+    Object.entries(rules).map(
+      ([ruleName, value]) => [normalizeRuleName(ruleName), normalizeRuleEntry(value)],
+    ),
+  );
+}
+
+const eslintRules = normalizeRules(null, {
   'no-useless-rename': 'error',
   'object-shorthand': 'error',
-};
+  'prefer-template': 'error',
+});
 
-const stylisticRules = pluginRules('@stylistic', {
-  semi: rule('always'),
-  quotes: rule('single'),
-  'linebreak-style': rule('unix'),
-  'quote-props': rule('as-needed'),
-  'arrow-parens': rule('always'),
+const stylisticRules = normalizeRules('@stylistic', {
+  'linebreak-style': 'unix',
+  'no-extra-parens': 'all',
+  'no-extra-semi': 'error',
   'padded-blocks': 'off',
+});
+
+const typescriptRules = normalizeRules('@typescript-eslint', {
+  'array-type': {
+    default: 'array-simple',
+    readonly: 'array-simple',
+  },
 });
 
 const typescriptFlatConfig = config(
@@ -36,7 +58,14 @@ export default config(
   { ignores: ['dist', 'coverage'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
-  stylistic.configs['recommended-flat'],
+  stylistic.configs.customize({
+    semi: true,
+    indent: 2,
+    quotes: 'single',
+    arrowParens: true,
+    quoteProps: 'as-needed',
+    braceStyle: '1tbs',
+  }),
   ...typescriptFlatConfig,
-  { rules: { ...eslintRules, ...stylisticRules } },
+  { rules: { ...eslintRules, ...stylisticRules, ...typescriptRules } },
 );
