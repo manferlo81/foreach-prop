@@ -1,4 +1,4 @@
-import pluginJs from '@eslint/js';
+import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import globals from 'globals';
 import { config, configs as typescriptConfigs } from 'typescript-eslint';
@@ -34,6 +34,7 @@ const eslintRules = normalizeRules(null, {
 });
 
 const stylisticRules = normalizeRules('@stylistic', {
+  indent: 2,
   'linebreak-style': 'unix',
   'no-extra-parens': 'all',
   'no-extra-semi': 'error',
@@ -47,7 +48,15 @@ const typescriptRules = normalizeRules('@typescript-eslint', {
   },
 });
 
-const typescriptFlatConfig = config(
+const stylisticConfig = stylistic.configs.customize({
+  semi: true,
+  quotes: 'single',
+  arrowParens: true,
+  quoteProps: 'as-needed',
+  braceStyle: '1tbs',
+});
+
+const typescriptConfig = config(
   ...typescriptConfigs.strictTypeChecked,
   ...typescriptConfigs.stylisticTypeChecked,
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
@@ -57,15 +66,8 @@ const typescriptFlatConfig = config(
 export default config(
   { ignores: ['dist', 'coverage'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
-  pluginJs.configs.recommended,
-  stylistic.configs.customize({
-    semi: true,
-    indent: 2,
-    quotes: 'single',
-    arrowParens: true,
-    quoteProps: 'as-needed',
-    braceStyle: '1tbs',
-  }),
-  ...typescriptFlatConfig,
+  js.configs.recommended,
+  stylisticConfig,
+  ...typescriptConfig,
   { rules: { ...eslintRules, ...stylisticRules, ...typescriptRules } },
 );
