@@ -45,13 +45,13 @@ npm i foreach-prop
 ### jsDelivr
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/umd/each-prop.umd.js"></script>
 ```
 
 ***for production***
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/foreach-prop@latest/dist/umd/each-prop.umd.min.js"></script>
 ```
 
 *[more options...](https://www.jsdelivr.com/package/npm/foreach-prop?version=latest)*
@@ -59,13 +59,13 @@ npm i foreach-prop
 ### unpkg
 
 ```html
-<script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.js"></script>
+<script src="https://unpkg.com/foreach-prop@latest/dist/umd/each-prop.umd.js"></script>
 ```
 
 ***for production***
 
 ```html
-<script src="https://unpkg.com/foreach-prop@latest/dist/each-prop.umd.min.js"></script>
+<script src="https://unpkg.com/foreach-prop@latest/dist/umd/each-prop.umd.min.js"></script>
 ```
 
 *[more options...](https://unpkg.com/foreach-prop@latest/)*

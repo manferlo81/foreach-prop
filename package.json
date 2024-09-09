@@ -25,15 +25,15 @@
   "type": "commonjs",
   "exports": {
     "types": "./dist/types/index.d.ts",
-    "import": "./dist/each-prop.mjs",
-    "require": "./dist/each-prop.js",
-    "node": "./dist/each-prop.js",
-    "default": "./dist/each-prop.js"
+    "import": "./dist/esm/each-prop.mjs",
+    "require": "./dist/commonjs/each-prop.js",
+    "node": "./dist/commonjs/each-prop.js",
+    "default": "./dist/commonjs/each-prop.js"
   },
-  "main": "./dist/each-prop.js",
-  "module": "./dist/each-prop.mjs",
-  "jsnext:main": "./dist/each-prop.mjs",
-  "browser": "./dist/each-prop.umd.js",
+  "main": "./dist/commonjs/each-prop.js",
+  "module": "./dist/esm/each-prop.mjs",
+  "jsnext:main": "./dist/esm/each-prop.mjs",
+  "browser": "./dist/umd/each-prop.umd.js",
   "types": "./dist/types/index.d.ts",
   "typings": "./dist/types/index.d.ts",
   "bundlib": "./bundlib.config.mjs",
