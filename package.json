@@ -82,7 +82,9 @@
     "typescript-eslint": "^8.8.1"
   },
   "overrides": {
-    "eslint": "^9.12.0"
+    "@rollup/plugin-eslint": {
+      "eslint": "$eslint"
+    }
   },
   "author": {
     "name": "Manuel Fernández",
