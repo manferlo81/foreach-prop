@@ -1,0 +1,32 @@
+changelog:
+  exclude:
+    authors:
+      - dependabot
+    labels:
+      - ignore-for-release
+
+  categories:
+    - title: Breaking Changes
+      labels:
+        - breaking-change
+
+    - title: Bug Fix
+      labels:
+        - fix
+        - bug
+
+    - title: Features
+      labels:
+        - feature
+        - feat
+
+    - title: Other Changes
+      labels:
+        - "*"
+      exclude:
+        labels:
+          - feature
+          - feat
+          - fix
+          - bug
+          - breaking-change
