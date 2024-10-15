@@ -1,27 +1,26 @@
 import { fill } from '../src';
 import { createObject, ownPropA, ownPropB } from './tools/create-object';
+import { UnknownFunction } from './tools/types';
 import { invalidObjects } from './tools/values';
 
 describe('fill method', () => {
 
   test('should throw on insufficient arguments', () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => fill()).toThrow(TypeError);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => fill({})).toThrow(TypeError);
-
+    const __fill = fill as UnknownFunction;
+    const cases = [
+      () => __fill(),
+      () => __fill({}),
+    ];
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      expect(() => fill(object as never, 0)).toThrow(TypeError);
+      const exec = () => fill(object as never, 0);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
   test('should skip prototype properties', () => {
@@ -37,13 +36,23 @@ describe('fill method', () => {
 
   });
 
+  test('should fill object with given value', () => {
+
+    const object = { a: 0, b: 0, c: 0, d: 0 };
+
+    const result = fill(object, true);
+    const expected = Object.fromEntries(Object.entries(object).map(([key]) => [key, true]));
+
+    expect(result).toEqual(expected);
+
+  });
+
   test('should return a new object', () => {
 
     const object = { a: 0, b: 0, c: 0, d: 0 };
 
     const result = fill(object, 0);
 
-    expect(typeof result).toBe('object');
     expect(result).toEqual(object);
     expect(result).not.toBe(object);
 

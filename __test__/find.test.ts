@@ -1,49 +1,36 @@
 import { find } from '../src';
 import { createObject, ownProps, protoProps } from './tools/create-object';
-import { invalidObjects } from './tools/values';
+import { normalizeObject } from './tools/helpers';
+import { UnknownFunction } from './tools/types';
+import { invalidCallbacks, invalidObjects } from './tools/values';
 
 describe('find method', () => {
 
   test('should throw on insufficient arguments', () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => find()).toThrow(TypeError);
-
-    expect(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      find({});
-    }).toThrow(TypeError);
-
+    const __find = find as UnknownFunction;
+    const cases = [
+      () => __find(),
+      () => __find({}),
+    ];
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      expect(() => find(object as never, () => null)).toThrow(TypeError);
+      const exec = () => find(object as never, () => null);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
-  test('should iterate properly', () => {
-
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
-    const callback = jest.fn();
-
-    find(object, callback);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key as keyof typeof object],
-        key,
-      );
+  test('should throw on invalid predicate function', () => {
+    invalidCallbacks.forEach((predicate) => {
+      const exec = () => {
+        find({}, predicate as never);
+      };
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
   test('should skip prototype properties', () => {
@@ -70,37 +57,56 @@ describe('find method', () => {
 
   });
 
+  test('should pass key and value to predicate function', () => {
+
+    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const predicate = jest.fn();
+
+    find(object, predicate);
+
+    expect(predicate).toHaveBeenCalledTimes(entries.length);
+
+    entries.forEach(([key, value], index) => {
+      expect(predicate).toHaveBeenNthCalledWith(
+        index + 1,
+        value,
+        key,
+      );
+    });
+
+  });
+
   test('should pass this argument to callback', () => {
 
+    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+
     const thisArg = {};
-    const object = { a: 1 };
-    const callback = jest.fn(function cb(this: unknown) {
+    const callback = jest.fn(function (this: unknown) {
       expect(this).toBe(thisArg);
+      return false;
     });
 
     find.call(thisArg, object, callback);
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(entries.length);
 
   });
 
-  test('should pass multiple extra arguments to callback', () => {
+  test('should pass extra arguments to predicate function', () => {
 
-    const value = 1;
-    const key = 'a';
-    const object = { [key]: value };
+    const [object, entries] = normalizeObject({ a: 1, b: 2 });
 
-    const callback = jest.fn<boolean, [unknown, string, unknown, unknown]>(() => true);
+    const callback = jest.fn(() => false);
 
     const extra1 = {};
     const extra2: never[] = [];
 
     find(object, callback, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(
-      value,
-      key,
+      expect.anything(),
+      expect.any(String),
       extra1,
       extra2,
     );
@@ -109,7 +115,7 @@ describe('find method', () => {
 
   test('should return the found value', () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
+    const object = { a: 1, b: 2, c: 3, d: 4 };
     const expectedResult = object.b;
 
     const result = find(object, (val) => {
@@ -117,6 +123,21 @@ describe('find method', () => {
     });
 
     expect(result).toBe(expectedResult);
+
+  });
+
+  test('should exit as soon as one condition is met', () => {
+
+    const object = { a: 1, b: 1, c: 1, d: 1 };
+
+    const predicate = jest.fn((val: number) => {
+      return val === 1;
+    });
+
+    const result = find(object, predicate);
+
+    expect(predicate).toHaveBeenCalledTimes(1);
+    expect(result).not.toBeUndefined();
 
   });
 

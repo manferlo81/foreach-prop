@@ -1,47 +1,34 @@
 import { map } from '../src';
 import { createObject, ownProps, protoProps } from './tools/create-object';
-import { invalidObjects } from './tools/values';
+import { normalizeObject } from './tools/helpers';
+import type { UnknownFunction } from './tools/types';
+import { invalidCallbacks, invalidObjects } from './tools/values';
 
 describe('map method', () => {
 
   test('should throw on insufficient arguments', () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => map()).toThrow(TypeError);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => map({})).toThrow(TypeError);
-
+    const __map = map as UnknownFunction;
+    const cases = [
+      () => __map(),
+      () => __map({}),
+    ];
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      expect(() => map(object as never, () => null)).toThrow(TypeError);
+      const exec = () => map(object as never, () => null);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
-  test('should iterate properly', () => {
-
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
-    const callback = jest.fn();
-
-    map(object, callback);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key as keyof typeof object],
-        key,
-      );
+  test('should throw on invalid callback', () => {
+    invalidCallbacks.forEach((callback) => {
+      const exec = () => map({}, callback as never);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
   test('should skip prototype properties', () => {
@@ -68,37 +55,55 @@ describe('map method', () => {
 
   });
 
+  test('should pass key and value to callback function', () => {
+
+    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const callback = jest.fn();
+
+    map(object, callback);
+
+    expect(callback).toHaveBeenCalledTimes(entries.length);
+
+    entries.forEach(([key, value], index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        value,
+        key,
+      );
+    });
+
+  });
+
   test('should pass this argument to callback', () => {
 
+    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+
     const thisArg = {};
-    const object = { a: 1 };
     const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
     map.call(thisArg, object, callback);
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(entries.length);
 
   });
 
-  test('should pass multiple extra arguments to callback', () => {
+  test('should pass extra arguments to callback function', () => {
 
-    const value = 1;
-    const key = 'a';
-    const object = { [key]: value };
+    const [object, entries] = normalizeObject({ a: 1, b: true });
 
-    const callback = jest.fn<0, [number, string, unknown, unknown[]]>(() => 0);
+    const callback = jest.fn(() => 0);
 
     const extra1 = {};
     const extra2: never[] = [];
 
     map(object, callback, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(
-      value,
-      key,
+      expect.anything(),
+      expect.any(String),
       extra1,
       extra2,
     );
@@ -111,7 +116,6 @@ describe('map method', () => {
 
     const result = map(object, (val) => val);
 
-    expect(typeof result).toBe('object');
     expect(result).toEqual(object);
     expect(result).not.toBe(object);
 
@@ -119,20 +123,14 @@ describe('map method', () => {
 
   test('should return a mapped object', () => {
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
+    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
-    const result = map(object, (val) => val * 2);
+    const doubleValue = (val: number) => val * 2;
 
-    expect(Object.keys(result)).toEqual(keys);
+    const result = map(object, doubleValue);
+    const expected = Object.fromEntries(entries.map(([key, value]) => [key, doubleValue(value)]));
 
-    keys.forEach((key) => {
-      expect(
-        result[key as keyof typeof object],
-      ).toBe(
-        object[key as keyof typeof object] * 2,
-      );
-    });
+    expect(result).toEqual(expected);
 
   });
 

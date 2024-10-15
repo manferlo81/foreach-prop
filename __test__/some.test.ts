@@ -1,47 +1,34 @@
 import { some } from '../src';
 import { createObject, ownProps, protoProps } from './tools/create-object';
-import { invalidObjects } from './tools/values';
+import { normalizeObject } from './tools/helpers';
+import type { UnknownFunction } from './tools/types';
+import { invalidCallbacks, invalidObjects } from './tools/values';
 
 describe('some method', () => {
 
   test('should throw on insufficient arguments', () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => some()).toThrow(TypeError);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => some({})).toThrow(TypeError);
-
+    const __some = some as UnknownFunction;
+    const cases = [
+      () => __some(),
+      () => __some({}),
+    ];
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      expect(() => some(object as never, () => null)).toThrow(TypeError);
+      const exec = () => some(object as never, () => null);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
-  test('should iterate properly', () => {
-
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const keys = Object.keys(object);
-    const callback = jest.fn();
-
-    some(object, callback);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key as keyof typeof object],
-        key,
-      );
+  test('should throw on invalid predicate function', () => {
+    invalidCallbacks.forEach((predicate) => {
+      const exec = () => some({}, predicate as never);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
   test('should skip prototype properties', () => {
@@ -68,57 +55,86 @@ describe('some method', () => {
 
   });
 
-  test('should pass this argument to callback', () => {
+  test('should pass key and value to predicate function', () => {
 
-    const thisArg = {};
-    const object = { a: 1, b: 2, c: 3, d: 2 };
-    const count = Object.keys(object).length;
-    const callback = jest.fn(function cb(this: unknown) {
-      expect(this).toBe(thisArg);
+    const [object, entries] = normalizeObject({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 4,
     });
 
-    some.call(thisArg, object, callback);
+    const predicate = jest.fn();
 
-    expect(callback).toHaveBeenCalledTimes(count);
+    some(object, predicate);
+
+    expect(predicate).toHaveBeenCalledTimes(entries.length);
+
+    entries.forEach(([key, value], index) => {
+      expect(predicate).toHaveBeenNthCalledWith(
+        index + 1,
+        value,
+        key,
+      );
+    });
 
   });
 
-  test('should pass multiple extra arguments to callback', () => {
+  test('should pass this argument to predicate function', () => {
 
-    const value = 1;
-    const key = 'a';
-    const object = { [key]: value };
+    const [object, entries] = normalizeObject({
+      a: 1,
+      b: 2,
+      c: 3,
+      d: 2,
+    });
 
-    const callback = jest.fn();
+    const thisArg = {};
+    const predicate = jest.fn(function (this) {
+      expect(this).toBe(thisArg);
+      return false;
+    });
+
+    some.call(thisArg, object, predicate);
+
+    expect(predicate).toHaveBeenCalledTimes(entries.length);
+
+  });
+
+  test('should pass extra arguments to predicate function', () => {
+
+    const [object, entries] = normalizeObject({ a: 1 });
+
+    const predicate = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    some(object, callback, extra1, extra2);
+    some(object, predicate, extra1, extra2);
 
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith(
-      value,
-      key,
+    expect(predicate).toHaveBeenCalledTimes(entries.length);
+    expect(predicate).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.any(String),
       extra1,
       extra2,
     );
 
   });
 
-  test('should return true if any match', () => {
+  test('should return true if at least one match', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
 
     const result = some(object, (val) => {
-      return val === 2;
+      return val === 3;
     });
 
     expect(result).toBe(true);
 
   });
 
-  test('should return false if no match', () => {
+  test('should return false if none match', () => {
 
     const object = { a: 1, b: 2, c: 3, d: 2 };
 
@@ -127,6 +143,19 @@ describe('some method', () => {
     });
 
     expect(result).toBe(false);
+
+  });
+
+  test('should exit as soon as one condition passes', () => {
+
+    const predicate = jest.fn((val: number) => {
+      return val > 0;
+    });
+
+    const result = some({ a: 1, b: 2, c: 3, d: 4 }, predicate);
+
+    expect(result).toBe(true);
+    expect(predicate).toHaveBeenCalledTimes(1);
 
   });
 
