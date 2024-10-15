@@ -1,23 +1,25 @@
 import { create } from '../src';
+import type { UnknownFunction } from './tools/types';
 import { invalidArrays } from './tools/values';
 
 describe('create method', () => {
 
   test('should throw on insufficient arguments', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => create()).toThrow(TypeError);
+    const __create = create as UnknownFunction;
+    const exec = () => __create();
+    expect(exec).toThrow(TypeError);
   });
 
   test('should throw on incorrect keys argument', () => {
     invalidArrays.forEach((invalid) => {
-      expect(() => create(invalid as never)).toThrow(TypeError);
+      const exec = () => create(invalid as never);
+      expect(exec).toThrow(TypeError);
     });
   });
 
-  test('should return an object', () => {
+  test('should return an object with undefined value', () => {
     const result = create(['a', 'b', 'c']);
-    expect(typeof result).toBe('object');
+    expect(result).toBeInstanceOf(Object);
     expect(result).toEqual({ a: undefined, b: undefined, c: undefined });
   });
 
@@ -25,7 +27,7 @@ describe('create method', () => {
     const values = [true, false, null, undefined, 1, 'string'];
     values.forEach((value) => {
       const result = create(['a', 'b', 'c'], value);
-      expect(typeof result).toBe('object');
+      expect(result).toBeInstanceOf(Object);
       expect(result).toEqual({ a: value, b: value, c: value });
     });
   });

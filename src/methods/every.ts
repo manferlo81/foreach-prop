@@ -1,59 +1,42 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
+import { createResultEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
-import { wrapFilterCallback } from '../tools/wrap-callback';
+import { getEntries } from '../tools/object-entries';
 import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
 import type { FilterCallback } from '../types/types';
 
 export function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, E, TH>,
+  predicate: FilterCallback<V, K, E, TH>,
   ...extra: E
 ): boolean;
 
 export function every<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, Extra, TH>,
+  predicate: FilterCallback<V, K, Extra, TH>,
   ...extra: Extra
 ): boolean;
 
 export function every<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, E, TH>,
+  predicate: FilterCallback<V, K, E, TH>,
+  ...extra: E
 ): boolean {
 
-  // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
+  // throw if not enough arguments
+  const argsLen = arguments.length;
+  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  // throw if not an object
+  if (!isObject(object)) throw errorNotObject(object);
 
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
+  // create entry predicate
+  const entryPredicate = createResultEntryHandler(this, predicate, extra);
 
-  const wrapped = wrapFilterCallback<V, K, E, TH>(
-    callback,
-    this,
-    object,
-    args,
-    argsLen,
-  );
-
-  for (const key in object) {
-    if (
-      hasOwn.call(object, key)
-      && !wrapped(key)
-    ) {
-      return false;
-    }
-  }
-
-  return true;
+  // return wether or not all entries satisfy predicate
+  return getEntries(object).every(entryPredicate);
 
 }

@@ -1,7 +1,7 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
+import { createReduceEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
-import { wrapReduceCallback } from '../tools/wrap-callback';
+import { getEntries } from '../tools/object-entries';
 import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
 import type { ReduceCallback } from '../types/types';
 
@@ -42,36 +42,24 @@ export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Any
   object: ImmutableObject<K, V>,
   callback: ReduceCallback<V, K, E, TH, R>,
   initial?: R,
+  ...extra: E
 ): R | undefined {
 
-  // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
+  // throw if not enough arguments
+  const argsLen = arguments.length;
+  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  // throw if not an object
+  if (!isObject(object)) throw errorNotObject(object);
 
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
+  // create entry handler
+  const entryHandler = createReduceEntryHandler(this, callback, extra);
 
-  const wrapped = wrapReduceCallback<V, K, E, R, TH>(
-    callback,
-    this,
-    object,
-    args,
-    argsLen,
-  );
+  // get entries
+  const entries = getEntries(object);
 
-  let result = initial;
-
-  for (const key in object) {
-    if (hasOwn.call(object, key)) {
-      result = wrapped(key, result);
-    }
-  }
-
-  return result;
+  // reduce entries into a result
+  // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
+  return entries.reduce<R>(entryHandler, initial as R) as R | undefined;
 
 }

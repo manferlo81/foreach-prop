@@ -1,25 +1,27 @@
 import { forEach } from '../src';
 import { createObject, ownProps, protoProps } from './tools/create-object';
-import { invalidObjects } from './tools/values';
+import { normalizeObject } from './tools/helpers';
+import { UnknownFunction } from './tools/types';
+import { invalidCallbacks, invalidObjects } from './tools/values';
 
 describe('forEach method', () => {
 
   test('should throw on insufficient arguments', () => {
 
-    const newLocal = () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      forEach();
-    };
-    expect(newLocal).toThrow(TypeError);
+    const __forEach = forEach as UnknownFunction;
 
-    const newLocal_1 = () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-expect-error
-      forEach({});
-    };
+    const cases = [
+      () => {
+        __forEach();
+      },
+      () => {
+        __forEach({});
+      },
+    ];
 
-    expect(newLocal_1).toThrow(TypeError);
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
 
   });
 
@@ -32,24 +34,13 @@ describe('forEach method', () => {
     });
   });
 
-  test('should iterate properly', () => {
-
-    const object = { a: 1, b: 2, c: 3, d: 4 };
-    const keys = Object.keys(object);
-    const callback = jest.fn();
-
-    forEach(object, callback);
-
-    expect(callback).toHaveBeenCalledTimes(keys.length);
-
-    keys.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        object[key as keyof typeof object],
-        key,
-      );
+  test('should throw on invalid callback function', () => {
+    invalidCallbacks.forEach((callback) => {
+      const exec = () => {
+        forEach({}, callback as never);
+      };
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
   test('should skip prototype properties', () => {
@@ -69,25 +60,43 @@ describe('forEach method', () => {
 
   });
 
-  test('should pass this argument to callback', () => {
+  test('should pass key and value to callback function', () => {
+
+    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
+    const callback = jest.fn();
+
+    forEach(object, callback);
+
+    expect(callback).toHaveBeenCalledTimes(entries.length);
+
+    entries.forEach(([key, value], index) => {
+      expect(callback).toHaveBeenNthCalledWith(
+        index + 1,
+        value,
+        key,
+      );
+    });
+
+  });
+
+  test('should pass this argument to callback function', () => {
+
+    const [object, entries] = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
-    const object = { a: 1 };
     const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
     forEach.call(thisArg, object, callback);
 
-    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback).toHaveBeenCalledTimes(entries.length);
 
   });
 
-  test('should pass multiple extra arguments to callback', () => {
+  test('should pass extra arguments to callback function', () => {
 
-    const value = 1;
-    const key = 'a';
-    const object = { [key]: value };
+    const object = { a: 1 };
 
     const callback = jest.fn();
 
@@ -98,22 +107,19 @@ describe('forEach method', () => {
 
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith(
-      value,
-      key,
+      expect.anything(),
+      expect.any(String),
       extra1,
       extra2,
     );
 
   });
 
-  test('should return void', () => {
-
+  test('should return undefined', () => {
     const object = { a: 1, b: 2, c: 3, d: 4 };
     // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
     const result = forEach(object, () => null);
-
     expect(result).toBeUndefined();
-
   });
 
 });

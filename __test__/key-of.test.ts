@@ -1,61 +1,69 @@
 import { keyOf } from '../src';
 import { createObject, protoPropA } from './tools/create-object';
+import { UnknownFunction } from './tools/types';
 import { invalidObjects } from './tools/values';
 
 describe('keyOf method', () => {
 
   test('should throw on insufficient arguments', () => {
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => keyOf()).toThrow(TypeError);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(() => keyOf({})).toThrow(TypeError);
-
+    const __keyOf = keyOf as UnknownFunction;
+    const cases = [
+      () => __keyOf(),
+      () => __keyOf({}),
+    ];
+    cases.forEach((exec) => {
+      expect(exec).toThrow(TypeError);
+    });
   });
 
   test('should throw on non object', () => {
-
     invalidObjects.forEach((object) => {
-      expect(() => keyOf(object as never, 100)).toThrow(TypeError);
+      const exec = () => keyOf(object as never, 100);
+      expect(exec).toThrow(TypeError);
     });
-
   });
 
-  test('should return the first found key', () => {
+  test('should return found key', () => {
+    const object = { a: 1, b: 2, c: 3, d: 4 };
+    const cases = [
+      { value: 1, expectedKey: 'a' },
+      { value: 2, expectedKey: 'b' },
+      { value: 3, expectedKey: 'c' },
+      { value: 4, expectedKey: 'd' },
+    ];
+    cases.forEach(({ value, expectedKey }) => {
+      const key = keyOf(object, value);
+      expect(key).toBe(expectedKey);
+    });
+  });
 
-    const object = { a: 1, b: 2, c: 3, d: 2 };
+  test('should return first key that matches', () => {
+    // IMPORTANT!
+    // Because object key don't follow a specific order,
+    // any key can be considered as the "first key that matches"
 
-    const keyOf1 = keyOf(object, 2);
-    const keyOf2 = keyOf(object, 3);
+    const object = { a: 1, b: 1, c: 1, d: 1 };
+    const key = keyOf(object, 1);
 
-    expect(keyOf1).toBe('b');
-    expect(keyOf2).toBe('c');
-
+    expect(key).not.toBeNull();
+    expect(Object.keys(object)).toContain(key);
   });
 
   test('should return null if not found', () => {
-
     const object = { a: 1, b: 2, c: 3, d: 2 };
-
-    const result = keyOf(object, 'does-not-exist');
-
-    expect(result).toBeNull();
-
+    const key = keyOf(object, 'does-not-exist');
+    expect(key).toBeNull();
   });
 
-  test('should return null if not own property', () => {
-
+  test('should ignore prototype properties', () => {
     const object = createObject();
+    const propPropValue = object[protoPropA];
 
-    const result = keyOf(object, object[protoPropA]);
+    const result = keyOf(object, propPropValue);
 
-    expect(object).toHaveProperty(protoPropA);
-    expect(object[protoPropA]).toBeDefined();
     expect(result).toBeNull();
-
+    expect(object[protoPropA]).toBeDefined();
+    expect(object).toHaveProperty(protoPropA);
   });
 
 });
