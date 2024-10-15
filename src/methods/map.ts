@@ -2,7 +2,7 @@ import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { Anything, EntryFromObject, Extra, ImmutableObject, InputEntry, Key } from '../types/private-types';
+import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key } from '../types/private-types';
 import type { MapCallback } from '../types/types';
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
@@ -42,7 +42,7 @@ export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anyth
 
   // create entry handler
   const entryToValue = createResultEntryHandler(this, callback, extra);
-  const entryHandler = (entry: InputEntry<V>): EntryFromObject<RV> => [entry[0], entryToValue(entry)];
+  const entryHandler = (entry: InputEntry<V>): Entry<RV> => [entry[0], entryToValue(entry)];
 
   // map through entries
   const entries = getEntries(object).map(entryHandler) as unknown as Array<InputEntry<RV, K>>;
