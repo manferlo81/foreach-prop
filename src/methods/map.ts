@@ -1,58 +1,53 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
-import { hasOwn } from '../tools/has-own';
+import { createResultEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
-import { wrapFilterCallback } from '../tools/wrap-callback';
-import type { Anything, Extra, Key } from '../types/private-types';
+import { fromEntries, getEntries } from '../tools/object-entries';
+import type { Anything, EntryFromObject, Extra, ImmutableObject, InputEntry, Key } from '../types/private-types';
 import type { MapCallback } from '../types/types';
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: MapCallback<V, K, E, TH, RV>,
   ...extra: E
 ): Record<K, RV>;
 
 export function map<V, K extends Key, RV = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: MapCallback<V, K, Extra, TH, RV>,
   ...extra: Extra
 ): Record<K, RV>;
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
-  object: Record<K, V>,
+  object: ImmutableObject<K, V>,
   callback: MapCallback<V, K, E, TH, RV>,
+  ...extra: E
 ): Record<K, RV> {
 
   // eslint-disable-next-line prefer-rest-params
   const args = arguments;
   const argsLen = args.length;
 
+  // throw if not enough arguments
   if (argsLen < 2) {
     throw errorNotEnoughArgs(argsLen, 2);
   }
 
+  // throw if not an object
   if (!isObject(object)) {
     throw errorNotObject(object);
   }
 
-  const wrapped = wrapFilterCallback<V, K, E, TH, RV>(
-    callback,
-    this,
-    object,
-    args,
-    argsLen,
-  );
+  // create entry handler
+  const entryToValue = createResultEntryHandler(this, callback, extra);
+  const entryHandler = (entry: InputEntry<V>): EntryFromObject<RV> => [entry[0], entryToValue(entry)];
 
-  const result: Record<Key, RV> = {};
+  // map through entries
+  const entries = getEntries(object).map(entryHandler) as unknown as Array<InputEntry<RV, K>>;
 
-  for (const key in object) {
-    if (hasOwn.call(object, key)) {
-      result[key as Key] = wrapped(key);
-    }
-  }
-
-  return result;
+  // return new object from mapped entries
+  return fromEntries(entries);
 
 }

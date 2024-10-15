@@ -8,21 +8,14 @@ export function fill<V, K extends Key, RV = Anything>(
   value: RV,
 ): Record<K, RV> {
 
-  // eslint-disable-next-line prefer-rest-params
-  const { length: argsLen } = arguments;
+  // throw if not enough arguments
+  const argsLen = arguments.length;
+  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  // throw if not an object
+  if (!isObject(object)) throw errorNotObject(object);
 
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
-
-  // get keys from object
   const keys = Object.keys(object) as K[];
-
-  // return new object
   return fillObject(keys, value);
 
 }

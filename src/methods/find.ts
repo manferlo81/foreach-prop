@@ -1,6 +1,7 @@
 import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
+import { createResultEntryHandler, findEntryValue } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
-import { wrapFilterCallback } from '../tools/wrap-callback';
+import { getEntries } from '../tools/object-entries';
 import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
 import type { FilterCallback } from '../types/types';
 
@@ -22,27 +23,23 @@ export function find<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
   callback: FilterCallback<V, K, E, TH>,
+  ...extra: E
 ): V | undefined {
 
-  // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
-
+  // throw if not enough arguments
+  const argsLen = arguments.length;
   if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
 
+  // throw if not an object
   if (!isObject(object)) throw errorNotObject(object);
 
-  const wrapped = wrapFilterCallback<V, K, E, TH>(
-    callback,
-    this,
-    object,
-    args,
-    argsLen,
-  );
+  // create entry handler
+  const entryHandler = createResultEntryHandler(this, callback, extra);
 
-  const keys = Object.keys(object) as K[];
-  const key = keys.find(wrapped);
-  if (key == null) return;
-  return object[key];
+  // get entries
+  const entries = getEntries(object);
+
+  // find value
+  return findEntryValue(entries, entryHandler);
 
 }
