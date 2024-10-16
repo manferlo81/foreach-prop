@@ -2,27 +2,27 @@ import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key } from '../types/private-types';
+import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
 import type { MapCallback } from '../types/types';
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, K, E, TH, RV>,
+  callback: MapCallback<V, StringifiedKey<K>, E, TH, RV>,
   ...extra: E
 ): Record<K, RV>;
 
 export function map<V, K extends Key, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, K, Extra, TH, RV>,
+  callback: MapCallback<V, StringifiedKey<K>, Extra, TH, RV>,
   ...extra: Extra
 ): Record<K, RV>;
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, K, E, TH, RV>,
+  callback: MapCallback<V, StringifiedKey<K>, E, TH, RV>,
   ...extra: E
 ): Record<K, RV> {
 

@@ -2,27 +2,27 @@ import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { createResultEntryHandler, findEntryKey } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
 import { getEntries } from '../tools/object-entries';
-import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { Anything, Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
 import type { FilterCallback } from '../types/types';
 
 export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, E, TH>,
+  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
   ...extra: E
 ): K | null;
 
 export function findKey<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, Extra, TH>,
+  callback: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
   ...extra: Extra
 ): K | null;
 
 export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, K, E, TH>,
+  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
   ...extra: E
 ): K | null {
 
