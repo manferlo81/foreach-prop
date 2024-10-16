@@ -11,22 +11,33 @@ const dictionaries = [
 
 const arrays = [
   [],
+  [1, 2, 3],
 ];
 
-const objects = [
+export const objects = [
   ...dictionaries,
   ...arrays,
 ];
 
-export const invalidObjects = [
+export const functions = [
+  () => null,
+  function () { /* body */ },
+];
+
+const primitives = [
   ...nulls,
   ...strings,
   ...numbers,
   ...booleans,
 ];
 
+export const invalidObjects = [
+  ...primitives,
+  ...functions,
+];
+
 export const invalidCallbacks = [
-  ...invalidObjects,
+  ...primitives,
   ...objects,
 ];
 

@@ -1,7 +1,6 @@
-import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
+import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import { isObject } from '../tools/is-object';
 import type { Anything, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
 import type { FilterCallback } from '../types/types';
 
@@ -27,11 +26,10 @@ export function filter<V, K extends Key, E extends Extra, TH = Anything>(
 ): Record<K, V> {
 
   // throw if not enough arguments
-  const argsLen = arguments.length;
-  if (argsLen < 2) throw errorNotEnoughArgs(argsLen, 2);
+  ensureMinLength(arguments.length, 2);
 
   // throw if not an object
-  if (!isObject(object)) throw errorNotObject(object);
+  ensureIsObject(object);
 
   // create entry handler
   const entryHandler = createResultEntryHandler(this, callback, extra);

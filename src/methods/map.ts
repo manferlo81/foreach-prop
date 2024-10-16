@@ -1,6 +1,5 @@
-import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
+import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler } from '../tools/handle-entry';
-import { isObject } from '../tools/is-object';
 import { fromEntries, getEntries } from '../tools/object-entries';
 import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
 import type { MapCallback } from '../types/types';
@@ -26,19 +25,11 @@ export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anyth
   ...extra: E
 ): Record<K, RV> {
 
-  // eslint-disable-next-line prefer-rest-params
-  const args = arguments;
-  const argsLen = args.length;
-
   // throw if not enough arguments
-  if (argsLen < 2) {
-    throw errorNotEnoughArgs(argsLen, 2);
-  }
+  ensureMinLength(arguments.length, 2);
 
   // throw if not an object
-  if (!isObject(object)) {
-    throw errorNotObject(object);
-  }
+  ensureIsObject(object);
 
   // create entry handler
   const entryToValue = createResultEntryHandler(this, callback, extra);

@@ -1,14 +1,14 @@
 import type { Extra, InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/private-types';
 import type { MapCallback, ReduceCallback } from '../types/types';
-import { validateFunction } from './validate';
+import { ensureIsFunction } from './ensure';
 
 export function createResultEntryHandler<V, K extends string, E extends Extra, TH, R>(
   thisArg: TH,
   callback: MapCallback<V, K, E, TH, R>,
   extra: E,
 ): ResultEntryHandler<V, R> {
-  const valid = validateFunction(callback);
-  return ([key, value]) => valid.call(thisArg, value, key as K, ...extra);
+  ensureIsFunction(callback);
+  return ([key, value]) => callback.call(thisArg, value, key as K, ...extra);
 }
 
 export function createReduceEntryHandler<V, K extends string, E extends Extra, TH, R>(
@@ -16,8 +16,8 @@ export function createReduceEntryHandler<V, K extends string, E extends Extra, T
   callback: ReduceCallback<V, K, E, TH, R>,
   extra: E,
 ): ReduceEntryHandler<V, R> {
-  const valid = validateFunction(callback);
-  return (prev, [key, value]) => valid.call(thisArg, prev, value, key as K, ...extra);
+  ensureIsFunction(callback);
+  return (prev, [key, value]) => callback.call(thisArg, prev, value, key as K, ...extra);
 }
 
 export function createFindValueEntryHandler<V>(value: unknown): ResultEntryHandler<V, boolean> {
