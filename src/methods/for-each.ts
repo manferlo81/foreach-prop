@@ -2,27 +2,27 @@ import { errorNotEnoughArgs, errorNotObject } from '../tools/errors';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { isObject } from '../tools/is-object';
 import { getEntries } from '../tools/object-entries';
-import type { Anything, Extra, ImmutableObject, Key } from '../types/private-types';
+import type { Anything, Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
 import type { ForEachCallback } from '../types/types';
 
 export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, K, E, TH>,
+  callback: ForEachCallback<V, StringifiedKey<K>, E, TH>,
   ...extra: E
 ): void;
 
 export function forEach<V, K extends Key, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, K, Extra, TH>,
+  callback: ForEachCallback<V, StringifiedKey<K>, Extra, TH>,
   ...extra: Extra
 ): void;
 
 export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, K, E, TH>,
+  callback: ForEachCallback<V, StringifiedKey<K>, E, TH>,
   ...extra: E
 ): void {
 

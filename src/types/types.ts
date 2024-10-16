@@ -1,8 +1,8 @@
-import type { Anything, Extra, Key } from './private-types';
+import type { Anything, Extra } from './private-types';
 
 export type MapCallback<
   V,
-  K extends Key,
+  K extends string,
   E extends Extra,
   TH = Anything,
   R = Anything> = (
@@ -14,19 +14,19 @@ export type MapCallback<
 
 export type ForEachCallback<
   V,
-  K extends Key,
+  K extends string,
   E extends Extra,
   TH = Anything> = MapCallback<V, K, E, TH, void>;
 
 export type FilterCallback<
   V,
-  K extends Key,
+  K extends string,
   E extends Extra,
   TH = Anything> = MapCallback<V, K, E, TH>;
 
 export type ReduceCallback<
   V,
-  K extends Key,
+  K extends string,
   E extends Extra,
   TH = Anything,
   R = Anything> = (

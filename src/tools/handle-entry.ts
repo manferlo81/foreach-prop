@@ -1,8 +1,8 @@
-import type { Extra, InputEntry, Key, ReduceEntryHandler, ResultEntryHandler } from '../types/private-types';
+import type { Extra, InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/private-types';
 import type { MapCallback, ReduceCallback } from '../types/types';
 import { validateFunction } from './validate';
 
-export function createResultEntryHandler<V, K extends Key, E extends Extra, TH, R>(
+export function createResultEntryHandler<V, K extends string, E extends Extra, TH, R>(
   thisArg: TH,
   callback: MapCallback<V, K, E, TH, R>,
   extra: E,
@@ -11,7 +11,7 @@ export function createResultEntryHandler<V, K extends Key, E extends Extra, TH, 
   return ([key, value]) => valid.call(thisArg, value, key as K, ...extra);
 }
 
-export function createReduceEntryHandler<V, K extends Key, E extends Extra, TH, R>(
+export function createReduceEntryHandler<V, K extends string, E extends Extra, TH, R>(
   thisArg: TH,
   callback: ReduceCallback<V, K, E, TH, R>,
   extra: E,
