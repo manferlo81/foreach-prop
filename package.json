@@ -55,7 +55,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "args-to-arr": "^1.4.9",
     "is-function": "^1.0.2"
   },
   "devDependencies": {
