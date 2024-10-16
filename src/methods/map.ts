@@ -2,26 +2,26 @@ import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
 import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
-import type { MapCallback } from '../types/types';
+import type { MapCallback_next } from '../types/types';
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, StringifiedKey<K>, E, TH, RV>,
+  callback: MapCallback_next<V, StringifiedKey<K>, RV, E, TH>,
   ...extra: E
 ): Record<K, RV>;
 
 export function map<V, K extends Key, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, StringifiedKey<K>, Extra, TH, RV>,
+  callback: MapCallback_next<V, StringifiedKey<K>, RV, Extra, TH>,
   ...extra: Extra
 ): Record<K, RV>;
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: MapCallback<V, StringifiedKey<K>, E, TH, RV>,
+  callback: MapCallback_next<V, StringifiedKey<K>, RV, E, TH>,
   ...extra: E
 ): Record<K, RV> {
 

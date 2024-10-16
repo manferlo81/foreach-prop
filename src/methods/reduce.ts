@@ -2,12 +2,12 @@ import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createReduceEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
 import type { Anything, Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { ReduceCallback } from '../types/types';
+import type { ReduceCallback_next } from '../types/types';
 
 export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ReduceCallback<V, StringifiedKey<K>, E, TH, R>,
+  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
   initial: R,
   ...extra: E
 ): R;
@@ -15,7 +15,7 @@ export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Any
 export function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ReduceCallback<V, StringifiedKey<K>, Extra, TH, R>,
+  callback: ReduceCallback_next<V, StringifiedKey<K>, R, Extra, TH>,
   initial: R,
   ...extra: Extra
 ): R;
@@ -23,7 +23,7 @@ export function reduce<V, K extends Key, R = Anything, TH = Anything>(
 export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ReduceCallback<V, StringifiedKey<K>, E, TH, R>,
+  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
   initial?: R,
   ...extra: E
 ): R | undefined;
@@ -31,7 +31,7 @@ export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Any
 export function reduce<V, K extends Key, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ReduceCallback<V, StringifiedKey<K>, Extra, TH, R>,
+  callback: ReduceCallback_next<V, StringifiedKey<K>, R, Extra, TH>,
   initial?: R,
   ...extra: Extra
 ): R | undefined;
@@ -39,7 +39,7 @@ export function reduce<V, K extends Key, R = Anything, TH = Anything>(
 export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
   this: TH,
   object: ImmutableObject<K, V>,
-  callback: ReduceCallback<V, StringifiedKey<K>, E, TH, R>,
+  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
   initial?: R,
   ...extra: E
 ): R | undefined {

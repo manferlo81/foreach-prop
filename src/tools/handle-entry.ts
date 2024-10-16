@@ -1,10 +1,10 @@
 import type { Extra, InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/private-types';
-import type { MapCallback, ReduceCallback } from '../types/types';
+import type { MapCallback_next, ReduceCallback_next } from '../types/types';
 import { ensureIsFunction } from './ensure';
 
 export function createResultEntryHandler<V, K extends string, E extends Extra, TH, R>(
   thisArg: TH,
-  callback: MapCallback<V, K, E, TH, R>,
+  callback: MapCallback_next<V, K, R, E, TH>,
   extra: E,
 ): ResultEntryHandler<V, R> {
   ensureIsFunction(callback);
@@ -13,7 +13,7 @@ export function createResultEntryHandler<V, K extends string, E extends Extra, T
 
 export function createReduceEntryHandler<V, K extends string, E extends Extra, TH, R>(
   thisArg: TH,
-  callback: ReduceCallback<V, K, E, TH, R>,
+  callback: ReduceCallback_next<V, K, R, E, TH>,
   extra: E,
 ): ReduceEntryHandler<V, R> {
   ensureIsFunction(callback);
