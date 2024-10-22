@@ -1,6 +1,7 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { fillObject } from '../tools/fill-object';
-import type { Anything, ImmutableObject, Key } from '../types/private-types';
+import type { Anything } from '../types/helper-types';
+import type { ImmutableObject, Key } from '../types/private-types';
 
 export function fill<V, K extends Key, RV = Anything>(
   object: ImmutableObject<K, V>,

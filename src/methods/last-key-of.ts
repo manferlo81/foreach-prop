@@ -1,7 +1,8 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createFindValueEntryHandler, findEntryKey } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything, ImmutableObject, Key } from '../types/private-types';
+import type { Anything } from '../types/helper-types';
+import type { ImmutableObject, Key } from '../types/private-types';
 
 export function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anything): K | null {
 

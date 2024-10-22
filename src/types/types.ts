@@ -1,4 +1,5 @@
-import type { Anything, Extra } from './private-types';
+import type { Anything } from './helper-types';
+import type { Extra } from './private-types';
 
 export type MapCallback_next<V, K extends string, R, E extends Extra, TH = Anything> = (
   (this: TH, value: V, key: K, ...extra: E) => R

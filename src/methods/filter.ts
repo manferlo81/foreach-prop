@@ -1,7 +1,9 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { Anything, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
+import type { InputEntry } from '../types/entry-types';
+import type { Anything } from '../types/helper-types';
+import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
 import type { FilterCallback } from '../types/types';
 
 export function filter<V, K extends Key, E extends Extra, TH = Anything>(

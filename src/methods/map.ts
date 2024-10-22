@@ -1,7 +1,9 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { Anything, Entry, Extra, ImmutableObject, InputEntry, Key, StringifiedKey } from '../types/private-types';
+import type { Entry, InputEntry } from '../types/entry-types';
+import type { Anything } from '../types/helper-types';
+import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
 import type { MapCallback_next } from '../types/types';
 
 export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(

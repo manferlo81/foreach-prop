@@ -1,4 +1,5 @@
-import type { Extra, InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/private-types';
+import type { InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/entry-types';
+import type { Extra } from '../types/private-types';
 import type { MapCallback_next, ReduceCallback_next } from '../types/types';
 import { ensureIsFunction } from './ensure';
 

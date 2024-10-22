@@ -1,7 +1,8 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createReduceEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything, Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
+import type { Anything } from '../types/helper-types';
+import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
 import type { ReduceCallback_next } from '../types/types';
 
 export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
