@@ -1,12 +1,9 @@
+import { createObject } from '../tools/create-object';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { fillObject } from '../tools/fill-object';
+import type { EntryKeyTypeFromObject, MapEntryValueFromObject, ObjectTypeFromEntry } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
-import type { ImmutableObject, Key } from '../types/private-types';
 
-export function fill<V, K extends Key, RV = Anything>(
-  object: ImmutableObject<K, V>,
-  value: RV,
-): Record<K, RV> {
+export function fill<O extends object, V = Anything>(object: O, value: V): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>> {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
@@ -14,7 +11,10 @@ export function fill<V, K extends Key, RV = Anything>(
   // throw if not an object
   ensureIsObject(object);
 
-  const keys = Object.keys(object) as K[];
-  return fillObject(keys, value);
+  // get keys from input object
+  const keys = Object.keys(object) as Array<EntryKeyTypeFromObject<O>>;
+
+  // return new object with input object keys filled with provided value
+  return createObject(keys, value);
 
 }

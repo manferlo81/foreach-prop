@@ -1,30 +1,53 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler, findEntryKey } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
+import type { EntryKeyType, EntryKeyTypeFromObject, EntryTypeFromObject, Key, KeyAsString } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { FilterCallback } from '../types/types';
+import type { Extra, ImmutableObject } from '../types/private-types';
+import type { FilterCallback, ResultCallbackFromObject } from '../types/types';
 
-export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
+export function findKey<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, [], T>,
+): EntryKeyTypeFromObject<O> | null;
+
+export function findKey<O extends object, X extends Extra, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryKeyTypeFromObject<O> | null;
+
+export function findKey<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, Extra, T>,
+  ...extra: Extra
+): EntryKeyTypeFromObject<O> | null;
+
+// vvvvvvvv OLD SIGNATURES vvvvvvvv
+
+export function findKey<V, K extends Key, X extends Extra, T = Anything>(
+  this: T,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+  callback: FilterCallback<V, KeyAsString<K>, X, T>,
+  ...extra: X
 ): K | null;
 
-export function findKey<V, K extends Key, TH = Anything>(
-  this: TH,
+export function findKey<V, K extends Key, T = Anything>(
+  this: T,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
+  callback: FilterCallback<V, KeyAsString<K>, Extra, T>,
   ...extra: Extra
 ): K | null;
 
-export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): K | null {
+export function findKey<O extends object, X extends Extra, T = Anything>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryKeyType<EntryTypeFromObject<O>> | null {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
@@ -39,6 +62,6 @@ export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   const entries = getEntries(object);
 
   // find key
-  return findEntryKey(entries, entryHandler) as K | null;
+  return findEntryKey(entries, entryHandler);
 
 }

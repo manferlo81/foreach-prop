@@ -1,12 +1,19 @@
-import type { Entry, InputEntry } from '../types/entry-types';
-import type { ImmutableObject, Key } from '../types/private-types';
+import type { EntryFromInputEntry, EntryTypeFromArray, EntryTypeFromObject, ObjectTypeFromEntry, ReadonlyUnknownEntry, UnknownInputEntry } from '../types/entry-types';
+import type { UnknownArray } from '../types/helper-types';
 
-type ObjectGetEntries = <V>(object: ImmutableObject<Key, V>) => Array<Entry<V>>;
-type ObjectFromEntries = <V, K extends Key>(entries: ReadonlyArray<InputEntry<V, K>>) => Record<K, V>;
+interface GetObjectEntriesFunction {
+  <A extends UnknownArray>(object: A): Array<EntryTypeFromArray<A>>;
+  <O extends object>(object: O): Array<EntryTypeFromObject<O>>;
+}
+
+interface ObjectFromEntriesFunction {
+  <E extends ReadonlyUnknownEntry>(entries: E[]): ObjectTypeFromEntry<E>;
+  <E extends UnknownInputEntry | ReadonlyUnknownEntry>(entries: E[]): ObjectTypeFromEntry<EntryFromInputEntry<E>>;
+}
 
 interface EnhancedObjectConstructor extends ObjectConstructor {
-  entries: ObjectGetEntries;
-  fromEntries: ObjectFromEntries;
+  entries: GetObjectEntriesFunction;
+  fromEntries: ObjectFromEntriesFunction;
 }
 
 export const { entries: getEntries, fromEntries } = Object as EnhancedObjectConstructor;

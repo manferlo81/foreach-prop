@@ -1,45 +1,45 @@
-import type { InputEntry, ReduceEntryHandler, ResultEntryHandler } from '../types/entry-types';
+import type { EntryKeyType, EntryValueType, ReduceEntryCallback, ResultEntryCallback, UnknownEntry } from '../types/entry-types';
 import type { Extra } from '../types/private-types';
-import type { MapCallback_next, ReduceCallback_next } from '../types/types';
+import type { ReduceCallbackFromEntry, ResultCallbackFromEntry } from '../types/types';
 import { ensureIsFunction } from './ensure';
 
-export function createResultEntryHandler<V, K extends string, E extends Extra, TH, R>(
-  thisArg: TH,
-  callback: MapCallback_next<V, K, R, E, TH>,
-  extra: E,
-): ResultEntryHandler<V, R> {
+export function createResultEntryHandler<E extends UnknownEntry, R, X extends Extra, T>(
+  thisArg: T,
+  callback: ResultCallbackFromEntry<E, R, X, T>,
+  extra: X,
+): ResultEntryCallback<E, R> {
   ensureIsFunction(callback);
-  return ([key, value]) => callback.call(thisArg, value, key as K, ...extra);
+  return ([key, value]) => callback.call(thisArg, value, key, ...extra);
 }
 
-export function createReduceEntryHandler<V, K extends string, E extends Extra, TH, R>(
-  thisArg: TH,
-  callback: ReduceCallback_next<V, K, R, E, TH>,
-  extra: E,
-): ReduceEntryHandler<V, R> {
+export function createReduceEntryHandler<E extends UnknownEntry, X extends Extra, T, R>(
+  thisArg: T,
+  callback: ReduceCallbackFromEntry<E, R, X, T>,
+  extra: X,
+): ReduceEntryCallback<E, R> {
   ensureIsFunction(callback);
-  return (prev, [key, value]) => callback.call(thisArg, prev, value, key as K, ...extra);
+  return (prev, [key, value]) => callback.call(thisArg, prev, value, key, ...extra);
 }
 
-export function createFindValueEntryHandler<V>(value: unknown): ResultEntryHandler<V, boolean> {
-  return ([,entryValue]) => entryValue === value;
+export function createFindValueEntryHandler(value: unknown): ResultEntryCallback<UnknownEntry, boolean> {
+  return ([, entryValue]) => entryValue === value;
 }
 
-export function findEntry<V>(entries: Array<InputEntry<V>>, handler: ResultEntryHandler<V, unknown>): InputEntry<V> | null {
+export function findEntry<E extends UnknownEntry>(entries: E[], handler: ResultEntryCallback<E, unknown>): E | null {
   const entry = entries.find(handler);
   return entry ?? null;
 }
 
-export function findEntryKey<V>(entries: Array<InputEntry<V>>, handler: ResultEntryHandler<V, unknown>): string | null {
+export function findEntryKey<E extends UnknownEntry>(entries: E[], handler: ResultEntryCallback<E, unknown>): EntryKeyType<E> | null {
   const entry = findEntry(entries, handler);
   if (!entry) return null;
   const [key] = entry;
   return key;
 }
 
-export function findEntryValue<V>(entries: Array<InputEntry<V>>, handler: ResultEntryHandler<V, unknown>): V | undefined {
+export function findEntryValue<E extends UnknownEntry>(entries: E[], handler: ResultEntryCallback<E, unknown>): EntryValueType<E> | undefined {
   const entry = findEntry(entries, handler);
   if (!entry) return;
-  const [,value] = entry;
+  const [, value] = entry;
   return value;
 }

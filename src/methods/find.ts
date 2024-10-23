@@ -1,30 +1,53 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler, findEntryValue } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
+import type { EntryTypeFromObject, EntryValueType, Key, KeyAsString } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { FilterCallback } from '../types/types';
+import type { Extra, ImmutableObject } from '../types/private-types';
+import type { FilterCallback, ResultCallbackFromObject } from '../types/types';
 
-export function find<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
+export function find<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, [], T>,
+): EntryValueType<EntryTypeFromObject<O>> | undefined;
+
+export function find<O extends object, X extends Extra, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryValueType<EntryTypeFromObject<O>> | undefined;
+
+export function find<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, Extra, T>,
+  ...extra: Extra
+): EntryValueType<EntryTypeFromObject<O>> | undefined;
+
+// vvvvvvvv OLD SIGNATURES vvvvvvvv
+
+export function find<V, K extends Key, X extends Extra, T = Anything>(
+  this: T,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+  callback: FilterCallback<V, KeyAsString<K>, X, T>,
+  ...extra: X
 ): V | undefined;
 
-export function find<V, K extends Key, TH = Anything>(
-  this: TH,
+export function find<V, K extends Key, T = Anything>(
+  this: T,
   object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
+  callback: FilterCallback<V, KeyAsString<K>, Extra, T>,
   ...extra: Extra
 ): V | undefined;
 
-export function find<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): V | undefined {
+export function find<O extends object, X extends Extra, T = Anything>(
+  this: T,
+  object: O,
+  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryValueType<EntryTypeFromObject<O>> | undefined {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
