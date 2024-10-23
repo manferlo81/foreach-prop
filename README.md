@@ -12,7 +12,7 @@
 
 Array-like methods for objects
 
-> :warning: *Some javascript implementations don't follow the object key order. Keep that in mind when you use* `keyOf`*,* `lastKeyOf`*,* `findKey` *and* `find` *methods.*
+> :warning: *Some javascript implementations don't follow the user object value-key order. Keep that in mind when you use* [`keyOf`](#function-keyof)*,* [`lastKeyOf`](#function-lastkeyof)*,* [`findKey`](#function-findkey) *and* [`find`](#function-find) *functions.*
 
 ## Content
 
@@ -20,19 +20,19 @@ Array-like methods for objects
 * [CDN](#cdn)
 * [Usage](#usage)
 * [API](#api)
-  * [`forEach`](#foreach)
-  * [`map`](#map)
-  * [`keyOf`](#keyof)
-  * [`lastKeyOf`](#lastkeyof)
-  * [`includes`](#includes)
-  * [`findKey`](#findkey)
-  * [`find`](#find)
-  * [`filter`](#filter)
-  * [`reduce`](#reduce)
-  * [`some`](#some)
-  * [`every`](#every)
-  * [`create`](#create)
-  * [`fill`](#fill)
+  * function [`create`](#function-create)
+  * function [`fill`](#function-fill)
+  * function [`includes`](#function-includes)
+  * function [`some`](#function-some)
+  * function [`every`](#function-every)
+  * function [`forEach`](#foreach-prop)
+  * function [`map`](#function-map)
+  * function [`filter`](#function-filter)
+  * function [`keyOf`](#function-keyof)
+  * function [`lastKeyOf`](#function-lastkeyof)
+  * function [`findKey`](#function-findkey)
+  * function [`find`](#function-find)
+  * function [`reduce`](#function-reduce)
 
 ## Install
 
@@ -74,7 +74,7 @@ npm i foreach-prop
 
 ***example***
 
-```javascript
+```typescript
 import { map } from "foreach-prop";
 
 const object = {
@@ -100,7 +100,7 @@ console.log(result);
 
 ### Node.js
 
-```javascript
+```typescript
 const { forEach } = require("foreach-prop");
 forEach(object, callback);
 ```
@@ -109,101 +109,227 @@ forEach(object, callback);
 
 *After adding the* `script` *tag,* `eachProp` *object will be available globally, containing all methods detailed in the [API section](#api).*
 
-```javascript
+```typescript
 eachProp.forEach(object, callback);
 ```
 
 ## API
 
-### `forEach`
+### function `create`
 
-*Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once initiated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#findkey) *method.*
+*added in:* `v2.1.0`
 
-```typescript
-forEach(object, function callback(value, key, ...extra) => void, ...extra): void;
-```
-
-*Any* `extra` *argument will be passed down to the callback function.*
-
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
-
-```javascript
-forEach.call(thisArg, object, callback, ...extra);
-```
-
-### `map`
-
-*Similar to* `Array.prototype.map`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object with the callback* `return` *as value.*
+*Similar to* `new Array()`*. It creates a new object with the given keys. If a value is provided, every property will be populated with the given value or* `undefined` *otherwise.*
 
 ```typescript
-map(object, function callback(value, key, ...extra) => any, ...extra): object;
+function create(
+  keys: Array<string | number>,
+  value?: V | undefined
+): Record<string, V | undefined>;
 ```
 
-*Any* `extra` *argument will be passed down to the callback function.*
-
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
-
-```javascript
-map.call(thisArg, object, callback, ...extra);
-```
-
-### `keyOf`
-
-*Similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one, or* `null` *if not found.*
+***example***
 
 ```typescript
-keyOf(object, value): string | null;
+const object = create(['a', 'b'], true);
+console.log(object);
 ```
 
-### `lastKeyOf`
+```bash
+{ a: true, b: true }
+```
 
-*Similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one, or* `null` *if not found.*
+### function `fill`
+
+*added in:* `v2.1.0`
+
+*Similar to* `Array.prototype.fill` *with a difference, it returns a new object instead of modifying the given one. Every property in the new object will be set to the provided value.*
 
 ```typescript
-lastKeyOf(object, value): string | null;
+function fill(
+  object: Record<string, V> | V[],
+  value: N
+): Record<string, N>;
 ```
 
-### `includes`
+### function `includes`
 
 *added in:* `v0.2.0`
 
 *Similar to* `Array.prototype.includes`*. It returns whether or not a value is present in an object.*
 
 ```typescript
-includes(object, value): boolean;
+function includes(
+  object: Record<string, V> | V[],
+  value: unknown
+): boolean;
 ```
 
-### `findKey`
+### function `some`
 
-*Similar to* `Array.prototype.findIndex`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
+*added in:* `v0.2.0`
+
+*Similar to* `Array.prototype.some`*. It returns whether at least one of the key-value-pairs satisfy the provided callback function.*
 
 ```typescript
-findKey(object, function callback(value, key, ...extra) => any, ...extra): string | null;
+function some(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  ...extra: X[]
+): boolean;
 ```
 
 *Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
-```javascript
+```typescript
+some.call(thisArg, object, callback, ...extra);
+```
+
+### function `every`
+
+*added in:* `v0.2.0`
+
+*Similar to* `Array.prototype.every`*. It returns whether all key-value-pairs satisfy the provided callback function.*
+
+```typescript
+function every(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  ...extra: X[]
+): boolean;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
+every.call(thisArg, object, callback, ...extra);
+```
+
+### function `forEach`
+
+*Similar to* `Array.prototype.forEach`*. It calls the provided callback function for every* `key-value-pair` *in the object. Once initiated there is no way to stop the execution of this function, if you intend to stop the iteration at some point have a look at* [`findKey`](#function-findkey) *method.*
+
+```typescript
+function forEach(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => void,
+  ...extra: X[]
+): void;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
+forEach.call(thisArg, object, callback, ...extra);
+```
+
+### function `map`
+
+*Similar to* `Array.prototype.map`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object with the callback* `return` *as value.*
+
+```typescript
+function map(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => N,
+  ...extra: X[]
+): Record<string, N>;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
+map.call(thisArg, object, callback, ...extra);
+```
+
+### function `filter`
+
+*Similar to* `Array.prototype.filter`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
+
+```typescript
+function filter(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  ...extra: X[]
+): Record<string, V>;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
+filter.call(thisArg, object, callback, ...extra);
+```
+
+### function `keyOf`
+
+*Similar to* `Array.prototype.indexOf`*. It returns the key of the first value that equals the provided one, or* `null` *if not found.*
+
+```typescript
+function keyOf(
+  object: Record<K, unknown>,
+  value: unknown
+): K | null;
+```
+
+### function `lastKeyOf`
+
+*Similar to* `Array.prototype.lastIndexOf`*. It returns the key of the last value that equals the provided one, or* `null` *if not found.*
+
+```typescript
+function lastKeyOf(
+  object: Record<K, unknown>,
+  value: unknown
+): K | null;
+```
+
+### function `findKey`
+
+*Similar to* `Array.prototype.findIndex`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
+
+```typescript
+function findKey(
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
+  ...extra: X[]
+): K | null;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
 findKey.call(thisArg, object, callback, ...extra);
 ```
 
-### `find`
+### function `find`
 
 *added in:* `v0.1.0`
 
 *Similar to* `Array.prototype.find`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns the value once the provided callback function return a truthy value. It returns* `undefined` *if nothing found.*
 
 ```typescript
-find(object, function callback(value, key, ...extra) => any, ...extra): any;
+function find(
+  object: Record<string, V> | V[],
+  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  ...extra: X[]
+): V | undefined;
 ```
 
 > *Note that the returned value may be* `undefined` *even if the condition is met but the value is* `undefined`*.*
 
 ***example***
 
-```javascript
+```typescript
 const undef;
 // undef is undefined
 const object = { key1: undef };
@@ -226,107 +352,29 @@ undefined
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
-```javascript
+```typescript
 find.call(thisArg, object, callback, ...extra);
 ```
 
-### `filter`
-
-*Similar to* `Array.prototype.filter`*. It calls the provided callback function for every* `key-value-pair` *in the object and returns a new object containing the key-value-pairs corresponding to those where the provided callback function returned a truthy value.*
-
-```typescript
-filter(object, function callback(value, key, ...extra) => any, ...extra): object;
-```
-
-*Any* `extra` *argument will be passed down to the callback function.*
-
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
-
-```javascript
-filter.call(thisArg, object, callback, ...extra);
-```
-
-### `reduce`
+### function `reduce`
 
 *Similar to* `Array.prototype.reduce` *but with a major difference: if no initial value provided it defaults to* `undefined`*.*
 
 ```typescript
-reduce(object, function callback(current, value, key, ...extra) => any, initial?, ...extra): any;
+function reduce(
+  object: Record<string, V> | V[],
+  callback: (current: R, value: V, key: string, ...extra: X[]) => R,
+  initial?: R,
+  ...extra: X[]
+): R;
 ```
 
 *Any* `extra` *argument will be passed down to the callback function.*
 
 *The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
 
-```javascript
-reduce.call(thisArg, object, callback, initial?, ...extra);
-```
-
-### `some`
-
-*added in:* `v0.2.0`
-
-*Similar to* `Array.prototype.some`*. It returns whether at least one of the key-value-pairs satisfy the provided callback function.*
-
-```javascript
-some(object, function callback(value, key, ...extra) => any, ...extra): boolean;
-```
-
-*Any* `extra` *argument will be passed down to the callback function.*
-
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
-
-```javascript
-some.call(thisArg, object, callback, ...extra): boolean;
-```
-
-### `every`
-
-*added in:* `v0.2.0`
-
-*Similar to* `Array.prototype.every`*. It returns whether all key-value-pairs satisfy the provided callback function.*
-
-```javascript
-every(object, function callback(value, key, ...extra) => any, ...extra): boolean;
-```
-
-*Any* `extra` *argument will be passed down to the callback function.*
-
-*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
-
-```javascript
-every.call(thisArg, object, callback, ...extra): boolean;
-```
-
-### `create`
-
-*added in:* `v2.1.0`
-
-*Similar to* `new Array()`*. It creates a new object with the given keys. If a value is provided, every property will be populated with the given value or* `undefined` *otherwise.*
-
 ```typescript
-create(keys: Array<string | number>, value?: any): object;
-```
-
-***example***
-
-```typescript
-const object = create(['a', 'b'], true);
-console.log(object);
-```
-
-```bach
-{ a: true, b: true }
-```
-
-### `fill`
-
-*added in:* `v2.1.0`
-
-*Similar to* `Array.prototype.fill` *with a difference, it returns a new object instead of modifying the given one. Every property in the new object will be set to the provided value.*
-
-```typescript
-fill(object, value): object;
+reduce.call(thisArg, object, callback, initial, ...extra);
 ```
 
 ## License
