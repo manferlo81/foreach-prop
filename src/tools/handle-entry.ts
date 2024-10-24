@@ -1,11 +1,11 @@
 import type { EntryKeyType, EntryValueType, ReduceEntryCallback, ResultEntryCallback, UnknownEntry } from '../types/entry-types';
 import type { Extra } from '../types/private-types';
-import type { ReduceCallbackFromEntry, ResultCallbackFromEntry } from '../types/types';
+import type { MapCallbackFromEntry, ReduceCallbackFromEntry } from '../types/types';
 import { ensureIsFunction } from './ensure';
 
 export function createResultEntryHandler<E extends UnknownEntry, R, X extends Extra, T>(
   thisArg: T,
-  callback: ResultCallbackFromEntry<E, R, X, T>,
+  callback: MapCallbackFromEntry<E, R, X, T>,
   extra: X,
 ): ResultEntryCallback<E, R> {
   ensureIsFunction(callback);

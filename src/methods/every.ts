@@ -4,25 +4,25 @@ import { getEntries } from '../tools/object-entries';
 import type { Key, KeyAsString } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
 import type { Extra, ImmutableObject } from '../types/private-types';
-import type { FilterCallback, ResultCallbackFromObject } from '../types/types';
+import type { FilterCallback, MapCallbackFromObject } from '../types/types';
 
 export function every<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, [], T>,
+  predicate: MapCallbackFromObject<O, unknown, [], T>,
 ): boolean;
 
 export function every<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): boolean;
 
 export function every<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, Extra, T>,
+  predicate: MapCallbackFromObject<O, unknown, Extra, T>,
   ...extra: Extra
 ): boolean;
 
@@ -45,7 +45,7 @@ export function every<V, K extends Key, T = Anything>(
 export function every<O extends object, X extends Extra, T = Anything>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): boolean {
 

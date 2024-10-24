@@ -4,25 +4,25 @@ import { getEntries } from '../tools/object-entries';
 import type { EntryKeyType, EntryKeyTypeFromObject, EntryTypeFromObject, Key, KeyAsString } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
 import type { Extra, ImmutableObject } from '../types/private-types';
-import type { FilterCallback, ResultCallbackFromObject } from '../types/types';
+import type { FilterCallback, MapCallbackFromObject } from '../types/types';
 
 export function findKey<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, unknown, [], T>,
+  callback: MapCallbackFromObject<O, unknown, [], T>,
 ): EntryKeyTypeFromObject<O> | null;
 
 export function findKey<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  callback: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): EntryKeyTypeFromObject<O> | null;
 
 export function findKey<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, unknown, Extra, T>,
+  callback: MapCallbackFromObject<O, unknown, Extra, T>,
   ...extra: Extra
 ): EntryKeyTypeFromObject<O> | null;
 
@@ -45,7 +45,7 @@ export function findKey<V, K extends Key, T = Anything>(
 export function findKey<O extends object, X extends Extra, T = Anything>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, unknown, X, T>,
+  callback: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): EntryKeyType<EntryTypeFromObject<O>> | null {
 

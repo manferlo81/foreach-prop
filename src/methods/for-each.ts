@@ -4,25 +4,25 @@ import { getEntries } from '../tools/object-entries';
 import type { Key, KeyAsString } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
 import type { Extra, ImmutableObject } from '../types/private-types';
-import type { ForEachCallback, ResultCallbackFromObject } from '../types/types';
+import type { ForEachCallback, MapCallbackFromObject } from '../types/types';
 
 export function forEach<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, void, [], T>,
+  callback: MapCallbackFromObject<O, void, [], T>,
 ): void;
 
 export function forEach<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, void, X, T>,
+  callback: MapCallbackFromObject<O, void, X, T>,
   ...extra: X
 ): void;
 
 export function forEach<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, void, Extra, T>,
+  callback: MapCallbackFromObject<O, void, Extra, T>,
   ...extra: Extra
 ): void;
 
@@ -45,7 +45,7 @@ export function forEach<V, K extends Key, T = Anything>(
 export function forEach<O extends object, X extends Extra, T = Anything>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, void, X, T>,
+  callback: MapCallbackFromObject<O, void, X, T>,
   ...extra: X
 ): void {
 

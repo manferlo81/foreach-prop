@@ -3,25 +3,25 @@ import { createResultEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
 import type { Anything } from '../types/helper-types';
 import type { Extra } from '../types/private-types';
-import type { ResultCallbackFromObject } from '../types/types';
+import type { MapCallbackFromObject } from '../types/types';
 
 export function some<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, [], T>,
+  predicate: MapCallbackFromObject<O, unknown, [], T>,
 ): boolean;
 
 export function some<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): boolean;
 
 export function some<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, Extra, T>,
+  predicate: MapCallbackFromObject<O, unknown, Extra, T>,
   ...extra: Extra
 ): boolean;
 
@@ -44,7 +44,7 @@ export function some<O extends object, T = unknown>(
 export function some<O extends object, X extends Extra, T = Anything>(
   this: T,
   object: O,
-  predicate: ResultCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): boolean {
 

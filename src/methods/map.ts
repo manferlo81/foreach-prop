@@ -4,25 +4,25 @@ import { fromEntries, getEntries } from '../tools/object-entries';
 import type { Key, KeyAsString, MapEntryValueFromObject, ObjectTypeFromEntry, ResultEntryCallbackFromObject } from '../types/entry-types';
 import type { Anything } from '../types/helper-types';
 import type { Extra, ImmutableObject } from '../types/private-types';
-import type { NextMapCallback, ResultCallbackFromObject } from '../types/types';
+import type { MapCallback, MapCallbackFromObject } from '../types/types';
 
 export function map<O extends object, V, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, V, [], T>,
+  callback: MapCallbackFromObject<O, V, [], T>,
 ): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>>;
 
 export function map<O extends object, V, X extends Extra, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, V, X, T>,
+  callback: MapCallbackFromObject<O, V, X, T>,
   ...extra: X
 ): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>>;
 
 export function map<O extends object, V, T = unknown>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, V, Extra, T>,
+  callback: MapCallbackFromObject<O, V, Extra, T>,
   ...extra: Extra
 ): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>>;
 
@@ -31,21 +31,21 @@ export function map<O extends object, V, T = unknown>(
 export function map<V, K extends Key, X extends Extra, RV = Anything, T = Anything>(
   this: T,
   object: ImmutableObject<K, V>,
-  callback: NextMapCallback<V, KeyAsString<K>, RV, X, T>,
+  callback: MapCallback<V, KeyAsString<K>, RV, X, T>,
   ...extra: X
 ): Record<K, RV>;
 
 export function map<V, K extends Key, RV = Anything, T = Anything>(
   this: T,
   object: ImmutableObject<K, V>,
-  callback: NextMapCallback<V, KeyAsString<K>, RV, Extra, T>,
+  callback: MapCallback<V, KeyAsString<K>, RV, Extra, T>,
   ...extra: Extra
 ): Record<K, RV>;
 
 export function map<O extends object, X extends Extra, V = Anything, T = Anything>(
   this: T,
   object: O,
-  callback: ResultCallbackFromObject<O, V, X, T>,
+  callback: MapCallbackFromObject<O, V, X, T>,
   ...extra: X
 ): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>> {
 
