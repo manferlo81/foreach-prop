@@ -1,15 +1,9 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createFindValueEntryHandler, findEntryKey } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { EntryKeyTypeFromObject, Key } from '../types/entry-types';
-import type { Anything } from '../types/helper-types';
-import type { ImmutableObject } from '../types/private-types';
+import type { EntryKeyTypeFromObject } from '../types/entry-types';
 
 export function lastKeyOf<O extends object>(object: O, value: unknown): EntryKeyTypeFromObject<O> | null;
-
-// vvvvvvvv OLD SIGNATURES vvvvvvvv
-
-export function lastKeyOf<K extends Key>(object: ImmutableObject<K, Anything>, value: Anything): K | null;
 
 export function lastKeyOf<O extends object>(object: O, value: unknown): EntryKeyTypeFromObject<O> | null {
 

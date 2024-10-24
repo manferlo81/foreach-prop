@@ -1,10 +1,9 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler, findEntryValue } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { EntryTypeFromObject, EntryValueType, Key, KeyAsString } from '../types/entry-types';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject } from '../types/private-types';
-import type { FilterCallback, MapCallbackFromObject } from '../types/types';
+import type { EntryTypeFromObject, EntryValueType } from '../types/entry-types';
+import type { Extra } from '../types/private-types';
+import type { MapCallbackFromObject } from '../types/types';
 
 export function find<O extends object, T = unknown>(
   this: T,
@@ -26,23 +25,7 @@ export function find<O extends object, T = unknown>(
   ...extra: Extra
 ): EntryValueType<EntryTypeFromObject<O>> | undefined;
 
-// vvvvvvvv OLD SIGNATURES vvvvvvvv
-
-export function find<V, K extends Key, X extends Extra, T = Anything>(
-  this: T,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, KeyAsString<K>, X, T>,
-  ...extra: X
-): V | undefined;
-
-export function find<V, K extends Key, T = Anything>(
-  this: T,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, KeyAsString<K>, Extra, T>,
-  ...extra: Extra
-): V | undefined;
-
-export function find<O extends object, X extends Extra, T = Anything>(
+export function find<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, unknown, X, T>,

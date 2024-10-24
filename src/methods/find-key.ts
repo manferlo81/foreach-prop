@@ -1,10 +1,9 @@
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { createResultEntryHandler, findEntryKey } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { EntryKeyType, EntryKeyTypeFromObject, EntryTypeFromObject, Key, KeyAsString } from '../types/entry-types';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject } from '../types/private-types';
-import type { FilterCallback, MapCallbackFromObject } from '../types/types';
+import type { EntryKeyType, EntryKeyTypeFromObject, EntryTypeFromObject } from '../types/entry-types';
+import type { Extra } from '../types/private-types';
+import type { MapCallbackFromObject } from '../types/types';
 
 export function findKey<O extends object, T = unknown>(
   this: T,
@@ -26,23 +25,7 @@ export function findKey<O extends object, T = unknown>(
   ...extra: Extra
 ): EntryKeyTypeFromObject<O> | null;
 
-// vvvvvvvv OLD SIGNATURES vvvvvvvv
-
-export function findKey<V, K extends Key, X extends Extra, T = Anything>(
-  this: T,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, KeyAsString<K>, X, T>,
-  ...extra: X
-): K | null;
-
-export function findKey<V, K extends Key, T = Anything>(
-  this: T,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, KeyAsString<K>, Extra, T>,
-  ...extra: Extra
-): K | null;
-
-export function findKey<O extends object, X extends Extra, T = Anything>(
+export function findKey<O extends object, X extends Extra, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, unknown, X, T>,
