@@ -1,34 +1,29 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler, findEntryValue } from '../tools/handle-entry';
+import { findEntryValue } from '../tools/find-entry';
 import { getEntries } from '../tools/object-entries';
 import type { EntryTypeFromObject, EntryValueType } from '../types/entry-types';
-import type { Extra } from '../types/private-types';
+import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromObject } from '../types/types';
 
-export function find<O extends object, T = unknown>(
+export function find<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, [], T>,
-): EntryValueType<EntryTypeFromObject<O>> | undefined;
-
-export function find<O extends object, X extends Extra, T = unknown>(
-  this: T,
-  object: O,
-  callback: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): EntryValueType<EntryTypeFromObject<O>> | undefined;
 
 export function find<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, Extra, T>,
-  ...extra: Extra
+  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  ...extra: UnknownArray
 ): EntryValueType<EntryTypeFromObject<O>> | undefined;
 
-export function find<O extends object, X extends Extra, T = unknown>(
+export function find<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): EntryValueType<EntryTypeFromObject<O>> | undefined {
 
@@ -39,12 +34,12 @@ export function find<O extends object, X extends Extra, T = unknown>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // get entries
   const entries = getEntries(object);
 
   // find value
-  return findEntryValue(entries, entryHandler);
+  return findEntryValue(entries, entryPredicate);
 
 }

@@ -1,36 +1,30 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
 import type { EntryTypeFromObject, ObjectTypeFromEntry } from '../types/entry-types';
-import type { Extra } from '../types/private-types';
+import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromObject } from '../types/types';
 
 type FilteredObject<O extends object> = Partial<ObjectTypeFromEntry<EntryTypeFromObject<O>>>;
 
-export function filter<O extends object, T = unknown>(
+export function filter<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, [], T>,
-): FilteredObject<O>;
-
-export function filter<O extends object, X extends Extra, T = unknown>(
-  this: T,
-  object: O,
-  callback: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): FilteredObject<O>;
 
 export function filter<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, Extra, T>,
-  ...extra: Extra
+  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  ...extra: UnknownArray
 ): FilteredObject<O>;
 
-export function filter<O extends object, X extends Extra, T = unknown>(
+export function filter<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
   ...extra: X
 ): FilteredObject<O> {
 
@@ -41,10 +35,10 @@ export function filter<O extends object, X extends Extra, T = unknown>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // filter entries
-  const entries = getEntries(object).filter(entryHandler);
+  const entries = getEntries(object).filter(entryPredicate);
 
   // return new object from filtered entries
   return fromEntries(entries);

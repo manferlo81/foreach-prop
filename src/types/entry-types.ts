@@ -41,8 +41,8 @@ export type MapEntryValue<E extends UnknownEntry, V> = DictionaryValueType<{
 }>;
 export type MapEntryValueFromObject<O extends object, V> = MapEntryValue<EntryTypeFromObject<O>, V>;
 
-export type ResultEntryCallback<E extends UnknownEntry, R> = (entry: E) => R;
-export type ResultEntryCallbackFromObject<O extends object, R> = ResultEntryCallback<EntryTypeFromObject<O>, R>;
+export type MapEntryCallback<E extends UnknownEntry, R> = (entry: E) => R;
+export type MapEntryCallbackFromObject<O extends object, R> = MapEntryCallback<EntryTypeFromObject<O>, R>;
 
 export type ReduceEntryCallback<E extends UnknownEntry, R> = (prev: R, entry: E) => R;
 export type ReduceEntryCallbackFromObject<O extends object, R> = ReduceEntryCallback<EntryTypeFromObject<O>, R>;

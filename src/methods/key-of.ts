@@ -1,5 +1,6 @@
+import { createFindValueEntryPredicate } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createFindValueEntryHandler, findEntryKey } from '../tools/handle-entry';
+import { findEntryKey } from '../tools/find-entry';
 import { getEntries } from '../tools/object-entries';
 import type { EntryKeyTypeFromObject } from '../types/entry-types';
 
@@ -13,7 +14,7 @@ export function keyOf<O extends object>(object: O, value: unknown): EntryKeyType
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createFindValueEntryHandler(value);
+  const entryHandler = createFindValueEntryPredicate(value);
 
   // get object entries
   const entries = getEntries(object);

@@ -1,19 +1,13 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { MapEntryValueFromObject, ObjectTypeFromEntry, ResultEntryCallbackFromObject } from '../types/entry-types';
-import type { Extra } from '../types/private-types';
+import type { MapEntryCallbackFromObject, MapEntryValueFromObject, ObjectTypeFromEntry } from '../types/entry-types';
+import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromObject } from '../types/types';
 
 type MappedObject<O extends object, V> = ObjectTypeFromEntry<MapEntryValueFromObject<O, V>>;
 
-export function map<O extends object, V, T = unknown>(
-  this: T,
-  object: O,
-  callback: MapCallbackFromObject<O, V, [], T>,
-): MappedObject<O, V>;
-
-export function map<O extends object, V, X extends Extra, T = unknown>(
+export function map<O extends object, V, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, V, X, T>,
@@ -23,11 +17,11 @@ export function map<O extends object, V, X extends Extra, T = unknown>(
 export function map<O extends object, V, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, V, Extra, T>,
-  ...extra: Extra
+  callback: MapCallbackFromObject<O, V, UnknownArray, T>,
+  ...extra: UnknownArray
 ): MappedObject<O, V>;
 
-export function map<O extends object, X extends Extra, V, T = unknown>(
+export function map<O extends object, X extends UnknownArray, V, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, V, X, T>,
@@ -41,9 +35,9 @@ export function map<O extends object, X extends Extra, V, T = unknown>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryToValue = createResultEntryHandler(this, callback, extra);
+  const entryToValue = createMapEntryCallback(this, callback, extra);
 
-  const entryHandler: ResultEntryCallbackFromObject<O, MapEntryValueFromObject<O, V>> = (entry) => [entry[0], entryToValue(entry)];
+  const entryHandler: MapEntryCallbackFromObject<O, MapEntryValueFromObject<O, V>> = (entry) => [entry[0], entryToValue(entry)];
 
   // map through entries
   const entries = getEntries(object).map(entryHandler);

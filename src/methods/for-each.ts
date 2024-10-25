@@ -1,16 +1,10 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Extra } from '../types/private-types';
+import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromObject } from '../types/types';
 
-export function forEach<O extends object, T = unknown>(
-  this: T,
-  object: O,
-  callback: MapCallbackFromObject<O, void, [], T>,
-): void;
-
-export function forEach<O extends object, X extends Extra, T = unknown>(
+export function forEach<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, void, X, T>,
@@ -20,11 +14,11 @@ export function forEach<O extends object, X extends Extra, T = unknown>(
 export function forEach<O extends object, T = unknown>(
   this: T,
   object: O,
-  callback: MapCallbackFromObject<O, void, Extra, T>,
-  ...extra: Extra
+  callback: MapCallbackFromObject<O, void, UnknownArray, T>,
+  ...extra: UnknownArray
 ): void;
 
-export function forEach<O extends object, X extends Extra, T = unknown>(
+export function forEach<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
   callback: MapCallbackFromObject<O, void, X, T>,
@@ -38,7 +32,7 @@ export function forEach<O extends object, X extends Extra, T = unknown>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryHandler = createMapEntryCallback(this, callback, extra);
 
   // iterate through object entries
   getEntries(object).forEach(entryHandler);

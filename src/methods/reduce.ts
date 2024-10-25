@@ -1,7 +1,7 @@
+import { createReduceEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createReduceEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Extra } from '../types/private-types';
+import type { UnknownArray } from '../types/helper-types';
 import type { ReduceCallbackFromObject } from '../types/types';
 
 export function reduce<O extends object, R, T = unknown>(
@@ -18,7 +18,7 @@ export function reduce<O extends object, R, T = unknown>(
   initial: R,
 ): R;
 
-export function reduce<O extends object, R, X extends Extra, T = unknown>(
+export function reduce<O extends object, R, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
   callback: ReduceCallbackFromObject<O, R, X, T>,
@@ -29,12 +29,12 @@ export function reduce<O extends object, R, X extends Extra, T = unknown>(
 export function reduce<O extends object, R, T = unknown>(
   this: T,
   object: O,
-  callback: ReduceCallbackFromObject<O, R, Extra, T>,
+  callback: ReduceCallbackFromObject<O, R, UnknownArray, T>,
   initial: R,
-  ...extra: Extra
+  ...extra: UnknownArray
 ): R;
 
-export function reduce<O extends object, R, X extends Extra, T = unknown>(
+export function reduce<O extends object, R, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
   callback: ReduceCallbackFromObject<O, R | undefined, X, T>,
@@ -49,7 +49,7 @@ export function reduce<O extends object, R, X extends Extra, T = unknown>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createReduceEntryHandler(this, callback, extra);
+  const entryHandler = createReduceEntryCallback(this, callback, extra);
 
   // get entries
   const entries = getEntries(object);
