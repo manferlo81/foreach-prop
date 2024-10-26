@@ -1,4 +1,5 @@
-import type { MapEntryCallback, ReduceEntryCallback, UnknownEntry } from '../types/entry-types';
+import type { MapEntryCallback, ReduceEntryCallback } from '../types/callback-types';
+import type { UnknownEntry } from '../types/entry-types';
 import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromEntry, ReduceCallbackFromEntry } from '../types/types';
 import { ensureIsFunction } from './ensure';

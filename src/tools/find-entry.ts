@@ -1,22 +1,13 @@
-import type { EntryKeyType, EntryValueType, MapEntryCallback, UnknownEntry } from '../types/entry-types';
-
-type EntryPredicate<E extends UnknownEntry> = MapEntryCallback<E, unknown>;
-
-export function findEntry<E extends UnknownEntry>(entries: E[], predicate: EntryPredicate<E>): E | null {
-  const entry = entries.find(predicate);
-  return entry ?? null;
-}
+import type { EntryPredicate } from '../types/callback-types';
+import type { EntryKeyType, EntryValueType, UnknownEntry } from '../types/entry-types';
 
 export function findEntryKey<E extends UnknownEntry>(entries: E[], predicate: EntryPredicate<E>): EntryKeyType<E> | null {
-  const entry = findEntry(entries, predicate);
-  if (!entry) return null;
-  const [key] = entry;
-  return key;
+  const entry = entries.find(predicate);
+  return entry ? entry[0] : null;
 }
 
 export function findEntryValue<E extends UnknownEntry>(entries: E[], predicate: EntryPredicate<E>): EntryValueType<E> | undefined {
-  const entry = findEntry(entries, predicate);
+  const entry = entries.find(predicate);
   if (!entry) return;
-  const [, value] = entry;
-  return value;
+  return entry[1];
 }

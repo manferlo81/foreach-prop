@@ -1,9 +1,8 @@
 import { createObject } from '../tools/create-object';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import type { EntryKeyTypeFromObject, MapEntryValueFromObject, ObjectTypeFromEntry } from '../types/entry-types';
+import type { EntryKeyTypeFromObject, FilledObject } from '../types/entry-types';
 
-export function fill<O extends object, V>(object: O, value: V): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>>;
-export function fill<O extends object, V>(object: O, value: V): ObjectTypeFromEntry<MapEntryValueFromObject<O, V>> {
+export function fill<O extends object, V>(object: O, value: V): FilledObject<O, V> {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);

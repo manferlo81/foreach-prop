@@ -1,11 +1,9 @@
 import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { EntryTypeFromObject, ObjectTypeFromEntry } from '../types/entry-types';
+import type { FilteredObject } from '../types/entry-types';
 import type { UnknownArray } from '../types/helper-types';
 import type { MapCallbackFromObject } from '../types/types';
-
-type FilteredObject<O extends object> = Partial<ObjectTypeFromEntry<EntryTypeFromObject<O>>>;
 
 export function filter<O extends object, X extends UnknownArray, T = unknown>(
   this: T,

@@ -1,48 +1,39 @@
 import type { ArrayItemType, DictionaryValueType, UnknownArray } from './helper-types';
 
 export type Key = Extract<PropertyKey, string | number>;
-export type KeyAsString<K extends Key> = K extends string ? K : `${K}`;
 
 export type Entry<V, K extends string> = [key: K, value: V];
-export type UnknownEntry = Entry<unknown, string>;
-
 export type ReadonlyEntry<V, K extends string> = Readonly<Entry<V, K>>;
-export type UnknownReadonlyEntry = Readonly<UnknownEntry>;
-
 export type InputEntry<V, K extends Key> = readonly [key: K, value: V];
+
+export type UnknownEntry = Entry<unknown, string>;
+export type UnknownReadonlyEntry = Readonly<UnknownEntry>;
 export type UnknownInputEntry = InputEntry<unknown, Key>;
 
-export type EntryFromInputEntry<E extends UnknownInputEntry> = E extends InputEntry<infer V, infer K> ? Entry<V, KeyAsString<K>> : never;
-
-export type EntryKeyType<E extends UnknownReadonlyEntry> = E[0];
+export type EntryKeyType<E extends UnknownInputEntry> = E[0];
 export type EntryKeyTypeFromObject<O extends object> = EntryKeyType<EntryTypeFromObject<O>>;
 
-export type EntryValueType<E extends UnknownReadonlyEntry> = E[1];
+export type EntryValueType<E extends UnknownInputEntry> = E[1];
 export type EntryValueTypeFromObject<O extends object> = EntryValueType<EntryTypeFromObject<O>>;
 
-type ExtractEntryWithKey<E extends UnknownReadonlyEntry, K extends EntryKeyType<E>> = E extends Entry<unknown, K> ? E : Entry<never, K> extends E ? Entry<EntryValueType<E>, K> : never;
+type ExtractEntryValueWithKey<E extends UnknownInputEntry, K extends EntryKeyType<E>> = E extends InputEntry<infer V, K> ? V : InputEntry<never, K> extends Readonly<E> ? EntryValueType<E> : never;
 
-export type EntryTypeFromArray<O extends UnknownArray> = O extends { length: 0 } ? Entry<never, KeyAsString<number>> : ArrayItemType<{
-  [K in keyof O]: Entry<O[K], KeyAsString<K>>;
+export type EntryTypeFromArray<O extends UnknownArray> = O extends { length: 0 } ? Entry<never, `${number}`> : ArrayItemType<{
+  [K in keyof O]: Entry<O[K], `${K}`>;
 }>;
 
 type EntryTypeFromDictionary<O extends object> = keyof O extends never ? Entry<never, string> : DictionaryValueType<{
-  [K in Extract<keyof O, Key>]: Entry<O[K], KeyAsString<K>>;
+  [K in Extract<keyof O, Key>]: Entry<O[K], `${K}`>;
 }>;
 
 export type EntryTypeFromObject<O extends object> = O extends UnknownArray ? EntryTypeFromArray<O> : EntryTypeFromDictionary<O>;
 
-export type ObjectTypeFromEntry<E extends UnknownReadonlyEntry> = {
-  [K in EntryKeyType<E>]: EntryValueType<ExtractEntryWithKey<E, K>>
+export type ObjectTypeFromEntry<E extends UnknownInputEntry> = {
+  [K in EntryKeyType<E>]: ExtractEntryValueWithKey<E, K>
 };
 
-export type MapEntryValue<E extends UnknownEntry, V> = DictionaryValueType<{
-  [K in EntryKeyType<E>]: Entry<V, K>
-}>;
-export type MapEntryValueFromObject<O extends object, V> = MapEntryValue<EntryTypeFromObject<O>, V>;
+export type ObjectTypeFromValueKey<V, K extends Key> = ObjectTypeFromEntry<InputEntry<V, K>>;
 
-export type MapEntryCallback<E extends UnknownEntry, R> = (entry: E) => R;
-export type MapEntryCallbackFromObject<O extends object, R> = MapEntryCallback<EntryTypeFromObject<O>, R>;
-
-export type ReduceEntryCallback<E extends UnknownEntry, R> = (prev: R, entry: E) => R;
-export type ReduceEntryCallbackFromObject<O extends object, R> = ReduceEntryCallback<EntryTypeFromObject<O>, R>;
+export type FilledObject<O extends object, V> = ObjectTypeFromValueKey<V, EntryKeyTypeFromObject<O>>;
+export type MappedObject<O extends object, V> = ObjectTypeFromValueKey<V, EntryKeyTypeFromObject<O>>;
+export type FilteredObject<O extends object> = Partial<ObjectTypeFromEntry<EntryTypeFromObject<O>>>;

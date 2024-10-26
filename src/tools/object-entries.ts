@@ -1,4 +1,4 @@
-import type { EntryFromInputEntry, EntryTypeFromArray, EntryTypeFromObject, ObjectTypeFromEntry, UnknownInputEntry, UnknownReadonlyEntry } from '../types/entry-types';
+import type { EntryTypeFromArray, EntryTypeFromObject, ObjectTypeFromEntry, UnknownInputEntry } from '../types/entry-types';
 import type { UnknownArray } from '../types/helper-types';
 
 interface GetObjectEntriesFunction {
@@ -6,10 +6,7 @@ interface GetObjectEntriesFunction {
   <O extends object>(object: O): Array<EntryTypeFromObject<O>>;
 }
 
-interface ObjectFromEntriesFunction {
-  <E extends UnknownReadonlyEntry>(entries: E[]): ObjectTypeFromEntry<E>;
-  <E extends UnknownInputEntry | UnknownReadonlyEntry>(entries: E[]): ObjectTypeFromEntry<EntryFromInputEntry<E>>;
-}
+type ObjectFromEntriesFunction = <E extends UnknownInputEntry>(entries: E[]) => ObjectTypeFromEntry<E>;
 
 interface EnhancedObjectConstructor extends ObjectConstructor {
   entries: GetObjectEntriesFunction;
