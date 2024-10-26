@@ -9,25 +9,29 @@ function normalizeRuleEntry(entry) {
   return ['error', entry];
 }
 
-function createRuleNameNormalizer(pluginName) {
-  if (!pluginName) return (ruleName) => ruleName;
+function normalizeRuleEntries(rules, pluginName) {
+  const entries = Object.entries(rules).map(
+    ([ruleName, ruleEntry]) => [ruleName, normalizeRuleEntry(ruleEntry)],
+  );
+  if (!pluginName) return Object.fromEntries(entries);
   const pluginPrefix = `${pluginName}/`;
-  return (ruleName) => {
+  const normalizeRuleName = (ruleName) => {
     if (ruleName.startsWith(pluginPrefix)) return ruleName;
     return `${pluginPrefix}${ruleName}`;
   };
-}
-
-function normalizeRules(pluginName, rules) {
-  const normalizeRuleName = createRuleNameNormalizer(pluginName);
   return Object.fromEntries(
-    Object.entries(rules).map(
-      ([ruleName, value]) => [normalizeRuleName(ruleName), normalizeRuleEntry(value)],
+    entries.map(
+      ([ruleName, normalizedRuleEntry]) => [normalizeRuleName(ruleName), normalizedRuleEntry],
     ),
   );
 }
 
-const eslintRules = normalizeRules(null, {
+export function normalizeRules(pluginOrRules, rules) {
+  if (typeof pluginOrRules !== 'string') return normalizeRuleEntries(pluginOrRules);
+  return normalizeRuleEntries(rules, pluginOrRules);
+}
+
+const eslintRules = normalizeRules({
   'no-useless-rename': 'error',
   'object-shorthand': 'error',
   'prefer-template': 'error',
@@ -60,11 +64,11 @@ const typescriptConfig = config(
   ...typescriptConfigs.strictTypeChecked,
   ...typescriptConfigs.stylisticTypeChecked,
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
-  { files: ['*.{js,cjs,mjs}'], ...typescriptConfigs.disableTypeChecked },
+  { files: ['**/*.{js,cjs,mjs}'], ...typescriptConfigs.disableTypeChecked },
 );
 
 export default config(
-  { ignores: ['dist', 'coverage'] },
+  { ignores: ['dist', 'coverage', 'helpers'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   js.configs.recommended,
   stylisticConfig,
