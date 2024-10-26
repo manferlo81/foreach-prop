@@ -1,31 +1,31 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { Entry, InputEntry } from '../types/entry-types';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { MapCallback_next } from '../types/types';
+import type { MapEntryCallbackFromObject } from '../types/callback-types';
+import type { EntryKeyTypeFromObject, InputEntry, MappedObject } from '../types/entry-types';
+import type { UnknownArray } from '../types/helper-types';
+import type { MapCallbackFromObject } from '../types/types';
 
-export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: MapCallback_next<V, StringifiedKey<K>, RV, E, TH>,
-  ...extra: E
-): Record<K, RV>;
+export function map<O extends object, V, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, V, X, T>,
+  ...extra: X
+): MappedObject<O, V>;
 
-export function map<V, K extends Key, RV = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: MapCallback_next<V, StringifiedKey<K>, RV, Extra, TH>,
-  ...extra: Extra
-): Record<K, RV>;
+export function map<O extends object, V, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, V, UnknownArray, T>,
+  ...extra: UnknownArray
+): MappedObject<O, V>;
 
-export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: MapCallback_next<V, StringifiedKey<K>, RV, E, TH>,
-  ...extra: E
-): Record<K, RV> {
+export function map<O extends object, X extends UnknownArray, V, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, V, X, T>,
+  ...extra: X
+): MappedObject<O, V> {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
@@ -34,11 +34,12 @@ export function map<V, K extends Key, E extends Extra, RV = Anything, TH = Anyth
   ensureIsObject(object);
 
   // create entry handler
-  const entryToValue = createResultEntryHandler(this, callback, extra);
-  const entryHandler = (entry: InputEntry<V>): Entry<RV> => [entry[0], entryToValue(entry)];
+  const entryToValue = createMapEntryCallback(this, callback, extra);
+
+  const entryHandler: MapEntryCallbackFromObject<O, InputEntry<V, EntryKeyTypeFromObject<O>>> = (entry) => [entry[0], entryToValue(entry)];
 
   // map through entries
-  const entries = getEntries(object).map(entryHandler) as unknown as Array<InputEntry<RV, K>>;
+  const entries = getEntries(object).map(entryHandler);
 
   // return new object from mapped entries
   return fromEntries(entries);

@@ -14,6 +14,6 @@ export { some } from './methods/some';
 export {
   FilterCallback,
   ForEachCallback,
-  MapCallback,
-  ReduceCallback,
+  DeprecatedMapCallback as MapCallback,
+  DeprecatedReduceCallback as ReduceCallback,
 } from './types/types';

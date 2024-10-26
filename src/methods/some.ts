@@ -1,29 +1,28 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { FilterCallback } from '../types/types';
+import type { UnknownArray } from '../types/helper-types';
+import type { MapCallbackFromObject } from '../types/types';
 
-export function some<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  predicate: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+export function some<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
 ): boolean;
 
-export function some<V, K extends Key, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  predicate: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
-  ...extra: Extra
+export function some<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  ...extra: UnknownArray
 ): boolean;
 
-export function some<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  predicate: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+export function some<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
 ): boolean {
 
   // throw if not enough arguments
@@ -33,7 +32,7 @@ export function some<V, K extends Key, E extends Extra, TH = Anything>(
   ensureIsObject(object);
 
   // create entry predicate
-  const entryPredicate = createResultEntryHandler(this, predicate, extra);
+  const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // return wether or not at least one entry satisfies predicate
   return getEntries(object).some(entryPredicate);

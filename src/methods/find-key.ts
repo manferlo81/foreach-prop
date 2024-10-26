@@ -1,30 +1,31 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler, findEntryKey } from '../tools/handle-entry';
+import { findEntryKey } from '../tools/find-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { FilterCallback } from '../types/types';
+import type { EntryKeyType, EntryKeyTypeFromObject, EntryTypeFromObject } from '../types/entry-types';
+import type { UnknownArray } from '../types/helper-types';
+import type { MapCallbackFromObject } from '../types/types';
 
-export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): K | null;
+export function findKey<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryKeyTypeFromObject<O> | null;
 
-export function findKey<V, K extends Key, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
-  ...extra: Extra
-): K | null;
+export function findKey<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  ...extra: UnknownArray
+): EntryKeyTypeFromObject<O> | null;
 
-export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): K | null {
+export function findKey<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): EntryKeyType<EntryTypeFromObject<O>> | null {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
@@ -33,12 +34,12 @@ export function findKey<V, K extends Key, E extends Extra, TH = Anything>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // get entries
   const entries = getEntries(object);
 
   // find key
-  return findEntryKey(entries, entryHandler) as K | null;
+  return findEntryKey(entries, entryPredicate);
 
 }

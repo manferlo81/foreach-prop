@@ -1,48 +1,45 @@
+import { createReduceEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createReduceEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { ReduceCallback_next } from '../types/types';
+import type { UnknownArray } from '../types/helper-types';
+import type { ReduceCallbackFromObject } from '../types/types';
 
-export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
-  initial: R,
-  ...extra: E
-): R;
-
-export function reduce<V, K extends Key, R = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ReduceCallback_next<V, StringifiedKey<K>, R, Extra, TH>,
-  initial: R,
-  ...extra: Extra
-): R;
-
-export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
-  initial?: R,
-  ...extra: E
+export function reduce<O extends object, R, T = unknown>(
+  this: T,
+  object: O,
+  callback: ReduceCallbackFromObject<O, R | undefined, [], T>,
+  initial?: undefined,
 ): R | undefined;
 
-export function reduce<V, K extends Key, R = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ReduceCallback_next<V, StringifiedKey<K>, R, Extra, TH>,
-  initial?: R,
-  ...extra: Extra
-): R | undefined;
+export function reduce<O extends object, R, T = unknown>(
+  this: T,
+  object: O,
+  callback: ReduceCallbackFromObject<O, R, [], T>,
+  initial: R,
+): R;
 
-export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ReduceCallback_next<V, StringifiedKey<K>, R, E, TH>,
-  initial?: R,
-  ...extra: E
+export function reduce<O extends object, R, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  callback: ReduceCallbackFromObject<O, R, X, T>,
+  initial: R,
+  ...extra: X
+): R;
+
+export function reduce<O extends object, R, T = unknown>(
+  this: T,
+  object: O,
+  callback: ReduceCallbackFromObject<O, R, UnknownArray, T>,
+  initial: R,
+  ...extra: UnknownArray
+): R;
+
+export function reduce<O extends object, R, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  callback: ReduceCallbackFromObject<O, R | undefined, X, T>,
+  initial: R | undefined,
+  ...extra: X
 ): R | undefined {
 
   // throw if not enough arguments
@@ -52,13 +49,12 @@ export function reduce<V, K extends Key, E extends Extra, R = Anything, TH = Any
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createReduceEntryHandler(this, callback, extra);
+  const entryHandler = createReduceEntryCallback(this, callback, extra);
 
   // get entries
   const entries = getEntries(object);
 
   // reduce entries into a result
-  // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
-  return entries.reduce<R>(entryHandler, initial as R) as R | undefined;
+  return entries.reduce(entryHandler, initial);
 
 }

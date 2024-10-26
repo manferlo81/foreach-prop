@@ -1,31 +1,30 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { InputEntry } from '../types/entry-types';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { FilterCallback } from '../types/types';
+import type { FilteredObject } from '../types/entry-types';
+import type { UnknownArray } from '../types/helper-types';
+import type { MapCallbackFromObject } from '../types/types';
 
-export function filter<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): Record<K, V>;
+export function filter<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): FilteredObject<O>;
 
-export function filter<V, K extends Key, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, Extra, TH>,
-  ...extra: Extra
-): Record<K, V>;
+export function filter<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  ...extra: UnknownArray
+): FilteredObject<O>;
 
-export function filter<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: FilterCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
-): Record<K, V> {
+export function filter<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  ...extra: X
+): FilteredObject<O> {
 
   // throw if not enough arguments
   ensureMinLength(arguments.length, 2);
@@ -34,10 +33,10 @@ export function filter<V, K extends Key, E extends Extra, TH = Anything>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // filter entries
-  const entries = getEntries(object).filter(entryHandler) as unknown as Array<InputEntry<V, K>>;
+  const entries = getEntries(object).filter(entryPredicate);
 
   // return new object from filtered entries
   return fromEntries(entries);

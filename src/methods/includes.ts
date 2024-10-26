@@ -1,6 +1,9 @@
-import type { Anything } from '../types/helper-types';
-import type { ImmutableObject, Key } from '../types/private-types';
+import type { EntryValueTypeFromObject } from '../types/entry-types';
 
-export function includes(object: ImmutableObject<Key, Anything>, value: Anything): boolean {
-  return Object.values(object).includes(value);
+export function includes<O extends object>(object: O, value: EntryValueTypeFromObject<O>): boolean;
+export function includes(object: object, value: unknown): boolean;
+
+export function includes(object: object, value: unknown): boolean {
+  const values = Object.values(object) as unknown[];
+  return values.includes(value);
 }

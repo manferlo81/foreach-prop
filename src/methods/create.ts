@@ -1,15 +1,15 @@
+import { createObject } from '../tools/create-object';
 import { errorIsNot } from '../tools/errors';
-import { fillObject } from '../tools/fill-object';
-import type { Key } from '../types/private-types';
+import type { Key, ObjectTypeFromValueKey } from '../types/entry-types';
 
-export function create<V, K extends Key>(keys: K[], value: V): Record<K, V>;
-export function create<K extends Key>(keys: K[], value?: undefined): Record<K, undefined>;
-export function create<V, K extends Key>(keys: K[], value?: V): Record<K, V | undefined> {
+export function create<K extends Key>(keys: readonly K[], value?: undefined): ObjectTypeFromValueKey<undefined, K>;
+export function create<V, K extends Key>(keys: readonly K[], value: V): ObjectTypeFromValueKey<V, K>;
+export function create<V, K extends Key>(keys: readonly K[], value?: V): ObjectTypeFromValueKey<V | undefined, K> {
 
   // throw if `keys` is not an array
   if (!Array.isArray(keys)) throw errorIsNot(keys, 'an array');
 
   // return new object
-  return fillObject(keys, value);
+  return createObject(keys as readonly K[], value);
 
 }

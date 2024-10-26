@@ -19,7 +19,9 @@ describe('find method', () => {
 
   test('should throw on non object', () => {
     invalidObjects.forEach((object) => {
-      const exec = () => find(object as never, () => null);
+      const exec = () => {
+        find(object as never, () => null);
+      };
       expect(exec).toThrow(TypeError);
     });
   });

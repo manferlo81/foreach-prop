@@ -1,29 +1,28 @@
+import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
-import { createResultEntryHandler } from '../tools/handle-entry';
 import { getEntries } from '../tools/object-entries';
-import type { Anything } from '../types/helper-types';
-import type { Extra, ImmutableObject, Key, StringifiedKey } from '../types/private-types';
-import type { ForEachCallback } from '../types/types';
+import type { UnknownArray } from '../types/helper-types';
+import type { MapCallbackFromObject } from '../types/types';
 
-export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+export function forEach<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, void, X, T>,
+  ...extra: X
 ): void;
 
-export function forEach<V, K extends Key, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, StringifiedKey<K>, Extra, TH>,
-  ...extra: Extra
+export function forEach<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, void, UnknownArray, T>,
+  ...extra: UnknownArray
 ): void;
 
-export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
-  this: TH,
-  object: ImmutableObject<K, V>,
-  callback: ForEachCallback<V, StringifiedKey<K>, E, TH>,
-  ...extra: E
+export function forEach<O extends object, X extends UnknownArray, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, void, X, T>,
+  ...extra: X
 ): void {
 
   // throw if not enough arguments
@@ -33,7 +32,7 @@ export function forEach<V, K extends Key, E extends Extra, TH = Anything>(
   ensureIsObject(object);
 
   // create entry handler
-  const entryHandler = createResultEntryHandler(this, callback, extra);
+  const entryHandler = createMapEntryCallback(this, callback, extra);
 
   // iterate through object entries
   getEntries(object).forEach(entryHandler);
