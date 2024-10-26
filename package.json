@@ -26,11 +26,11 @@
   "exports": {
     "types": "./dist/types/index.d.ts",
     "import": "./dist/esm/each-prop.mjs",
-    "require": "./dist/commonjs/each-prop.js",
-    "node": "./dist/commonjs/each-prop.js",
-    "default": "./dist/commonjs/each-prop.js"
+    "require": "./dist/commonjs/each-prop.cjs",
+    "node": "./dist/commonjs/each-prop.cjs",
+    "default": "./dist/commonjs/each-prop.cjs"
   },
-  "main": "./dist/commonjs/each-prop.js",
+  "main": "./dist/commonjs/each-prop.cjs",
   "module": "./dist/esm/each-prop.mjs",
   "jsnext:main": "./dist/esm/each-prop.mjs",
   "browser": "./dist/umd/each-prop.umd.js",
