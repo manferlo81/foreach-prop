@@ -123,9 +123,9 @@ eachProp.forEach(object, callback);
 
 ```typescript
 function create(
-  keys: Array<string | number>,
-  value?: V | undefined
-): Record<string, V | undefined>;
+  keys: K[],
+  value?: V
+): Record<K, V>;
 ```
 
 ***example***
@@ -147,9 +147,9 @@ console.log(object);
 
 ```typescript
 function fill(
-  object: Record<string, V> | V[],
+  object: Record<K, V> | V[],
   value: N
-): Record<string, N>;
+): Record<K, N>;
 ```
 
 ### function `includes`
@@ -173,8 +173,8 @@ function includes(
 
 ```typescript
 function some(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
   ...extra: X[]
 ): boolean;
 ```
@@ -195,8 +195,8 @@ some.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function every(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
   ...extra: X[]
 ): boolean;
 ```
@@ -215,8 +215,8 @@ every.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function forEach(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => void,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => void,
   ...extra: X[]
 ): void;
 ```
@@ -235,10 +235,10 @@ forEach.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function map(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => N,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => N,
   ...extra: X[]
-): Record<string, N>;
+): Record<K, N>;
 ```
 
 *Any* `extra` *argument will be passed down to the callback function.*
@@ -255,10 +255,10 @@ map.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function filter(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
   ...extra: X[]
-): Record<string, V>;
+): Partial<Record<K, V>>;
 ```
 
 *Any* `extra` *argument will be passed down to the callback function.*
@@ -319,8 +319,8 @@ findKey.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function find(
-  object: Record<string, V> | V[],
-  callback: (value: V, key: string, ...extra: X[]) => unknown,
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
   ...extra: X[]
 ): V | undefined;
 ```
@@ -362,8 +362,8 @@ find.call(thisArg, object, callback, ...extra);
 
 ```typescript
 function reduce(
-  object: Record<string, V> | V[],
-  callback: (current: R, value: V, key: string, ...extra: X[]) => R,
+  object: Record<K, V> | V[],
+  callback: (current: R, value: V, key: K, ...extra: X[]) => R,
   initial?: R,
   ...extra: X[]
 ): R;
