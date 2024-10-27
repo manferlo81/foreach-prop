@@ -12,8 +12,8 @@ export { map } from './methods/map';
 export { reduce } from './methods/reduce';
 export { some } from './methods/some';
 export {
-  FilterCallback,
-  ForEachCallback,
+  DeprecatedFilterCallback as FilterCallback,
+  DeprecatedForEachCallback as ForEachCallback,
   DeprecatedMapCallback as MapCallback,
   DeprecatedReduceCallback as ReduceCallback,
-} from './types/types';
+} from './types/callback-types';

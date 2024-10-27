@@ -1,8 +1,8 @@
 import { createReduceEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { getEntries } from '../tools/object-entries';
+import type { ReduceCallbackFromObject } from '../types/callback-types';
 import type { UnknownArray } from '../types/helper-types';
-import type { ReduceCallbackFromObject } from '../types/types';
 
 export function reduce<O extends object, R, T = unknown>(
   this: T,

@@ -1,27 +1,33 @@
 import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { getEntries } from '../tools/object-entries';
+import type { PredicateCallbackFromObject } from '../types/callback-types';
 import type { UnknownArray } from '../types/helper-types';
-import type { MapCallbackFromObject } from '../types/types';
+
+export function some<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  predicate: PredicateCallbackFromObject<O, [], T>,
+): boolean;
 
 export function some<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: PredicateCallbackFromObject<O, X, T>,
   ...extra: X
 ): boolean;
 
 export function some<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  predicate: PredicateCallbackFromObject<O, UnknownArray, T>,
   ...extra: UnknownArray
 ): boolean;
 
 export function some<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: PredicateCallbackFromObject<O, X, T>,
   ...extra: X
 ): boolean {
 

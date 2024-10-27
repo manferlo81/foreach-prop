@@ -1,28 +1,34 @@
 import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { fromEntries, getEntries } from '../tools/object-entries';
+import type { PredicateCallbackFromObject } from '../types/callback-types';
 import type { FilteredObject } from '../types/entry-types';
 import type { UnknownArray } from '../types/helper-types';
-import type { MapCallbackFromObject } from '../types/types';
+
+export function filter<O extends object, T = unknown>(
+  this: T,
+  object: O,
+  predicate: PredicateCallbackFromObject<O, [], T>,
+): FilteredObject<O>;
 
 export function filter<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: PredicateCallbackFromObject<O, X, T>,
   ...extra: X
 ): FilteredObject<O>;
 
 export function filter<O extends object, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, UnknownArray, T>,
+  predicate: PredicateCallbackFromObject<O, UnknownArray, T>,
   ...extra: UnknownArray
 ): FilteredObject<O>;
 
 export function filter<O extends object, X extends UnknownArray, T = unknown>(
   this: T,
   object: O,
-  predicate: MapCallbackFromObject<O, unknown, X, T>,
+  predicate: PredicateCallbackFromObject<O, X, T>,
   ...extra: X
 ): FilteredObject<O> {
 
@@ -32,7 +38,7 @@ export function filter<O extends object, X extends UnknownArray, T = unknown>(
   // throw if not an object
   ensureIsObject(object);
 
-  // create entry handler
+  // create entry predicate
   const entryPredicate = createMapEntryCallback(this, predicate, extra);
 
   // filter entries

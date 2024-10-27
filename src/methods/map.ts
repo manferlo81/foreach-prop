@@ -1,10 +1,16 @@
 import { createMapEntryCallback } from '../tools/callbacks';
 import { ensureIsObject, ensureMinLength } from '../tools/ensure';
 import { fromEntries, getEntries } from '../tools/object-entries';
-import type { MapEntryCallbackFromObject } from '../types/callback-types';
-import type { EntryKeyTypeFromObject, InputEntry, MappedObject } from '../types/entry-types';
+import type { MapCallbackFromObject } from '../types/callback-types';
+import type { MapEntryCallbackFromObject } from '../types/entry-callback-types';
+import type { MappedObject } from '../types/entry-types';
 import type { UnknownArray } from '../types/helper-types';
-import type { MapCallbackFromObject } from '../types/types';
+
+export function map<O extends object, V, T = unknown>(
+  this: T,
+  object: O,
+  callback: MapCallbackFromObject<O, V, [], T>,
+): MappedObject<O, V>;
 
 export function map<O extends object, V, X extends UnknownArray, T = unknown>(
   this: T,
@@ -33,13 +39,12 @@ export function map<O extends object, X extends UnknownArray, V, T = unknown>(
   // throw if not an object
   ensureIsObject(object);
 
-  // create entry handler
+  // create entry callbacks
   const entryToValue = createMapEntryCallback(this, callback, extra);
-
-  const entryHandler: MapEntryCallbackFromObject<O, InputEntry<V, EntryKeyTypeFromObject<O>>> = (entry) => [entry[0], entryToValue(entry)];
+  const entryMapCallback: MapEntryCallbackFromObject<O, V> = (entry) => [entry[0], entryToValue(entry)];
 
   // map through entries
-  const entries = getEntries(object).map(entryHandler);
+  const entries = getEntries(object).map(entryMapCallback);
 
   // return new object from mapped entries
   return fromEntries(entries);
