@@ -1,6 +1,7 @@
 import { findLastKey } from '../src';
 import { createObjectWithProto } from './tools/create-object';
 import { normalizeObject } from './tools/helpers';
+import { reverseArray } from './tools/reverse-array';
 import { UnknownFunction } from './tools/types';
 import { invalidCallbacks, invalidObjects } from './tools/values';
 
@@ -42,11 +43,11 @@ describe('findLastKey method', () => {
     findLastKey(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
+    reverseArray(ownProps).forEach((key, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, key, key);
+    });
     protoProps.forEach((key) => {
       expect(callback).not.toHaveBeenCalledWith(key, key);
-    });
-    ownProps.toReversed().forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, key, key);
     });
 
   });
@@ -60,7 +61,7 @@ describe('findLastKey method', () => {
     findLastKey(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
-    entries.toReversed().forEach(([key, value], index) => {
+    reverseArray(entries).forEach(([key, value], index) => {
       expect(callback).toHaveBeenNthCalledWith(
         index + 1,
         value,
