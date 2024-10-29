@@ -1,5 +1,5 @@
 import { keyOf } from '../src';
-import { createObject, protoPropA } from './tools/create-object';
+import { createObjectWithProto } from './tools/create-object';
 import { UnknownFunction } from './tools/types';
 import { invalidObjects } from './tools/values';
 
@@ -56,14 +56,19 @@ describe('keyOf method', () => {
   });
 
   test('should ignore prototype properties', () => {
-    const object = createObject();
-    const propPropValue = object[protoPropA];
 
-    const result = keyOf(object, propPropValue);
+    const ownProps = ['ownPropA', 'ownPropB'] as const;
+    const protoProps = ['protoPropA', 'protoPropB'] as const;
+    const object = createObjectWithProto(protoProps, ownProps);
 
-    expect(result).toBeNull();
-    expect(object[protoPropA]).toBeDefined();
-    expect(object).toHaveProperty(protoPropA);
+    protoProps.forEach((protoKeyAndValue) => {
+      const result = keyOf(object, protoKeyAndValue);
+
+      expect(result).toBeNull();
+      expect(object).toHaveProperty(protoKeyAndValue);
+      expect(object[protoKeyAndValue]).toBe(protoKeyAndValue);
+    });
+
   });
 
 });

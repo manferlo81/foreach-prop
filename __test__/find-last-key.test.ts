@@ -34,20 +34,20 @@ describe('findLastKey method', () => {
 
   test('should skip prototype properties', () => {
 
-    const callback = jest.fn();
-
     const ownProps = ['ownPropA', 'ownPropB'] as const;
     const protoProps = ['protoPropA', 'protoPropB'] as const;
     const object = createObjectWithProto(protoProps, ownProps);
 
+    const callback = jest.fn();
+
     findLastKey(object, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
-    reverseArray(ownProps).forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(index + 1, key, key);
+    reverseArray(ownProps).forEach((ownKeyAndValue, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, ownKeyAndValue, ownKeyAndValue);
     });
-    protoProps.forEach((key) => {
-      expect(callback).not.toHaveBeenCalledWith(key, key);
+    protoProps.forEach((protoKeyAndValue) => {
+      expect(callback).not.toHaveBeenCalledWith(expect.anything(), protoKeyAndValue);
     });
 
   });

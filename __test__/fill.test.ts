@@ -1,5 +1,5 @@
 import { fill } from '../src';
-import { createObject, ownPropA, ownPropB } from './tools/create-object';
+import { createObjectWithProto } from './tools/create-object';
 import { UnknownFunction } from './tools/types';
 import { invalidObjects } from './tools/values';
 
@@ -25,14 +25,18 @@ describe('fill method', () => {
 
   test('should skip prototype properties', () => {
 
-    const instance = createObject();
+    const ownProps = ['ownPropA', 'ownPropB'] as const;
+    const protoProps = ['protoPropA', 'protoPropB'] as const;
+    const instance = createObjectWithProto(protoProps, ownProps);
 
     const result = fill(instance, 0);
+    const expected = Object.fromEntries(ownProps.map((propName) => [propName, 0]));
 
-    expect(result).toEqual({
-      [ownPropA]: 0,
-      [ownPropB]: 0,
+    protoProps.forEach((protoKeyAndValue) => {
+      expect(instance).toHaveProperty(protoKeyAndValue);
+      expect(instance[protoKeyAndValue]).toBe(protoKeyAndValue);
     });
+    expect(result).toEqual(expected);
 
   });
 

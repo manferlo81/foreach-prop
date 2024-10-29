@@ -1,7 +1,7 @@
 import { lastKeyOf } from '../src';
-import { invalidObjects } from './tools/values';
-import { protoPropA, createObject } from './tools/create-object';
+import { createObjectWithProto } from './tools/create-object';
 import { UnknownFunction } from './tools/types';
+import { invalidObjects } from './tools/values';
 
 describe('lastKeyOf method', () => {
 
@@ -56,14 +56,18 @@ describe('lastKeyOf method', () => {
   });
 
   test('should ignore prototype properties', () => {
-    const object = createObject();
-    const protoPropValue = object[protoPropA];
 
-    const result = lastKeyOf(object, protoPropValue);
+    const ownProps = ['ownPropA', 'ownPropB'] as const;
+    const protoProps = ['protoPropA', 'protoPropB'] as const;
+    const instance = createObjectWithProto(protoProps, ownProps);
 
-    expect(result).toBeNull();
-    expect(protoPropValue).toBeDefined();
-    expect(object).toHaveProperty(protoPropA);
+    protoProps.forEach((protoKeyAndValue) => {
+      const result = lastKeyOf(instance, protoKeyAndValue);
+
+      expect(result).toBeNull();
+      expect(instance).toHaveProperty(protoKeyAndValue);
+      expect(instance[protoKeyAndValue]).toBe(protoKeyAndValue);
+    });
   });
 
 });

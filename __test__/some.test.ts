@@ -1,5 +1,5 @@
 import { some } from '../src';
-import { createObject, ownProps, protoProps } from './tools/create-object';
+import { createObjectWithProto } from './tools/create-object';
 import { normalizeObject } from './tools/helpers';
 import type { UnknownFunction } from './tools/types';
 import { invalidCallbacks, invalidObjects } from './tools/values';
@@ -33,24 +33,20 @@ describe('some method', () => {
 
   test('should skip prototype properties', () => {
 
-    const instance = createObject();
+    const protoProps = ['protoPropA', 'protoPropB'] as const;
+    const ownProps = ['ownPropA', 'ownPropB'] as const;
+    const instance = createObjectWithProto(protoProps, ownProps);
+
     const callback = jest.fn();
 
     some(instance, callback);
 
     expect(callback).toHaveBeenCalledTimes(ownProps.length);
-    protoProps.forEach((key) => {
-      expect(callback).not.toHaveBeenCalledWith(
-        expect.anything(),
-        key,
-      );
+    protoProps.forEach((protoKeyAndValue) => {
+      expect(callback).not.toHaveBeenCalledWith(expect.anything(), protoKeyAndValue);
     });
-    ownProps.forEach((key, index) => {
-      expect(callback).toHaveBeenNthCalledWith(
-        index + 1,
-        instance[key],
-        key,
-      );
+    ownProps.forEach((ownKeyAndValue, index) => {
+      expect(callback).toHaveBeenNthCalledWith(index + 1, ownKeyAndValue, ownKeyAndValue);
     });
 
   });
