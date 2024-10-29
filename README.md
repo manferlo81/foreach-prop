@@ -12,7 +12,7 @@
 
 Array-like methods for objects
 
-> :warning: *Some javascript implementations don't follow the user object value-key order. Keep that in mind when you use* [`keyOf`](#function-keyof)*,* [`lastKeyOf`](#function-lastkeyof)*,* [`findKey`](#function-findkey) *and* [`find`](#function-find) *functions.*
+> :warning: *Some javascript implementations don't follow the user object value-key order. Keep that in mind when you use* [`keyOf`](#function-keyof)*,* [`lastKeyOf`](#function-lastkeyof)*,* [`findKey`](#function-findkey), [`findLastKey`](#function-findlastkey) *and* [`find`](#function-find) *functions.*
 
 ## Content
 
@@ -31,6 +31,7 @@ Array-like methods for objects
   * function [`keyOf`](#function-keyof)
   * function [`lastKeyOf`](#function-lastkeyof)
   * function [`findKey`](#function-findkey)
+  * function [`findLastKey`](#function-findlastkey)
   * function [`find`](#function-find)
   * function [`reduce`](#function-reduce)
 
@@ -309,6 +310,28 @@ function findKey(
 
 ```typescript
 findKey.call(thisArg, object, callback, ...extra);
+```
+
+### function `findLastKey`
+
+*added in:* `v3.0.0`
+
+*Similar to* `Array.prototype.findLastIndex`*. It calls the provided callback function for every* `key-value-pair` *in the object in the reversed order and returns the key once the provided callback function return a truthy value. It returns* `null` *if nothing found.*
+
+```typescript
+function findLastKey(
+  object: Record<K, V> | V[],
+  callback: (value: V, key: K, ...extra: X[]) => unknown,
+  ...extra: X[]
+): K | null;
+```
+
+*Any* `extra` *argument will be passed down to the callback function.*
+
+*The callback function inherits the* `this` *value from the function call, so if you want a specific* `this` *value in your callback function, you can call it using the* `call` *method of the* `Function.prototype`*.*
+
+```typescript
+findLastKey.call(thisArg, object, callback, ...extra);
 ```
 
 ### function `find`
