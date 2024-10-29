@@ -57,10 +57,10 @@ describe('find method', () => {
 
   test('should pass key and value to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
     const predicate = jest.fn();
 
-    find(object, predicate);
+    find(normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
 
@@ -76,7 +76,7 @@ describe('find method', () => {
 
   test('should pass this argument to callback', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function (this: unknown) {
@@ -84,7 +84,7 @@ describe('find method', () => {
       return false;
     });
 
-    find.call(thisArg, object, callback);
+    find.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -92,14 +92,14 @@ describe('find method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const callback = jest.fn(() => false);
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    find(object, callback, extra1, extra2);
+    find(normalized, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(

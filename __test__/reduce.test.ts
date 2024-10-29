@@ -54,11 +54,11 @@ describe('reduce method', () => {
 
   test('should pass key and value to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
     const callback = jest.fn<unknown, [unknown, number, string]>((result) => result);
 
     const initial = {};
-    reduce(object, callback, initial);
+    reduce(normalized, callback, initial);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     entries.forEach(([key, value], index) => {
@@ -74,7 +74,7 @@ describe('reduce method', () => {
 
   test('should pass this argument to callback', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function <T>(this: unknown, result: T): T {
@@ -82,7 +82,7 @@ describe('reduce method', () => {
       return result;
     });
 
-    reduce.call(thisArg, object, callback, 0);
+    reduce.call(thisArg, normalized, callback, 0);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -90,14 +90,14 @@ describe('reduce method', () => {
 
   test('should pass extra arguments to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
     const callback = jest.fn<unknown, [unknown, unknown, string, unknown, unknown]>((result) => result);
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    reduce(object, callback, 0, extra1, extra2);
+    reduce(normalized, callback, 0, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     entries.forEach(([key, value], index) => {

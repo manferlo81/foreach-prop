@@ -53,10 +53,10 @@ describe('filter method', () => {
 
   test('should pass key and value to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
     const predicate = jest.fn();
 
-    filter(object, predicate);
+    filter(normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
 
@@ -72,14 +72,14 @@ describe('filter method', () => {
 
   test('should pass this argument to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1 });
+    const { normalized, entries } = normalizeObject({ a: 1 });
 
     const thisArg = {};
     const predicate = jest.fn(function (this: unknown) {
       expect(this).toBe(thisArg);
     });
 
-    filter.call(thisArg, object, predicate);
+    filter.call(thisArg, normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
 
@@ -87,14 +87,14 @@ describe('filter method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1 });
+    const { normalized, entries } = normalizeObject({ a: 1 });
 
     const predicate = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    filter(object, predicate, extra1, extra2);
+    filter(normalized, predicate, extra1, extra2);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
     expect(predicate).toHaveBeenCalledWith(
@@ -108,14 +108,14 @@ describe('filter method', () => {
 
   test('should return a filtered object', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
 
     const predicate = jest.fn((val) => {
       return val >= 2 && val <= 3;
     });
     const expected = { b: 2, c: 3 };
 
-    const result = filter(object, predicate);
+    const result = filter(normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
     expect(result).toEqual(expected);

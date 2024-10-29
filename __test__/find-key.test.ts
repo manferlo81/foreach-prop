@@ -53,11 +53,11 @@ describe('findKey method', () => {
 
   test('should pass key and value to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
     const callback = jest.fn(() => false);
 
-    findKey(object, callback);
+    findKey(normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     entries.forEach(([key, value], index) => {
@@ -72,7 +72,7 @@ describe('findKey method', () => {
 
   test('should pass this argument to callback', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function (this: unknown) {
@@ -80,7 +80,7 @@ describe('findKey method', () => {
       return false;
     });
 
-    findKey.call(thisArg, object, callback);
+    findKey.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -88,14 +88,14 @@ describe('findKey method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const callback = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    findKey(object, callback, extra1, extra2);
+    findKey(normalized, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(

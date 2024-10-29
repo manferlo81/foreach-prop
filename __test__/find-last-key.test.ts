@@ -54,11 +54,11 @@ describe('findLastKey method', () => {
 
   test('should pass key and value to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
     const callback = jest.fn(() => false);
 
-    findLastKey(object, callback);
+    findLastKey(normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     reverseArray(entries).forEach(([key, value], index) => {
@@ -73,7 +73,7 @@ describe('findLastKey method', () => {
 
   test('should pass this argument to callback', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function (this: unknown) {
@@ -81,7 +81,7 @@ describe('findLastKey method', () => {
       return false;
     });
 
-    findLastKey.call(thisArg, object, callback);
+    findLastKey.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -89,14 +89,14 @@ describe('findLastKey method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const callback = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    findLastKey(object, callback, extra1, extra2);
+    findLastKey(normalized, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(

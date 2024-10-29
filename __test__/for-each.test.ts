@@ -65,10 +65,10 @@ describe('forEach method', () => {
 
   test('should pass key and value to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 4 });
     const callback = jest.fn();
 
-    forEach(object, callback);
+    forEach(normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -84,14 +84,14 @@ describe('forEach method', () => {
 
   test('should pass this argument to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
-    forEach.call(thisArg, object, callback);
+    forEach.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 

@@ -53,10 +53,10 @@ describe('map method', () => {
 
   test('should pass key and value to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
     const callback = jest.fn();
 
-    map(object, callback);
+    map(normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -72,14 +72,14 @@ describe('map method', () => {
 
   test('should pass this argument to callback', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2 });
 
     const thisArg = {};
     const callback = jest.fn(function cb(this: unknown) {
       expect(this).toBe(thisArg);
     });
 
-    map.call(thisArg, object, callback);
+    map.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -87,14 +87,14 @@ describe('map method', () => {
 
   test('should pass extra arguments to callback function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: true });
+    const { normalized, entries } = normalizeObject({ a: 1, b: true });
 
     const callback = jest.fn(() => 0);
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    map(object, callback, extra1, extra2);
+    map(normalized, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(
@@ -119,11 +119,11 @@ describe('map method', () => {
 
   test('should return a mapped object', () => {
 
-    const [object, entries] = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
+    const { normalized, entries } = normalizeObject({ a: 1, b: 2, c: 3, d: 2 });
 
     const doubleValue = (val: number) => val * 2;
 
-    const result = map(object, doubleValue);
+    const result = map(normalized, doubleValue);
     const expected = Object.fromEntries(entries.map(([key, value]) => [key, doubleValue(value)]));
 
     expect(result).toEqual(expected);

@@ -53,7 +53,7 @@ describe('every method', () => {
 
   test('should pass value and key to predicate function', () => {
 
-    const [object, entries] = normalizeObject({
+    const { normalized, entries } = normalizeObject({
       a: 1,
       b: 2,
       c: 3,
@@ -62,7 +62,7 @@ describe('every method', () => {
 
     const predicate = jest.fn<true, [unknown, string]>(() => true);
 
-    every(object, predicate);
+    every(normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
     entries.forEach(([key, value], index) => {
@@ -77,7 +77,7 @@ describe('every method', () => {
 
   test('should pass this argument to predicate function', () => {
 
-    const [object, entries] = normalizeObject({
+    const { normalized, entries } = normalizeObject({
       a: 1,
       b: 2,
     });
@@ -88,7 +88,7 @@ describe('every method', () => {
       return true;
     });
 
-    every.call(thisArg, object, callback);
+    every.call(thisArg, normalized, callback);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
 
@@ -96,14 +96,14 @@ describe('every method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1 });
+    const { normalized, entries } = normalizeObject({ a: 1 });
 
     const callback = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    every(object, callback, extra1, extra2);
+    every(normalized, callback, extra1, extra2);
 
     expect(callback).toHaveBeenCalledTimes(entries.length);
     expect(callback).toHaveBeenCalledWith(

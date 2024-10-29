@@ -53,7 +53,7 @@ describe('some method', () => {
 
   test('should pass key and value to predicate function', () => {
 
-    const [object, entries] = normalizeObject({
+    const { normalized, entries } = normalizeObject({
       a: 1,
       b: 2,
       c: 3,
@@ -62,7 +62,7 @@ describe('some method', () => {
 
     const predicate = jest.fn();
 
-    some(object, predicate);
+    some(normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
 
@@ -78,7 +78,7 @@ describe('some method', () => {
 
   test('should pass this argument to predicate function', () => {
 
-    const [object, entries] = normalizeObject({
+    const { normalized, entries } = normalizeObject({
       a: 1,
       b: 2,
       c: 3,
@@ -91,7 +91,7 @@ describe('some method', () => {
       return false;
     });
 
-    some.call(thisArg, object, predicate);
+    some.call(thisArg, normalized, predicate);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
 
@@ -99,14 +99,14 @@ describe('some method', () => {
 
   test('should pass extra arguments to predicate function', () => {
 
-    const [object, entries] = normalizeObject({ a: 1 });
+    const { normalized, entries } = normalizeObject({ a: 1 });
 
     const predicate = jest.fn();
 
     const extra1 = {};
     const extra2: never[] = [];
 
-    some(object, predicate, extra1, extra2);
+    some(normalized, predicate, extra1, extra2);
 
     expect(predicate).toHaveBeenCalledTimes(entries.length);
     expect(predicate).toHaveBeenCalledWith(
