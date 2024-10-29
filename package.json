@@ -17,6 +17,7 @@
     "lastKeyOf",
     "find",
     "findKey",
+    "findLastKey",
     "reduce",
     "includes",
     "some",
