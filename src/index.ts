@@ -4,6 +4,7 @@ export { fill } from './methods/fill';
 export { filter } from './methods/filter';
 export { find } from './methods/find';
 export { findKey } from './methods/find-key';
+export { findLastKey } from './methods/find-last-key';
 export { forEach } from './methods/for-each';
 export { includes } from './methods/includes';
 export { keyOf } from './methods/key-of';
