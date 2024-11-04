@@ -3,42 +3,16 @@ import stylistic from '@stylistic/eslint-plugin';
 import globals from 'globals';
 import { config, configs as typescriptConfigs } from 'typescript-eslint';
 
-function normalizeRuleEntry(entry) {
-  if (Array.isArray(entry)) return entry;
-  if (['off', 'warn', 'error'].includes(entry)) return entry;
-  return ['error', entry];
-}
-
-function normalizeRuleEntries(rules, pluginName) {
-  const entries = Object.entries(rules).map(
-    ([ruleName, ruleEntry]) => [ruleName, normalizeRuleEntry(ruleEntry)],
-  );
-  if (!pluginName) return Object.fromEntries(entries);
-  const pluginPrefix = `${pluginName}/`;
-  const normalizeRuleName = (ruleName) => {
-    if (ruleName.startsWith(pluginPrefix)) return ruleName;
-    return `${pluginPrefix}${ruleName}`;
-  };
-  return Object.fromEntries(
-    entries.map(
-      ([ruleName, normalizedRuleEntry]) => [normalizeRuleName(ruleName), normalizedRuleEntry],
-    ),
-  );
-}
-
-export function normalizeRules(pluginOrRules, rules) {
-  if (typeof pluginOrRules !== 'string') return normalizeRuleEntries(pluginOrRules);
-  return normalizeRuleEntries(rules, pluginOrRules);
-}
-
 const eslintRules = normalizeRules({
   'no-useless-rename': 'error',
   'object-shorthand': 'error',
   'prefer-template': 'error',
+  'no-useless-concat': 'error',
 });
 
 const stylisticRules = normalizeRules('@stylistic', {
   indent: 2,
+  quotes: 'single',
   'linebreak-style': 'unix',
   'no-extra-parens': 'all',
   'no-extra-semi': 'error',
@@ -52,15 +26,14 @@ const typescriptRules = normalizeRules('@typescript-eslint', {
   },
 });
 
-const stylisticConfig = stylistic.configs.customize({
+const stylisticPluginConfig = stylistic.configs.customize({
   semi: true,
-  quotes: 'single',
   arrowParens: true,
   quoteProps: 'as-needed',
   braceStyle: '1tbs',
 });
 
-const typescriptConfig = config(
+const typescriptPluginConfig = config(
   ...typescriptConfigs.strictTypeChecked,
   ...typescriptConfigs.stylisticTypeChecked,
   { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
@@ -68,10 +41,43 @@ const typescriptConfig = config(
 );
 
 export default config(
-  { ignores: ['dist', 'coverage', 'helpers'] },
+  { files: ['**/*.{js,cjs,mjs,ts}'] },
+  { ignores: ['dist', 'coverage'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   js.configs.recommended,
-  stylisticConfig,
-  ...typescriptConfig,
+  stylisticPluginConfig,
+  ...typescriptPluginConfig,
   { rules: { ...eslintRules, ...stylisticRules, ...typescriptRules } },
 );
+
+function normalizeRuleEntry(entry) {
+  if (Array.isArray(entry)) return entry;
+  if (['off', 'warn', 'error'].includes(entry)) return entry;
+  return ['error', entry];
+}
+
+function normalizeRuleEntries(rules, pluginName) {
+  const entries = Object.entries(rules);
+  if (!pluginName) {
+    return Object.fromEntries(
+      entries.map(
+        ([ruleName, ruleEntry]) => [ruleName, normalizeRuleEntry(ruleEntry)],
+      ),
+    );
+  }
+  const pluginPrefix = `${pluginName}/`;
+  const normalizeRuleName = (ruleName) => {
+    if (ruleName.startsWith(pluginPrefix)) return ruleName;
+    return `${pluginPrefix}${ruleName}`;
+  };
+  return Object.fromEntries(
+    entries.map(
+      ([ruleName, ruleEntry]) => [normalizeRuleName(ruleName), normalizeRuleEntry(ruleEntry)],
+    ),
+  );
+}
+
+export function normalizeRules(pluginOrRules, rules) {
+  if (!rules) return normalizeRuleEntries(pluginOrRules);
+  return normalizeRuleEntries(rules, pluginOrRules);
+}
