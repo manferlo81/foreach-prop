@@ -3,17 +3,18 @@ changelog:
     authors:
       - dependabot
     labels:
-      - ignore-for-release
+      - no-release
 
   categories:
     - title: Breaking Changes
       labels:
-        - breaking-change
+        - breaking
+        - breaking change
 
-    - title: Bug Fix
+    - title: Bug Fixes
       labels:
         - fix
-        - bug
+        - bug fix
 
     - title: Features
       labels:
@@ -22,11 +23,4 @@ changelog:
 
     - title: Other Changes
       labels:
-        - "*"
-      exclude:
-        labels:
-          - feature
-          - feat
-          - fix
-          - bug
-          - breaking-change
+        - change
