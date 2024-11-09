@@ -51,20 +51,17 @@ export default config(
 );
 
 function normalizeRuleEntry(entry) {
-  if (Array.isArray(entry)) return entry;
-  if (['off', 'warn', 'error'].includes(entry)) return entry;
+  if (Array.isArray(entry) || ['off', 'warn', 'error'].includes(entry)) return entry;
   return ['error', entry];
 }
 
-function normalizeRuleEntries(rules, pluginName) {
+function normalizeRulesObject(rules, pluginName) {
   const entries = Object.entries(rules);
-  if (!pluginName) {
-    return Object.fromEntries(
-      entries.map(
-        ([ruleName, ruleEntry]) => [ruleName, normalizeRuleEntry(ruleEntry)],
-      ),
-    );
-  }
+  if (!pluginName) return Object.fromEntries(
+    entries.map(
+      ([ruleName, ruleEntry]) => [ruleName, normalizeRuleEntry(ruleEntry)],
+    ),
+  );
   const pluginPrefix = `${pluginName}/`;
   const normalizeRuleName = (ruleName) => {
     if (ruleName.startsWith(pluginPrefix)) return ruleName;
@@ -78,6 +75,6 @@ function normalizeRuleEntries(rules, pluginName) {
 }
 
 export function normalizeRules(pluginOrRules, rules) {
-  if (!rules) return normalizeRuleEntries(pluginOrRules);
-  return normalizeRuleEntries(rules, pluginOrRules);
+  if (!rules) return normalizeRulesObject(pluginOrRules);
+  return normalizeRulesObject(rules, pluginOrRules);
 }

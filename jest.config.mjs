@@ -3,16 +3,14 @@ const config = {
   cacheDirectory: 'node_modules/.cache/jest',
   preset: 'ts-jest',
 
-  collectCoverage: true,
+  collectCoverage: !process.env.SKIP_COVERAGE,
   coverageDirectory: 'coverage',
   collectCoverageFrom: [
     'src/**/*.ts',
   ],
-  coverageReporters: [
-    process.env.CI ? 'json' : 'lcov',
-    'text',
-    'text-summary',
-  ],
+  coverageReporters: process.env.CI
+    ? ['json', 'clover', 'cobertura']
+    : ['html', 'text', ''],
 
   testMatch: [
     '**/__test__/**/*.test.ts',
