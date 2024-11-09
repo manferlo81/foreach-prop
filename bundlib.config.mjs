@@ -1,7 +1,9 @@
 import { config } from 'bundlib';
 
 export default config({
-  name: 'eachProp',
+  esModule: true,
+  interop: true,
   min: ['browser', 'module'],
+  name: 'eachProp',
   project: 'tsconfig-build.json',
 });
