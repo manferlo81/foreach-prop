@@ -2,6 +2,7 @@ name: Lint, Test and Build
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 env:
   DEFAULT_NODE_VERSION: 20.x
