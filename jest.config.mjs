@@ -8,7 +8,7 @@ const config = {
   collectCoverageFrom: [
     'src/**/*.ts',
   ],
-  coverageReporters: process.env.COVERAGE === 'CI'
+  coverageReporters: process.env.COVERAGE === 'CI' || process.env.CI
     ? ['json', 'clover', 'cobertura']
     : ['html', 'text'],
 
