@@ -20,14 +20,29 @@ jobs:
     uses: ./.github/workflows/lint-test-build.yml
 
   job_upload_coverage:
-    name: Upload Coverage
+    name: Upload Coverage Report to Codecov
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref_type == 'branch'
     needs: job_lint_test_build
 
     steps:
-      - run: echo "not implemented yet..."
+      - name: Checkout, Setup Node.js v${{ env.DEFAULT_NODE_VERSION }} and Install dependencies
+        uses: manferlo81/action-checkout-node-install@v0
+        with:
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+
+      - name: Collect Coverage
+        run: npm test
+        env:
+          CI: true
+          COVERAGE: CI
+
+      - name: Upload Coverage Report
+        uses: codecov/codecov-action@v4
+        with:
+          directory: coverage
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   job_create_release:
     name: Create GitHub Release
@@ -41,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout, Setup Node.js v${{ env.DEFAULT_NODE_VERSION }} and Install dependencies
-        uses: manferlo81/action-checkout-node-install@initial
+        uses: manferlo81/action-checkout-node-install@v0
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 

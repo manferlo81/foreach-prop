@@ -44,4 +44,4 @@ jobs:
       - name: Build
         run: npm test
         env:
-          COVERAGE: 'SKIP'
+          COVERAGE: SKIP
