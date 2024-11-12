@@ -42,7 +42,7 @@ jobs:
         uses: codecov/codecov-action@v4
         with:
           directory: coverage
-          file: '*.json'
+          file: '*.{json,xml}'
           token: ${{ secrets.CODECOV_TOKEN }}
 
   job_create_release:
