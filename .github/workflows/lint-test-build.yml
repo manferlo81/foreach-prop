@@ -25,10 +25,17 @@ jobs:
     strategy:
       matrix:
         os:
+          - name: Windows
+            image: windows-latest
           - name: Ubuntu
             image: ubuntu-latest
+          - name: macOS
+            image: macos-latest
         node-version:
+          - 18.x
           - 20.x
+          - 21.x
+          - 22.x
 
     name: Test and Build ( ${{ matrix.os.name }}, Node.js v${{ matrix.node-version }} )
 
