@@ -5,53 +5,49 @@ import { config, configs as typescriptConfigs } from 'typescript-eslint';
 
 const javascriptPluginConfig = config(
   pluginJavascript.configs.recommended,
-  {
-    rules: normalizeRules({
-      'no-useless-rename': 'error',
-      'object-shorthand': 'error',
-      'prefer-template': 'error',
-      'no-useless-concat': 'error',
-    }),
-  },
+  normalizeRulesConfig({
+    'no-useless-rename': 'error',
+    'object-shorthand': 'error',
+    'prefer-template': 'error',
+    'no-useless-concat': 'error',
+    eqeqeq: 'smart',
+  }),
 );
 
 const stylisticPluginConfig = config(
   pluginStylistic.configs.customize({
-    quotes: 'single',
     indent: 2,
     semi: true,
     arrowParens: true,
     quoteProps: 'as-needed',
     braceStyle: '1tbs',
   }),
-  {
-    rules: normalizeRules('@stylistic', {
-      'linebreak-style': 'unix',
-      'no-extra-parens': 'all',
-      'no-extra-semi': 'error',
-      'padded-blocks': 'off',
-    }),
-  },
+  normalizeRulesConfig('@stylistic', {
+    quotes: 'single',
+    'linebreak-style': 'unix',
+    'no-extra-parens': 'all',
+    'no-extra-semi': 'error',
+    'padded-blocks': 'off',
+  }),
 );
 
 const typescriptPluginConfig = config(
   typescriptConfigs.strictTypeChecked,
   typescriptConfigs.stylisticTypeChecked,
+  { languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } } },
+  normalizeRulesConfig('@typescript-eslint', {
+    'array-type': { default: 'array-simple', readonly: 'array-simple' },
+  }),
   {
-    languageOptions: { parserOptions: { projectService: true, tsconfigRootDir: process.cwd() } },
-    rules: normalizeRules('@typescript-eslint', {
-      'array-type': { default: 'array-simple', readonly: 'array-simple' },
-    }),
-  }, {
-    files: ['**/*.{js,mjs,cjs}'],
     ...typescriptConfigs.disableTypeChecked,
+    files: ['**/*.{js,mjs,cjs}'],
   },
 );
 
 export default config(
-  { files: ['**/*.{js,mjs,cjs,ts}'] },
   { ignores: ['dist', 'coverage'] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+  { files: ['**/*.{js,mjs,cjs,ts}'] },
   javascriptPluginConfig,
   stylisticPluginConfig,
   typescriptPluginConfig,
@@ -77,8 +73,10 @@ function createEntryNormalizer(pluginName) {
   return ([ruleName, ruleEntry]) => [normalizeRuleName(ruleName), normalizeRuleEntry(ruleEntry)];
 }
 
-function normalizeRules(pluginName, rules) {
-  if (!rules && pluginName) return normalizeRules(null, pluginName);
+function normalizeRulesConfig(pluginName, rules) {
+  if (!rules && pluginName) return normalizeRulesConfig(null, pluginName);
   const normalizeEntry = createEntryNormalizer(pluginName);
-  return Object.fromEntries(Object.entries(rules).map(normalizeEntry));
+  const entries = Object.entries(rules).map(normalizeEntry);
+  const rulesNormalized = Object.fromEntries(entries);
+  return { rules: rulesNormalized };
 }
