@@ -1,10 +1,16 @@
+import { createDefaultPreset } from 'ts-jest';
+
 const { COVERAGE: COVERAGE_ENV } = process.env;
 const collectCoverage = COVERAGE_ENV !== 'SKIP';
 const coverageOnCI = COVERAGE_ENV === 'CI';
 
+const typescriptJestPreset = createDefaultPreset({
+  tsconfig: './tsconfig.json',
+});
+
 /** @type { import("ts-jest").JestConfigWithTsJest } */
 const config = {
-  preset: 'ts-jest',
+  ...typescriptJestPreset,
 
   collectCoverage,
   coverageDirectory: 'coverage',
@@ -12,8 +18,8 @@ const config = {
     'src/**/*.ts',
   ],
   coverageReporters: coverageOnCI
-    ? ['json', 'clover', 'cobertura']
-    : ['html', 'text'],
+    ? ['text', 'json', 'clover', 'cobertura']
+    : ['text', 'html'],
 
   testMatch: [
     '**/__test__/**/*.test.ts',
