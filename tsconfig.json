@@ -5,6 +5,7 @@
     "moduleResolution": "Node10",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,

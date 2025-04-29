@@ -12,7 +12,7 @@ export { lastKeyOf } from './methods/last-key-of';
 export { map } from './methods/map';
 export { reduce } from './methods/reduce';
 export { some } from './methods/some';
-export {
+export type {
   DeprecatedFilterCallback as FilterCallback,
   DeprecatedForEachCallback as ForEachCallback,
   DeprecatedMapCallback as MapCallback,
