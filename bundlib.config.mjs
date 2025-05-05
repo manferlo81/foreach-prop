@@ -5,5 +5,5 @@ export default config({
   interop: true,
   min: ['browser', 'module'],
   name: 'eachProp',
-  project: 'tsconfig-build.json',
+  project: './tsconfig.build.json',
 });
