@@ -1,1 +1,1 @@
-export type UnknownFunction = (this: unknown, ...args: unknown[]) => unknown;
+export type UnknownFunction = (this: unknown, ...args: unknown[]) => unknown
