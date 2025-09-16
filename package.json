@@ -65,7 +65,7 @@
     "@stylistic/eslint-plugin": "^5.3.1",
     "@types/is-function": "^1.0.3",
     "@types/jest": "^30.0.0",
-    "@types/node": "^24.3.1",
+    "@types/node": "^24.5.0",
     "bundlib": "^0.21.7",
     "chokidar": "^4.0.3",
     "core-js": "^3.45.1",
