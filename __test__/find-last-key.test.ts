@@ -2,7 +2,7 @@ import { findLastKey } from '../src'
 import { createObjectWithProto } from './tools/create-object'
 import { normalizeObject } from './tools/helpers'
 import { reverseArray } from './tools/reverse-array'
-import { UnknownFunction } from './tools/types'
+import type { UnknownFunction } from './tools/types'
 import { invalidCallbacks, invalidObjects } from './tools/values'
 
 describe('findLastKey method', () => {

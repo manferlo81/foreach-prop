@@ -1,27 +1,33 @@
 {
+  "include": [
+    "__test__",
+    "src"
+  ],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "CommonJS",
+    // Module
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "Node10",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "lib": [],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    // Strict
     "strict": true,
-    "noImplicitAny": true,
     "noImplicitReturns": false,
-    "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    // Others
+    "noEmit": true,
     "declaration": true,
     "declarationMap": true,
     "importHelpers": true,
     "newLine": "lf",
     "pretty": true
   },
-  "include": [
-    "__test__",
-    "src"
-  ],
   "exclude": [
     "node_modules",
     "dist",

@@ -1,6 +1,6 @@
 import { fill } from '../src'
 import { createObjectWithProto } from './tools/create-object'
-import { UnknownFunction } from './tools/types'
+import type { UnknownFunction } from './tools/types'
 import { invalidObjects } from './tools/values'
 
 describe('fill method', () => {

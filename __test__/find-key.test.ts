@@ -1,7 +1,7 @@
 import { findKey } from '../src'
 import { createObjectWithProto } from './tools/create-object'
 import { normalizeObject } from './tools/helpers'
-import { UnknownFunction } from './tools/types'
+import type { UnknownFunction } from './tools/types'
 import { invalidCallbacks, invalidObjects } from './tools/values'
 
 describe('findKey method', () => {
